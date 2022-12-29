@@ -22,7 +22,6 @@ public class TitleView extends JPanel {
     private JButton settings = new JButton("Options");
     private JButton quit = new JButton("Quit");
     private JPanel buttonsPanel = new JPanel(); // JPanel to store buttons
-    private JPanel mainPanel = new JPanel();
     private JLabel startNewGame = new JLabel("You need to start a new game.");
     private JButton easy = new JButton("Easy");
     private JButton medium = new JButton("Medium");
@@ -49,14 +48,16 @@ public class TitleView extends JPanel {
         int height = (int)this.screenSize.getHeight();
 
         loadingScreenImage.setBounds(0, 0, width, height);
-        loadingScreenImage.setIcon(new ImageIcon(directory + "\\res\\Safeimagekit-resized-img.png"));
+        loadingScreenImage.setIcon(new ImageIcon(directory + "\\src\\res\\Safeimagekit-resized-img.png"));
 
         // Formatting for title
-        title.setBounds(450, 250, 1200, 100);
+        title.setBounds(450,250,1200,100);
         // title.setBounds(width/2, height/6, 1200, 100); TODO Try to make it more responsive
         title.setForeground(new Color(139, 0, 0));
+        title.setBorder(null);
 
-        File fontFile = new File(directory + "\\res\\HelpMe.ttf");
+        System.out.println(directory);
+        File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf");
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
             Font sizedFont = font.deriveFont(100f);
@@ -68,31 +69,29 @@ public class TitleView extends JPanel {
         }
 
         // Adds the buttons to the buttons panel
+        buttonsPanel.setBounds(800,500,300,550);
         buttonsPanel.setLayout(new GridLayout(4, 1));
         buttonsPanel.add(newGame);
         buttonsPanel.add(loadGame);
         buttonsPanel.add(settings);
         buttonsPanel.add(quit);
 
-        // Adds the components to the main panel
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(title, BorderLayout.NORTH);
-        // mainPanel.add(buttonsPanel, BorderLayout.CENTER);
 
-        // Error message for trying to load a game that is either complete or not started
         startNewGame.setVisible(false);
-        // mainPanel.add(startNewGame, BorderLayout.EAST);
+
+        //
+        gameModePanel.setBounds(1200,500,200,200);
+        gameModePanel.setLayout(new GridLayout(3,1));
 
         gameModePanel.add(easy);
         gameModePanel.add(medium);
         gameModePanel.add(hard);
         gameModePanel.setVisible(false);
-        mainPanel.add(gameModePanel, BorderLayout.EAST);
 
-        // TODO Fix this thing up so that it displays properly
-        // this.add(loadingScreenImage);
-        // this.setLayout(null);
-        this.add(mainPanel);
+        this.setLayout(null);
+
+        this.add(title);
+        this.add(gameModePanel);
         this.add(buttonsPanel);
         this.add(startNewGame);
         this.add(loadingScreenImage);
@@ -145,7 +144,7 @@ public class TitleView extends JPanel {
             /*
             String newDir = directory.replace("\\src", "");
             File sFile = new File(newDir + "\\SaveFile.txt"); */
-            File sFile = new File(directory + "\\SaveFiles\\SaveFile1.txt");
+            File sFile = new File(directory + "\\src\\SaveFiles\\SaveFile1.txt");
             Scanner saveFile = null;
             String gameMode = "";
             int numOfKeys = 0;
