@@ -6,7 +6,7 @@
 public class TitleModel {
 
     // Creates instance variables
-    private TitleViewV2 view;
+    private TitleView view;
     public String userSelection = "";
     public String difficulty = "";
     public String gameDifficulty = "";
@@ -18,7 +18,7 @@ public class TitleModel {
     }
 
     // Sets the current layout of the GUI
-    public void setGUI(TitleViewV2 currentView) {
+    public void setGUI(TitleView currentView) {
         this.view = currentView;
     }
 

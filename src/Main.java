@@ -18,7 +18,7 @@ public class Main {
         
         // Creates the model and view
         TitleModel model = new TitleModel();
-        TitleViewV2 view = new TitleViewV2(model);
+        TitleView view = new TitleView(model);
 
         // JFrame frame = new JFrame("A Secluded Place");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Sets JFrame to be fullscreen by default

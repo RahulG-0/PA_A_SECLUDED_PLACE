@@ -1,120 +1,114 @@
+// Program Name: TitleView
+// Last Modified:
+// Name: Rahul Gurukiran & Anirudh Bharadwaj
+// Description: Creates the GUI for the title screen
+
+// Imports
 import javax.swing.*;
-
-import javafx.scene.effect.ColorAdjust;
-
-// import javafx.scene.paint.Color;
-
 import java.awt.*;
-import java.io.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
-public class TitleView extends JPanel{
+public class TitleView extends JPanel {
 
-    public JLabel loadingScreenImage;
-    public JFrame loadingScreen;
-
-    public JLabel title;
-
-    private TitleModel titleModel = new TitleModel();
-
-    // Default buttons
-    public JButton newGame= new JButton("New Game");
-    public JButton loadGame = new JButton("Continue Game");
-    public JButton settings = new JButton("Options");
-    public JButton quit = new JButton("Quit");
-
+    // Creates instance variables
+    private TitleModel titleModel; // Instance of model
+    private JLabel loadingScreenImage = new JLabel(); // Background image
+    private JLabel title = new JLabel("A Secluded Place"); // Title
+    private JButton newGame = new JButton("New Game"); // Buttons on GUI
+    private JButton loadGame = new JButton("Continue Game");
+    private JButton settings = new JButton("Options");
+    private JButton quit = new JButton("Quit");
+    private JPanel buttonsPanel = new JPanel(); // JPanel to store buttons
+    private JPanel mainPanel = new JPanel();
     private JLabel startNewGame = new JLabel("You need to start a new game.");
-
-    // Different game modes
     private JButton easy = new JButton("Easy");
     private JButton medium = new JButton("Medium");
     private JButton hard = new JButton("Hard");
     private JPanel gameModePanel = new JPanel();
-    
+
     // Gets directory and screen size
     private String directory = System.getProperty("user.dir");
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    public JPanel menu;
-
-    public TitleView(TitleModel aGame)
-    {
-        super();
-        LayoutView();
+    // Constructor
+    public TitleView(TitleModel titleModel) {
+        this.titleModel = titleModel;
+        this.titleModel.setGUI(this);
+        this.layoutView();
         this.registerControllers();
         this.update();
     }
 
-    public void LayoutView(){
-
-        loadingScreenImage = new JLabel();
+    // Creates the initial layout of the GUI
+    private void layoutView() {
+        // Sets the background image
         int width = (int)this.screenSize.getWidth();
         int height = (int)this.screenSize.getHeight();
 
         loadingScreenImage.setBounds(0, 0, width, height);
         loadingScreenImage.setIcon(new ImageIcon(directory + "\\Safeimagekit-resized-img.png"));
-       
 
-        title =  new JLabel();
-        title.setText("A Secluded Place");
-        title.setBounds(450,250,1200,100);
-        // title.setEditable(false);
+        // Formatting for title
+        title.setBounds(450, 250, 1200, 100);
+        // title.setBounds(width/2, height/6, 1200, 100); TODO Try to make it more responsive
         title.setForeground(new Color(139, 0, 0));
-        // title.setBackground(new Color(0,0,0,70));
-        title.setBorder(null);
 
-        File font_file = new File(directory + "\\HelpMe.ttf");
+        File fontFile = new File(directory + "\\HelpMe.ttf");
         try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);
+            Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
             Font sizedFont = font.deriveFont(100f);
             title.setFont(sizedFont);
         } catch (FontFormatException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
+        // Adds the buttons to the buttons panel
+        buttonsPanel.setLayout(new GridLayout(4, 1));
+        buttonsPanel.add(newGame);
+        buttonsPanel.add(loadGame);
+        buttonsPanel.add(settings);
+        buttonsPanel.add(quit);
 
-        menu = new JPanel();
-        
+        // Adds the components to the main panel
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(title, BorderLayout.NORTH);
+        // mainPanel.add(buttonsPanel, BorderLayout.CENTER);
+
+        // Error message for trying to load a game that is either complete or not started
+        startNewGame.setVisible(false);
+        // mainPanel.add(startNewGame, BorderLayout.EAST);
+
         gameModePanel.add(easy);
         gameModePanel.add(medium);
         gameModePanel.add(hard);
         gameModePanel.setVisible(false);
+        mainPanel.add(gameModePanel, BorderLayout.EAST);
 
-        menu.add(newGame);
-        menu.add(loadGame);
-        menu.add(settings);
-        menu.add(quit);
-        menu.add(gameModePanel);
-
-        menu.setBounds(800,500,300,550);
-
-
-        this.setSize(1920,1080);
-        this.setLayout(null);
-        this.add(title);
-        this.add(menu);
+        // TODO Fix this thing up so that it displays properly
+        // this.add(loadingScreenImage);
+        // this.setLayout(null);
+        this.add(mainPanel);
+        this.add(buttonsPanel);
+        this.add(startNewGame);
         this.add(loadingScreenImage);
-        this.setVisible(true);
-
-    }   
+    }
 
     // Registers the controller to the buttons
     private void registerControllers() {
-        TitleController controller = new TitleController(this.titleModel, this.newGame);
+        TitleController controller = new TitleController(this.titleModel);
         this.newGame.addActionListener(controller);
         this.loadGame.addActionListener(controller);
         this.settings.addActionListener(controller);
         this.quit.addActionListener(controller);
     }
-
+    
     // This takes the player into another JFrame for the actual game
-    public void goToGame(String gameMode, int numOfKeys, int health, ArrayList<String> inventory) {
+    public void goToGame(String gameMode, int numOfKeys, int health, int inventory) {
         GameModel model = new GameModel(gameMode, numOfKeys, health, inventory);
         GameView view = new GameView(model);
 
@@ -136,14 +130,15 @@ public class TitleView extends JPanel{
 
             // Creates the game if the user has selected a game difficulty
             if (this.titleModel.gameDifficulty.equals("Easy")) {
-                this.goToGame("Easy", 0, 100, null);
+                this.goToGame("Easy", 0, 100, 3);
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
-                this.goToGame("Medium", 0, 100, null);
+                this.goToGame("Medium", 0, 100, 2);
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
-                this.goToGame("Hard", 0, 100, null);
+                this.goToGame("Hard", 0, 100, 1);
             }
             
         } else if (this.titleModel.userSelection.equals("load")) {
+            gameModePanel.setVisible(false);
 
             ////////////////// CHANGE NEWDIR TO MAKE IT WORK WITH EVERY COMPUTER
             // This opens the save file
@@ -154,7 +149,7 @@ public class TitleView extends JPanel{
             String gameMode = "";
             int numOfKeys = 0;
             int health = 100;
-            ArrayList<String> inventory = new ArrayList<String>();
+            int inventory = 0;
             int counter = 0;
 
             // Tries to access the save file
@@ -167,6 +162,7 @@ public class TitleView extends JPanel{
             // If the file is blank meaning the player hasn't played a game yet
             if (!saveFile.hasNext()) {
                 startNewGame.setVisible(true);
+                System.out.println("Setting it to true");
             } else {
                 while (saveFile.hasNext()) {
                     if (counter == 0) {
@@ -175,8 +171,8 @@ public class TitleView extends JPanel{
                         numOfKeys = Integer.parseInt(saveFile.next());
                     } else if (counter == 2) {
                         health = Integer.parseInt(saveFile.next());
-                    } else if (counter >= 3) {
-                        inventory.add(saveFile.next());
+                    } else if (counter == 3) {
+                        inventory = Integer.parseInt(saveFile.next());
                     }
 
                     counter++;
@@ -202,5 +198,5 @@ public class TitleView extends JPanel{
             System.exit(0);
         }
     }
-
-}
+    
+} // Closes class
