@@ -49,14 +49,14 @@ public class TitleView extends JPanel {
         int height = (int)this.screenSize.getHeight();
 
         loadingScreenImage.setBounds(0, 0, width, height);
-        loadingScreenImage.setIcon(new ImageIcon(directory + "\\Safeimagekit-resized-img.png"));
+        loadingScreenImage.setIcon(new ImageIcon(directory + "\\res\\Safeimagekit-resized-img.png"));
 
         // Formatting for title
         title.setBounds(450, 250, 1200, 100);
         // title.setBounds(width/2, height/6, 1200, 100); TODO Try to make it more responsive
         title.setForeground(new Color(139, 0, 0));
 
-        File fontFile = new File(directory + "\\HelpMe.ttf");
+        File fontFile = new File(directory + "\\res\\HelpMe.ttf");
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
             Font sizedFont = font.deriveFont(100f);
@@ -142,9 +142,10 @@ public class TitleView extends JPanel {
 
             ////////////////// CHANGE NEWDIR TO MAKE IT WORK WITH EVERY COMPUTER
             // This opens the save file
+            /*
             String newDir = directory.replace("\\src", "");
-            File sFile = new File(newDir + "\\SaveFile.txt");
-            // File sFile = new File(directory + "\\SaveFile.txt"); THIS IS HOW IT WOULD WORK
+            File sFile = new File(newDir + "\\SaveFile.txt"); */
+            File sFile = new File(directory + "\\SaveFiles\\SaveFile1.txt");
             Scanner saveFile = null;
             String gameMode = "";
             int numOfKeys = 0;
