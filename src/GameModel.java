@@ -10,6 +10,7 @@ public class GameModel {
 
     // Creates instance variables
     private GameView view;
+    private TitleModel titleModel;
     public String userSelection = "";
     public String gameMode = "";
     public int numOfKeys = 0;

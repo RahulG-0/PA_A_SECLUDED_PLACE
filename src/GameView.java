@@ -24,7 +24,7 @@ public class GameView extends JPanel {
     }
 
     // Creates the initial layout of the GUI
-    private void layoutView() {
+    public void layoutView() {
         String info1 = this.gameModel.gameMode + " " + this.gameModel.numOfKeys;
         info1 = info1 + " " + this.gameModel.health + " " + this.gameModel.inventory;
 

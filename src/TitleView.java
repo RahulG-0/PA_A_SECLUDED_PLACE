@@ -104,6 +104,10 @@ public class TitleView extends JPanel {
         this.loadGame.addActionListener(controller);
         this.settings.addActionListener(controller);
         this.quit.addActionListener(controller);
+
+        this.easy.addActionListener(controller);
+        this.medium.addActionListener(controller);
+        this.hard.addActionListener(controller);
     }
     
     // This takes the player into another JFrame for the actual game
@@ -111,11 +115,13 @@ public class TitleView extends JPanel {
         GameModel model = new GameModel(gameMode, numOfKeys, health, inventory);
         GameView view = new GameView(model);
 
-        JFrame frame = new JFrame("A Secluded Place");
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setContentPane(view);
-        frame.setVisible(true);
+        view.layoutView();
+
+        // JFrame frame = new JFrame("A Secluded Place");
+        // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        // frame.setContentPane(view);
+        // frame.setVisible(true);
     }
 
     // Updates the GUI with the answer
