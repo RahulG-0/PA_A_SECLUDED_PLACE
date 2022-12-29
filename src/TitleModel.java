@@ -31,6 +31,12 @@ public class TitleModel {
             userSelection = "settings";
         } else if (option.equals("Quit")) {
             userSelection = "exit";
+        } else if(option.equals("Easy")){
+            gameDifficulty = "Easy";
+        } else if(option.equals("Medium")){
+            gameDifficulty = "Medium";
+        } else if(option.equals("Hard")){
+            gameDifficulty = "Hard";
         }
 
         this.update();

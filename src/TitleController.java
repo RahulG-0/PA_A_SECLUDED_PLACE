@@ -27,13 +27,13 @@ public class TitleController implements ActionListener {
         // }
         
         this.titleModel.getSelected(e.getActionCommand());
-        /*
+        
         // Add a check here to make send the button information to the right place
-        if (this.titleModel.gameModeFlag == 0) {
-            this.titleModel.getSelected(e.getActionCommand());
-        } else if (this.titleModel.gameModeFlag == 1) {
-            this.titleModel.getDifficulty(e.getActionCommand());
-        } */
+        // if (this.titleModel.gameModeFlag == 0) {
+        //     this.titleModel.getSelected(e.getActionCommand());
+        // } else if (this.titleModel.gameModeFlag == 1) {
+        //     this.titleModel.getDifficulty(e.getActionCommand());
+        // } 
     }
 
 } // Closes class
