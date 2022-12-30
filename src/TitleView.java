@@ -28,6 +28,8 @@ public class TitleView extends JPanel {
     private JButton hard = new JButton("Hard");
     private JPanel gameModePanel = new JPanel();
 
+    private GameModel model = new GameModel();
+
     // Gets directory and screen size
     private String directory = System.getProperty("user.dir");
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -111,18 +113,7 @@ public class TitleView extends JPanel {
     }
     
     // This takes the player into another JFrame for the actual game
-    public void goToGame(String gameMode, int numOfKeys, int health, int inventory) {
-        GameModel model = new GameModel(gameMode, numOfKeys, health, inventory);
-        GameView view = new GameView(model);
-
-        view.layoutView();
-
-        // JFrame frame = new JFrame("A Secluded Place");
-        // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        // frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        // frame.setContentPane(view);
-        // frame.setVisible(true);
-    }
+    
 
     // Updates the GUI with the answer
     public void update() {
@@ -135,11 +126,11 @@ public class TitleView extends JPanel {
 
             // Creates the game if the user has selected a game difficulty
             if (this.titleModel.gameDifficulty.equals("Easy")) {
-                this.goToGame("Easy", 0, 100, 3);
+                this.model.getInfo("Easy", 0, 100, 3);
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
-                this.goToGame("Medium", 0, 100, 2);
+                this.model.getInfo("Medium", 0, 100, 2);
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
-                this.goToGame("Hard", 0, 100, 1);
+                this.model.getInfo("Hard", 0, 100, 1);
             }
             
         } else if (this.titleModel.userSelection.equals("load")) {
@@ -192,7 +183,7 @@ public class TitleView extends JPanel {
                 } else if (gameMode.equals("Hard") && numOfKeys == 5) {
                     startNewGame.setVisible(true);
                 } else {
-                    this.goToGame(gameMode, numOfKeys, health, inventory);
+                    this.model.getInfo(gameMode, numOfKeys, health, inventory);
                 }
             }
 

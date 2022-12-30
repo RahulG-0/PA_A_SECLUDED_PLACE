@@ -17,8 +17,8 @@ public class Main {
     public static void main(String[] args) {
         
         // Creates the model and view
-        TitleModel model = new TitleModel();
-        TitleView view = new TitleView(model);
+        TotalModel TotalModel = new TotalModel();
+        TotalView view = new TotalView(TotalModel);
 
         // JFrame frame = new JFrame("A Secluded Place");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Sets JFrame to be fullscreen by default

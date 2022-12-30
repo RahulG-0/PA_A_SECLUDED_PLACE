@@ -20,8 +20,12 @@ public class GameModel {
     // private double time = 0.00; TODO Add this later
 
     // Constructor
-    public GameModel(String gameMode, int numOfKeys, int health, int inventory) {
+    public GameModel() {
         super();
+
+    }
+
+    public void getInfo(String gameMode, int numOfKeys, int health, int inventory){
         this.gameMode = gameMode;
         this.numOfKeys = numOfKeys;
         this.health = health;

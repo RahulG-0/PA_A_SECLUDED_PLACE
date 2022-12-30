@@ -12,6 +12,10 @@ public class TitleModel {
     public String gameDifficulty = "";
     public int gameModeFlag = 0;
 
+    
+
+    public boolean startGame = false;
+
     // Constructor
     public TitleModel() {
         super();
@@ -27,16 +31,20 @@ public class TitleModel {
             userSelection = "new";
         } else if (option.equals("Continue Game")) {
             userSelection = "load";
+            startGame = true;
         } else if (option.equals("Options")) {
             userSelection = "settings";
         } else if (option.equals("Quit")) {
             userSelection = "exit";
         } else if(option.equals("Easy")){
             gameDifficulty = "Easy";
+            startGame = true;
         } else if(option.equals("Medium")){
             gameDifficulty = "Medium";
+            startGame = true;
         } else if(option.equals("Hard")){
             gameDifficulty = "Hard";
+            startGame = true;
         }
 
         this.update();
@@ -50,6 +58,11 @@ public class TitleModel {
     // Updates the GUI
     public void update() {
         view.update();
+
+    }
+
+    public boolean getStartGame(){
+        return startGame;
     }
     
 } // Closes class
