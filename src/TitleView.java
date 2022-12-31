@@ -15,20 +15,23 @@ public class TitleView extends JPanel {
 
     // Creates instance variables
     private TitleModel titleModel; // Instance of model
+
     private JLabel loadingScreenImage = new JLabel(); // Background image
     private JLabel title = new JLabel("A Secluded Place"); // Title
+
     private JButton newGame = new JButton("New Game"); // Buttons on GUI
     private JButton loadGame = new JButton("Continue Game");
     private JButton settings = new JButton("Options");
     private JButton quit = new JButton("Quit");
     private JPanel buttonsPanel = new JPanel(); // JPanel to store buttons
-    private JLabel startNewGame = new JLabel("You need to start a new game.");
-    private JButton easy = new JButton("Easy");
+
+    private JLabel startNewGame = new JLabel("You need to start a new game."); // button that staarts the game
+    // difficulty settings
+    private JButton easy = new JButton("Easy"); 
     private JButton medium = new JButton("Medium");
     private JButton hard = new JButton("Hard");
     private JPanel gameModePanel = new JPanel();
-
-    private GameModel model = new GameModel();
+    private GameModel model = new GameModel(); // pannel that holds the difficulkty setting butttons
 
     // Gets directory and screen size
     private String directory = System.getProperty("user.dir");
@@ -192,7 +195,8 @@ public class TitleView extends JPanel {
         } else if (this.titleModel.userSelection.equals("settings")) {
             // TODO Create a settings menu
         } else if (this.titleModel.userSelection.equals("exit")) {
-            System.exit(0);
+            Window win = SwingUtilities.getWindowAncestor(this);
+            win.dispose();
         }
     }
     

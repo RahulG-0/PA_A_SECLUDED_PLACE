@@ -11,6 +11,6 @@ public class TotalModel {
     }
 
     public void update(){
-        while(true) totalView.update();
+        totalView.update();
     }
 }

@@ -7,6 +7,7 @@ public class TitleModel {
 
     // Creates instance variables
     private TitleView view;
+    private TotalView totalView;
     public String userSelection = "";
     public String difficulty = "";
     public String gameDifficulty = "";
@@ -39,6 +40,7 @@ public class TitleModel {
         } else if(option.equals("Easy")){
             gameDifficulty = "Easy";
             startGame = true;
+            System.out.println("easy");
         } else if(option.equals("Medium")){
             gameDifficulty = "Medium";
             startGame = true;
@@ -58,6 +60,7 @@ public class TitleModel {
     // Updates the GUI
     public void update() {
         view.update();
+        
 
     }
 
