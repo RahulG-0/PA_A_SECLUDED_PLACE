@@ -26,7 +26,7 @@ public class TitleView extends JPanel {
     private JPanel buttonsPanel = new JPanel(); // JPanel to store buttons
 
     // Error message for if the save file has not been started or is completed
-    private JLabel startNewGame = new JLabel("You need to start a new game.");
+    private JLabel startNewGame = new JLabel("No game in session. Please start a new game.");
     
     // Difficulty settings
     private JButton easy = new JButton("Easy"); 
@@ -163,19 +163,10 @@ public class TitleView extends JPanel {
                 counter++;
             }
 
-            // Checks to see if the save file is already completed
-            if (gameMode.equals("Easy") && numOfKeys == 3) {
-                startNewGame.setVisible(true);
-            } else if (gameMode.equals("Medium") && numOfKeys == 4) {
-                startNewGame.setVisible(true);
-            } else if (gameMode.equals("Hard") && numOfKeys == 5) {
-                startNewGame.setVisible(true);
-            } else {
-                // Passes the information to the GameModel and sets canLoad to true
-                this.gameModel.SetInfo(gameMode, numOfKeys, health, flashbangs);
-                this.gameModel.update();
-                canLoad = true;
-            }
+            // Passes the information to the GameModel and sets canLoad to true
+            this.gameModel.SetInfo(gameMode, numOfKeys, health, flashbangs);
+            this.gameModel.update();
+            canLoad = true;
         }
 
         // Closes the file
