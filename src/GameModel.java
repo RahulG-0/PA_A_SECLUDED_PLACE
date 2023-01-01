@@ -10,7 +10,6 @@ public class GameModel {
 
     // Creates instance variables
     private GameView view;
-    private TitleModel titleModel;
     public String userSelection = "";
     public String gameMode = "";
     public int numOfKeys = 0;
@@ -30,6 +29,14 @@ public class GameModel {
         this.numOfKeys = numOfKeys;
         this.health = health;
         this.inventory = inventory;
+    }
+
+    public String getGameMode() {
+        return (this.gameMode);
+    }
+
+    public void setDifficulty(String gameMode) {
+        this.gameMode = gameMode;
     }
 
     // Sets the current layout of the GUI

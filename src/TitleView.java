@@ -31,15 +31,16 @@ public class TitleView extends JPanel {
     private JButton medium = new JButton("Medium");
     private JButton hard = new JButton("Hard");
     private JPanel gameModePanel = new JPanel();
-    private GameModel model = new GameModel(); // pannel that holds the difficulkty setting butttons
+    private GameModel gameModel; // pannel that holds the difficulkty setting butttons
 
     // Gets directory and screen size
     private String directory = System.getProperty("user.dir");
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     // Constructor
-    public TitleView(TitleModel titleModel) {
+    public TitleView(TitleModel titleModel, GameModel gameModel) {
         this.titleModel = titleModel;
+        this.gameModel = gameModel;
         this.titleModel.setGUI(this);
         this.layoutView();
         this.registerControllers();
@@ -61,7 +62,7 @@ public class TitleView extends JPanel {
         title.setForeground(new Color(139, 0, 0));
         title.setBorder(null);
 
-        System.out.println(directory);
+        // System.out.println(directory);
         File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf");
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
@@ -129,11 +130,11 @@ public class TitleView extends JPanel {
 
             // Creates the game if the user has selected a game difficulty
             if (this.titleModel.gameDifficulty.equals("Easy")) {
-                this.model.getInfo("Easy", 0, 100, 3);
+                this.gameModel.getInfo("Easy", 0, 100, 3);
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
-                this.model.getInfo("Medium", 0, 100, 2);
+                this.gameModel.getInfo("Medium", 0, 100, 2);
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
-                this.model.getInfo("Hard", 0, 100, 1);
+                this.gameModel.getInfo("Hard", 0, 100, 1);
             }
             
         } else if (this.titleModel.userSelection.equals("load")) {
@@ -144,7 +145,7 @@ public class TitleView extends JPanel {
             /*
             String newDir = directory.replace("\\src", "");
             File sFile = new File(newDir + "\\SaveFile.txt"); */
-            File sFile = new File(directory + "\\src\\SaveFiles\\SaveFile1.txt");
+            File sFile = new File(directory + "\\src\\SaveFile\\SaveFile.txt");
             Scanner saveFile = null;
             String gameMode = "";
             int numOfKeys = 0;
@@ -152,7 +153,7 @@ public class TitleView extends JPanel {
             int inventory = 0;
             int counter = 0;
 
-            // Tries to access the save file
+            // Accesses the save file
             try {
                 saveFile = new Scanner(sFile);
             } catch (FileNotFoundException ex) {
@@ -162,7 +163,6 @@ public class TitleView extends JPanel {
             // If the file is blank meaning the player hasn't played a game yet
             if (!saveFile.hasNext()) {
                 startNewGame.setVisible(true);
-                System.out.println("Setting it to true");
             } else {
                 while (saveFile.hasNext()) {
                     if (counter == 0) {
@@ -186,7 +186,7 @@ public class TitleView extends JPanel {
                 } else if (gameMode.equals("Hard") && numOfKeys == 5) {
                     startNewGame.setVisible(true);
                 } else {
-                    this.model.getInfo(gameMode, numOfKeys, health, inventory);
+                    this.gameModel.getInfo(gameMode, numOfKeys, health, inventory);
                 }
             }
 

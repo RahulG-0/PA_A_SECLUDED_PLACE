@@ -14,6 +14,8 @@ public class GameView extends JPanel {
     // Gets directory and screen size
     private JLabel info = new JLabel();
 
+    private String info1;
+
     // Constructor
     public GameView(GameModel gameModel) {
         this.gameModel = gameModel;
@@ -25,8 +27,9 @@ public class GameView extends JPanel {
 
     // Creates the initial layout of the GUI
     public void layoutView() {
-        String info1 = this.gameModel.gameMode + " " + this.gameModel.numOfKeys;
-        info1 = info1 + " " + this.gameModel.health + " " + this.gameModel.inventory;
+        // info1 = this.gameModel.gameMode + " " + this.gameModel.numOfKeys;
+        info1 = gameModel.getGameMode();
+        // info1 = info1 + " " + this.gameModel.health + " " + this.gameModel.inventory;
 
         this.info.setText(info1);
         this.add(info);
@@ -39,7 +42,7 @@ public class GameView extends JPanel {
 
     // Updates the GUI with the answer
     public void update() {
-        //
+        System.out.println(info1);
     }
     
 } // Closes class

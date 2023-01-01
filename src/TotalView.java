@@ -1,11 +1,5 @@
 // Imports
 import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.*;
-
 public class TotalView extends JPanel{
 
     private TitleModel titleModel;
@@ -20,7 +14,7 @@ public class TotalView extends JPanel{
         this.titleModel = new TitleModel();
         this.gameModel = new GameModel();
 
-        this.title = new TitleView(titleModel);
+        this.title = new TitleView(titleModel, gameModel);
         this.game = new GameView(gameModel);
 
         this.totalModel = new TotalModel();
@@ -53,7 +47,6 @@ public class TotalView extends JPanel{
 
 
     public void update(){
-        
         title.setVisible(!titleModel.startGame);
         game.setVisible(titleModel.startGame);
 

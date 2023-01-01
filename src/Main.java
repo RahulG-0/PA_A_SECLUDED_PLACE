@@ -8,22 +8,14 @@ import javax.swing.*;
 
 public class Main {
 
-    public static JFrame frame = new JFrame("A Secluded Place");
-
-    public Main() {
-        super();
-    }
-
     public static void main(String[] args) {
         
         // Creates the model and view
-        TitleModel titlemModel = new TitleModel();
-        GameModel gameModel = new GameModel();
-        TotalModel TotalModel = new TotalModel();
         TotalView view = new TotalView();
+        JFrame frame = new JFrame("A Secluded Place");
 
-        // JFrame frame = new JFrame("A Secluded Place");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Sets JFrame to be fullscreen by default
+        frame.setUndecorated(true); // Gets rid of the top bar of the JFrame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(view);
         frame.setVisible(true);
