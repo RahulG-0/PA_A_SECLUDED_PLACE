@@ -25,13 +25,16 @@ public class TitleView extends JPanel {
     private JButton quit = new JButton("Quit");
     private JPanel buttonsPanel = new JPanel(); // JPanel to store buttons
 
-    private JLabel startNewGame = new JLabel("You need to start a new game."); // button that staarts the game
-    // difficulty settings
+    // Error message for if the save file has not been started or is completed
+    private JLabel startNewGame = new JLabel("You need to start a new game.");
+    
+    // Difficulty settings
     private JButton easy = new JButton("Easy"); 
     private JButton medium = new JButton("Medium");
     private JButton hard = new JButton("Hard");
-    private JPanel gameModePanel = new JPanel();
-    private GameModel gameModel; // pannel that holds the difficulkty setting butttons
+    private JPanel gameModePanel = new JPanel(); // Stores buttons for difficulty
+
+    private GameModel gameModel; // Instance of GameModel
 
     // Gets directory and screen size
     private String directory = System.getProperty("user.dir");
@@ -53,6 +56,7 @@ public class TitleView extends JPanel {
         int width = (int)this.screenSize.getWidth();
         int height = (int)this.screenSize.getHeight();
 
+        // Sets the image to the background
         loadingScreenImage.setBounds(0, 0, width, height);
         loadingScreenImage.setIcon(new ImageIcon(directory + "\\src\\res\\Safeimagekit-resized-img.png"));
 
@@ -62,7 +66,9 @@ public class TitleView extends JPanel {
         title.setForeground(new Color(139, 0, 0));
         title.setBorder(null);
 
+        // Gets the font for the title
         File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf");
+
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
             Font sizedFont = font.deriveFont(100f);
@@ -81,20 +87,23 @@ public class TitleView extends JPanel {
         buttonsPanel.add(settings);
         buttonsPanel.add(quit);
 
-
+        // Sets the error message to the title screen and makes it not visible
+        startNewGame.setBounds(1200, 600, 200, 200);
+        startNewGame.setForeground(new Color(255, 255, 255));
         startNewGame.setVisible(false);
 
-        //
+        // Sets the gameModePanel to the GUI
         gameModePanel.setBounds(1200,500,200,200);
         gameModePanel.setLayout(new GridLayout(3,1));
 
+        // Adds the difficulty buttons to the gameModePanel panel and sets it to not visible
         gameModePanel.add(easy);
         gameModePanel.add(medium);
         gameModePanel.add(hard);
         gameModePanel.setVisible(false);
 
+        // Sets layout and adds everything to the JFrame
         this.setLayout(null);
-
         this.add(title);
         this.add(gameModePanel);
         this.add(buttonsPanel);
@@ -114,18 +123,81 @@ public class TitleView extends JPanel {
         this.medium.addActionListener(controller);
         this.hard.addActionListener(controller);
     }
-    
-    // This takes the player into another JFrame for the actual game
+
+    // This checks if the save file can be used for game information
+    public boolean canFileLoad() {
+        File sFile = new File(directory + "\\src\\SaveFile\\SaveFile.txt"); // Directory of file
+        Scanner saveFile = null;
+        String gameMode = ""; // Information for game
+        int numOfKeys = 0;
+        int health = 100;
+        int flashbangs = 0;
+        int counter = 0; // Counter to help transfer information from file to variables
+        boolean canLoad = false;
+
+        // Accesses the save file
+        try {
+            saveFile = new Scanner(sFile);
+        } catch (FileNotFoundException ex) {
+            System.out.println("Error.");
+        }
+
+        // If the file is blank meaning the player hasn't played a game yet
+        if (!saveFile.hasNext()) {
+
+            startNewGame.setVisible(true);
+
+        } else {
+            // Transfers all information from file to variables
+            while (saveFile.hasNext()) {
+                if (counter == 0) {
+                    gameMode = saveFile.next();
+                } else if (counter == 1) {
+                    numOfKeys = Integer.parseInt(saveFile.next());
+                } else if (counter == 2) {
+                    health = Integer.parseInt(saveFile.next());
+                } else if (counter == 3) {
+                    flashbangs = Integer.parseInt(saveFile.next());
+                }
+
+                counter++;
+            }
+
+            // Checks to see if the save file is already completed
+            if (gameMode.equals("Easy") && numOfKeys == 3) {
+                startNewGame.setVisible(true);
+            } else if (gameMode.equals("Medium") && numOfKeys == 4) {
+                startNewGame.setVisible(true);
+            } else if (gameMode.equals("Hard") && numOfKeys == 5) {
+                startNewGame.setVisible(true);
+            } else {
+                // Passes the information to the GameModel and sets canLoad to true
+                this.gameModel.SetInfo(gameMode, numOfKeys, health, flashbangs);
+                this.gameModel.update();
+                canLoad = true;
+            }
+        }
+
+        // Closes the file
+        saveFile.close();
+
+        // Returns whether the file can be loaded or not
+        if (canLoad) {
+            return(true);
+        } else {
+            return(false);
+        }
+    }
     
 
     // Updates the GUI with the answer
     public void update() {
         // Updates the GUI based on which button the user selects
         if (this.titleModel.userSelection.equals("new")) {
-            // TODO Display buttons to select game mode
+
+            // Displays buttons to select game mode
             startNewGame.setVisible(false);
             gameModePanel.setVisible(true);
-            this.titleModel.gameModeFlag = 1;
 
             // Creates the game if the user has selected a game difficulty
             if (this.titleModel.gameDifficulty.equals("Easy")) {
@@ -140,66 +212,19 @@ public class TitleView extends JPanel {
             }
             
         } else if (this.titleModel.userSelection.equals("load")) {
+
+            // Checks to see if the file can be loaded
             gameModePanel.setVisible(false);
-
-            ////////////////// CHANGE NEWDIR TO MAKE IT WORK WITH EVERY COMPUTER
-            // This opens the save file
-            /*
-            String newDir = directory.replace("\\src", "");
-            File sFile = new File(newDir + "\\SaveFile.txt"); */
-            File sFile = new File(directory + "\\src\\SaveFile\\SaveFile.txt");
-            Scanner saveFile = null;
-            String gameMode = "";
-            int numOfKeys = 0;
-            int health = 100;
-            int flashbangs = 0;
-            int counter = 0;
-
-            // Accesses the save file
-            try {
-                saveFile = new Scanner(sFile);
-            } catch (FileNotFoundException ex) {
-                System.out.println("Error.");
-            }
-
-            // If the file is blank meaning the player hasn't played a game yet
-            if (!saveFile.hasNext()) {
-                startNewGame.setVisible(true);
-            } else {
-                while (saveFile.hasNext()) {
-                    if (counter == 0) {
-                        gameMode = saveFile.next();
-                    } else if (counter == 1) {
-                        numOfKeys = Integer.parseInt(saveFile.next());
-                    } else if (counter == 2) {
-                        health = Integer.parseInt(saveFile.next());
-                    } else if (counter == 3) {
-                        flashbangs = Integer.parseInt(saveFile.next());
-                    }
-
-                    counter++;
-                }
-
-                // Checks to see if the save file is already completed
-                if (gameMode.equals("Easy") && numOfKeys == 3) {
-                    startNewGame.setVisible(true);
-                } else if (gameMode.equals("Medium") && numOfKeys == 4) {
-                    startNewGame.setVisible(true);
-                } else if (gameMode.equals("Hard") && numOfKeys == 5) {
-                    startNewGame.setVisible(true);
-                } else {
-                    this.gameModel.SetInfo(gameMode, numOfKeys, health, flashbangs);
-                    this.gameModel.update();
-                }
-            }
-
-            saveFile.close();
+            canFileLoad();
 
         } else if (this.titleModel.userSelection.equals("settings")) {
             // TODO Create a settings menu
         } else if (this.titleModel.userSelection.equals("exit")) {
+            
+            // Closes the program
             Window win = SwingUtilities.getWindowAncestor(this);
             win.dispose();
+
         }
     }
     

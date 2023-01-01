@@ -1,4 +1,4 @@
-// Program Name: TitleView
+// Program Name: GameView
 // Last Modified:
 // Name: Rahul Gurukiran & Anirudh Bharadwaj
 // Description: Creates the GUI for the game
@@ -11,11 +11,6 @@ public class GameView extends JPanel {
     // Creates instance variables
     private GameModel gameModel; // Instance of model
 
-    // Gets directory and screen size
-    private JLabel info = new JLabel();
-
-    private String info1;
-
     // Constructor
     public GameView(GameModel gameModel) {
         this.gameModel = gameModel;
@@ -27,27 +22,17 @@ public class GameView extends JPanel {
 
     // Creates the initial layout of the GUI
     public void layoutView() {
-        // info1 = this.gameModel.gameMode + " " + this.gameModel.numOfKeys;
-        // info1 = gameModel.getGameMode();
-        info1 = gameModel.getGameMode();
-        // info1 = info1 + " " + this.gameModel.health + " " + this.gameModel.flashbangs;
-
-        this.info.setText(info1);
-        this.add(info);
+        //
     }
 
-    // Registers the controller to the buttons
+    // Registers controllers
     private void registerControllers() {
         //
     }
 
-    // Updates the GUI with the answer
+    // Updates the GUI based on what happens in the game
     public void update() {
-        info1 = gameModel.getGameMode();
-        // info1 = info1 + " " + this.gameModel.health + " " + this.gameModel.flashbangs;
-
-        this.info.setText(info1);
-        this.add(info);
+        //
     }
     
 } // Closes class

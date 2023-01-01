@@ -1,4 +1,4 @@
-// Program Name:
+// Program Name: GameModel
 // Last Modified:
 // Name: Rahul Gurukiran & Anirudh Bharadwaj
 // Description: Handles the background processing for the game
@@ -9,9 +9,9 @@
 public class GameModel {
 
     // Creates instance variables
-    private GameView view;
-    public String userSelection = "";
-    public String gameMode;
+    private GameView view; // Instance of GameView
+    public String userSelection = ""; // Registers which button a user presses
+    public String gameMode; // Information for the game
     public int numOfKeys = 0;
     public int health = 100;
     public int flashbangs = 0;
@@ -20,9 +20,9 @@ public class GameModel {
     // Constructor
     public GameModel() {
         super();
-
     }
 
+    // Sets instance variables to information passed in via the file or by starting a new game
     public void SetInfo(String gameMode, int numOfKeys, int health, int flashbangs) {
         this.gameMode = gameMode;
         this.numOfKeys = numOfKeys;
@@ -30,8 +30,7 @@ public class GameModel {
         this.flashbangs = flashbangs;
     }
 
-
-
+    // Getter methods for the information
     public String getGameMode() {
         return (this.gameMode);
     }
@@ -48,16 +47,12 @@ public class GameModel {
         return(this.flashbangs);
     }
 
-    /*
-    public void setDifficulty(String gameMode) {
-        this.gameMode = gameMode;
-    } */
-
     // Sets the current layout of the GUI
     public void setGUI(GameView currentView) {
         this.view = currentView;
     }
 
+    // DELETE THIS LATER
     public void getSelected(String option) {
         if (option.equals("New Game")) {
             userSelection = "new";
