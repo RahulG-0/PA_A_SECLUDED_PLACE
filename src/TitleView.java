@@ -62,7 +62,6 @@ public class TitleView extends JPanel {
         title.setForeground(new Color(139, 0, 0));
         title.setBorder(null);
 
-        // System.out.println(directory);
         File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf");
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
@@ -150,7 +149,7 @@ public class TitleView extends JPanel {
             String gameMode = "";
             int numOfKeys = 0;
             int health = 100;
-            int inventory = 0;
+            int flashbangs = 0;
             int counter = 0;
 
             // Accesses the save file
@@ -172,7 +171,7 @@ public class TitleView extends JPanel {
                     } else if (counter == 2) {
                         health = Integer.parseInt(saveFile.next());
                     } else if (counter == 3) {
-                        inventory = Integer.parseInt(saveFile.next());
+                        flashbangs = Integer.parseInt(saveFile.next());
                     }
 
                     counter++;
@@ -186,7 +185,7 @@ public class TitleView extends JPanel {
                 } else if (gameMode.equals("Hard") && numOfKeys == 5) {
                     startNewGame.setVisible(true);
                 } else {
-                    this.gameModel.getInfo(gameMode, numOfKeys, health, inventory);
+                    this.gameModel.getInfo(gameMode, numOfKeys, health, flashbangs);
                 }
             }
 
