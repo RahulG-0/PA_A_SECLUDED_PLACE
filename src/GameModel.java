@@ -11,7 +11,7 @@ public class GameModel {
     // Creates instance variables
     private GameView view;
     public String userSelection = "";
-    public String gameMode = "";
+    public String gameMode;
     public int numOfKeys = 0;
     public int health = 100;
     public int flashbangs = 0;
@@ -23,12 +23,14 @@ public class GameModel {
 
     }
 
-    public void getInfo(String gameMode, int numOfKeys, int health, int flashbangs) {
+    public void SetInfo(String gameMode, int numOfKeys, int health, int flashbangs) {
         this.gameMode = gameMode;
         this.numOfKeys = numOfKeys;
         this.health = health;
         this.flashbangs = flashbangs;
     }
+
+
 
     public String getGameMode() {
         return (this.gameMode);

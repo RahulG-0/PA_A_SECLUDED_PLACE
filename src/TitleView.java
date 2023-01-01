@@ -129,11 +129,14 @@ public class TitleView extends JPanel {
 
             // Creates the game if the user has selected a game difficulty
             if (this.titleModel.gameDifficulty.equals("Easy")) {
-                this.gameModel.getInfo("Easy", 0, 100, 3);
+                this.gameModel.SetInfo("Easy", 0, 100, 3);
+                this.gameModel.update();
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
-                this.gameModel.getInfo("Medium", 0, 100, 2);
+                this.gameModel.SetInfo("Medium", 0, 100, 2);
+                this.gameModel.update();
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
-                this.gameModel.getInfo("Hard", 0, 100, 1);
+                this.gameModel.SetInfo("Hard", 0, 100, 1);
+                this.gameModel.update();
             }
             
         } else if (this.titleModel.userSelection.equals("load")) {
@@ -185,7 +188,8 @@ public class TitleView extends JPanel {
                 } else if (gameMode.equals("Hard") && numOfKeys == 5) {
                     startNewGame.setVisible(true);
                 } else {
-                    this.gameModel.getInfo(gameMode, numOfKeys, health, flashbangs);
+                    this.gameModel.SetInfo(gameMode, numOfKeys, health, flashbangs);
+                    this.gameModel.update();
                 }
             }
 

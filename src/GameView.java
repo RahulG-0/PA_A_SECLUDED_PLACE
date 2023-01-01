@@ -29,7 +29,7 @@ public class GameView extends JPanel {
     public void layoutView() {
         // info1 = this.gameModel.gameMode + " " + this.gameModel.numOfKeys;
         // info1 = gameModel.getGameMode();
-        info1 = Integer.toString(gameModel.getFlashbangs());
+        info1 = gameModel.getGameMode();
         // info1 = info1 + " " + this.gameModel.health + " " + this.gameModel.flashbangs;
 
         this.info.setText(info1);
@@ -43,7 +43,11 @@ public class GameView extends JPanel {
 
     // Updates the GUI with the answer
     public void update() {
-        System.out.println(info1);
+        info1 = gameModel.getGameMode();
+        // info1 = info1 + " " + this.gameModel.health + " " + this.gameModel.flashbangs;
+
+        this.info.setText(info1);
+        this.add(info);
     }
     
 } // Closes class
