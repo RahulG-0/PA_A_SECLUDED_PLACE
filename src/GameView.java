@@ -5,11 +5,14 @@
 
 // Imports
 import javax.swing.*;
+import java.awt.*;
 
 public class GameView extends JPanel {
 
     // Creates instance variables
     private GameModel gameModel; // Instance of model
+
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     // Constructor
     public GameView(GameModel gameModel) {
@@ -22,7 +25,11 @@ public class GameView extends JPanel {
 
     // Creates the initial layout of the GUI
     public void layoutView() {
-        //
+        int width = (int)this.screenSize.getWidth();
+        int height = (int)this.screenSize.getHeight();
+
+
+        this.setBounds(0,0,width,height);
     }
 
     // Registers controllers

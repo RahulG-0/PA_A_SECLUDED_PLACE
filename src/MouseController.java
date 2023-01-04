@@ -39,7 +39,9 @@ public class MouseController extends MouseInputAdapter {
     }
     
     @Override
-    public void mouseExited(MouseEvent me) { }
+    public void mouseExited(MouseEvent me) { 
+        totalModel.update();
+    }
 
 //Also, you will need to include the other mouselistener implemented methods, just 
 //leave them empty

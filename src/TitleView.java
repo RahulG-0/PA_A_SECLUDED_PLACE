@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+
 
 public class TitleView extends JPanel {
 
@@ -56,54 +59,56 @@ public class TitleView extends JPanel {
         int width = (int)this.screenSize.getWidth();
         int height = (int)this.screenSize.getHeight();
 
-        // Sets the image to the background
         loadingScreenImage.setBounds(0, 0, width, height);
-        loadingScreenImage.setIcon(new ImageIcon(directory + "\\src\\res\\Safeimagekit-resized-img.png"));
+        // loadingScreenImage.setIcon(new ImageIcon(directory + "\\src\\res\\Safeimagekit-resized-img.png"));
+
+        try {
+            // setting image and scaling image to fit the icon
+            BufferedImage bufferedImage = ImageIO.read(new File(directory + "\\src\\res\\Safeimagekit-resized-img.png")); 
+            Image image = bufferedImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+            loadingScreenImage.setIcon(new ImageIcon(image));
+        } catch (IOException e1) {}
 
         // Formatting for title
-        title.setBounds(450,250,1200,100);
-        // title.setBounds(width/2, height/6, 1200, 100); TODO Try to make it more responsive
+        title.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.231),(int)Math.round(width*0.625),(int)Math.round(height*0.092)); // setting scaling for title
+        // title.setBounds(450,250,1200,100);
         title.setForeground(new Color(139, 0, 0));
         title.setBorder(null);
 
-        // Gets the font for the title
         File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf");
-
         try {
+            // setting font and scaling the font
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-            Font sizedFont = font.deriveFont(100f);
+            Font sizedFont = font.deriveFont(width*0.052f); // original size 100
             title.setFont(sizedFont);
-        } catch (FontFormatException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } 
+        catch (FontFormatException e) {} 
+        catch (IOException e){}
 
         // Adds the buttons to the buttons panel
-        buttonsPanel.setBounds(800,500,300,550);
+        buttonsPanel.setBounds((int)Math.round(width*0.416),(int)Math.round(height*0.462),(int)Math.round(width*0.156),(int)Math.round(height*0.509));
+        // buttonsPanel.setBounds(800,500,300,550);
         buttonsPanel.setLayout(new GridLayout(4, 1));
         buttonsPanel.add(newGame);
         buttonsPanel.add(loadGame);
         buttonsPanel.add(settings);
         buttonsPanel.add(quit);
 
-        // Sets the error message to the title screen and makes it not visible
-        startNewGame.setBounds(1200, 600, 200, 200);
-        startNewGame.setForeground(new Color(255, 255, 255));
+
         startNewGame.setVisible(false);
 
-        // Sets the gameModePanel to the GUI
-        gameModePanel.setBounds(1200,500,200,200);
+        //
+        gameModePanel.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.462),(int)Math.round(width*0.104),(int)Math.round(height*0.185));
+        // gameModePanel.setBounds(1200,500,200,200);
         gameModePanel.setLayout(new GridLayout(3,1));
 
-        // Adds the difficulty buttons to the gameModePanel panel and sets it to not visible
         gameModePanel.add(easy);
         gameModePanel.add(medium);
         gameModePanel.add(hard);
         gameModePanel.setVisible(false);
 
-        // Sets layout and adds everything to the JFrame
         this.setLayout(null);
+
         this.add(title);
         this.add(gameModePanel);
         this.add(buttonsPanel);
@@ -192,12 +197,15 @@ public class TitleView extends JPanel {
 
             // Creates the game if the user has selected a game difficulty
             if (this.titleModel.gameDifficulty.equals("Easy")) {
+                gameModePanel.setVisible(false);
                 this.gameModel.SetInfo("Easy", 0, 100, 3);
                 this.gameModel.update();
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
+                gameModePanel.setVisible(false);
                 this.gameModel.SetInfo("Medium", 0, 100, 2);
                 this.gameModel.update();
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
+                gameModePanel.setVisible(false);
                 this.gameModel.SetInfo("Hard", 0, 100, 1);
                 this.gameModel.update();
             }
