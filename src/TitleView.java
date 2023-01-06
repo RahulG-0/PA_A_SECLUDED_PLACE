@@ -18,6 +18,8 @@ public class TitleView extends JPanel {
 
     // Creates instance variables
     private TitleModel titleModel; // Instance of model
+    private MusicPlayer mPlayer;
+    private VolumeModel volumeModel;
 
     private JLabel loadingScreenImage = new JLabel(); // Background image
     private JLabel title = new JLabel("A Secluded Place"); // Title
@@ -37,6 +39,25 @@ public class TitleView extends JPanel {
     private JButton hard = new JButton("Hard");
     private JPanel gameModePanel = new JPanel(); // Stores buttons for difficulty
 
+    private JSlider volume = new JSlider(JSlider.HORIZONTAL,-20, 6,0);
+    private JTextField cFowardKeybind = new JTextField();
+    private JTextField cBackwardsKeybind = new JTextField();
+    private JTextField cRightKeybind = new JTextField();
+    private JTextField cLeftKeybind = new JTextField();
+
+    private JLabel fowardKeybind = new JLabel("Foward Keybind");
+    private JLabel backwardsKeybind = new JLabel("Backward Keybing");
+    private JLabel rightKeybind = new JLabel("Right Keybind");
+    private JLabel leftKeybind = new JLabel("Left Keybind"); 
+    private JLabel volumeLable = new JLabel("Volume"); 
+
+    private JButton exitOptions = new JButton("Exit");
+
+    private JLabel optionsTitle = new JLabel("Options");
+    private JPanel optionsPanel = new JPanel();
+
+
+
     private GameModel gameModel; // Instance of GameModel
 
     // Gets directory and screen size
@@ -45,12 +66,14 @@ public class TitleView extends JPanel {
 
     // Constructor
     public TitleView(TitleModel titleModel, GameModel gameModel) {
+        this.mPlayer = new MusicPlayer();
         this.titleModel = titleModel;
         this.gameModel = gameModel;
         this.titleModel.setGUI(this);
         this.layoutView();
         this.registerControllers();
         this.update();
+        this.mPlayer.music();
     }
 
     // Creates the initial layout of the GUI
@@ -82,8 +105,7 @@ public class TitleView extends JPanel {
             Font sizedFont = font.deriveFont(width*0.052f); // original size 100
             title.setFont(sizedFont);
         } 
-        catch (FontFormatException e) {} 
-        catch (IOException e){}
+        catch (Exception e) {}
 
         // Adds the buttons to the buttons panel
         buttonsPanel.setBounds((int)Math.round(width*0.416),(int)Math.round(height*0.462),(int)Math.round(width*0.156),(int)Math.round(height*0.509));
@@ -102,6 +124,82 @@ public class TitleView extends JPanel {
         // gameModePanel.setBounds(1200,500,200,200);
         gameModePanel.setLayout(new GridLayout(3,1));
 
+        optionsPanel.setLayout(null);
+        optionsPanel.setBounds(0,0,width,height);
+        optionsPanel.setBackground(new Color(20,20,20,20));
+
+        optionsTitle.setBounds(750,100,(int)Math.round(width*0.625),(int)Math.round(height*0.092)); // setting scaling for Options title
+        optionsTitle.setForeground(new Color(139, 0, 0));
+
+        try {
+            // setting font and scaling the font
+            Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            Font sizedFont = font.deriveFont(width*0.052f); // original size 100
+            optionsTitle.setFont(sizedFont);
+
+            Font font1 = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            Font LableSizedFont = font1.deriveFont(30f); // original size 30
+
+            fowardKeybind.setFont(LableSizedFont);
+            backwardsKeybind.setFont(LableSizedFont);
+            leftKeybind.setFont(LableSizedFont);
+            rightKeybind.setFont(LableSizedFont);
+            volumeLable.setFont(LableSizedFont);
+            exitOptions.setFont(LableSizedFont);
+
+            Font font2 = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            Font volumeFont = font2.deriveFont(15f);
+
+            volume.setFont(volumeFont);
+        } 
+        catch (Exception e) {}
+
+        cFowardKeybind.setBounds(1300, 300, 100, 50);
+        fowardKeybind.setBounds(500, 280, 300, 100);
+        fowardKeybind.setForeground(new Color(139, 0, 0));
+
+        cBackwardsKeybind.setBounds(1300, 400, 100, 50);
+        backwardsKeybind.setBounds(500, 380, 400, 100);
+        backwardsKeybind.setForeground(new Color(139, 0, 0));
+
+        cLeftKeybind.setBounds(1300, 500, 100, 50);
+        leftKeybind.setBounds(500, 480, 400, 100);
+        leftKeybind.setForeground(new Color(139, 0, 0));
+
+        cRightKeybind.setBounds(1300, 600, 100, 50);
+        rightKeybind.setBounds(500, 580, 400, 100);
+        rightKeybind.setForeground(new Color(139, 0, 0));
+
+        volumeLable.setBounds(890, 680, 400, 50);
+        volumeLable.setForeground(new Color(139, 0, 0));
+        volume.setBounds(500, 780, 900, 50);
+        volume.setMajorTickSpacing(2);
+        volume.setMinorTickSpacing(1);
+        volume.setPaintTicks(true);
+        volume.setPaintLabels(true);
+        volume.setForeground(new Color(139, 0, 0));
+
+        exitOptions.setBounds(10,10,150,90);
+        exitOptions.setForeground(new Color(139, 0, 0));
+
+        fowardKeybind.setText("Foward Keybind");
+        backwardsKeybind.setText("Backward Keybind");
+
+        optionsPanel.add(optionsTitle);
+        optionsPanel.add(cFowardKeybind);
+        optionsPanel.add(fowardKeybind);
+        optionsPanel.add(cBackwardsKeybind);
+        optionsPanel.add(backwardsKeybind);
+        optionsPanel.add(cLeftKeybind);
+        optionsPanel.add(leftKeybind);
+        optionsPanel.add(cRightKeybind);
+        optionsPanel.add(rightKeybind);
+        optionsPanel.add(volume);
+        optionsPanel.add(volumeLable);
+        optionsPanel.add(exitOptions);
+
+        optionsPanel.setVisible(false);
+
         gameModePanel.add(easy);
         gameModePanel.add(medium);
         gameModePanel.add(hard);
@@ -109,12 +207,15 @@ public class TitleView extends JPanel {
 
         this.setLayout(null);
 
+        this.add(optionsPanel);
         this.add(title);
         this.add(gameModePanel);
         this.add(buttonsPanel);
         this.add(startNewGame);
         this.add(loadingScreenImage);
+
     }
+
 
     // Registers the controller to the buttons
     private void registerControllers() {
@@ -127,6 +228,10 @@ public class TitleView extends JPanel {
         this.easy.addActionListener(controller);
         this.medium.addActionListener(controller);
         this.hard.addActionListener(controller);
+        this.exitOptions.addActionListener(controller);
+
+        volumeModel = new VolumeModel(mPlayer, volume);
+        volume.addChangeListener(volumeModel);
     }
 
     // This checks if the save file can be used for game information
@@ -200,14 +305,17 @@ public class TitleView extends JPanel {
                 gameModePanel.setVisible(false);
                 this.gameModel.SetInfo("Easy", 0, 100, 3);
                 this.gameModel.update();
+                this.mPlayer.stop();
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
                 gameModePanel.setVisible(false);
                 this.gameModel.SetInfo("Medium", 0, 100, 2);
                 this.gameModel.update();
+                this.mPlayer.stop();
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
                 gameModePanel.setVisible(false);
                 this.gameModel.SetInfo("Hard", 0, 100, 1);
                 this.gameModel.update();
+                this.mPlayer.stop();
             }
             
         } else if (this.titleModel.userSelection.equals("load")) {
@@ -215,15 +323,30 @@ public class TitleView extends JPanel {
             // Checks to see if the file can be loaded
             gameModePanel.setVisible(false);
             canFileLoad();
+            this.mPlayer.stop();
 
         } else if (this.titleModel.userSelection.equals("settings")) {
-            // TODO Create a settings menu
+
+            // setting settings to visible
+            optionsPanel.setVisible(true);
+            title.setVisible(false);
+            gameModePanel.setVisible(false);
+            buttonsPanel.setVisible(false);
+            startNewGame.setVisible(false);
+
+
         } else if (this.titleModel.userSelection.equals("exit")) {
             
             // Closes the program
+            this.mPlayer.stop();
             Window win = SwingUtilities.getWindowAncestor(this);
             win.dispose();
-
+        } else if(this.titleModel.userSelection.equals("Quit")){
+            optionsPanel.setVisible(false);
+            title.setVisible(true);
+            gameModePanel.setVisible(true);
+            buttonsPanel.setVisible(true);
+            startNewGame.setVisible(true);
         }
     }
     

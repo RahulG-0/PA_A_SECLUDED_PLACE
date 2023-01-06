@@ -65,6 +65,8 @@ public class TitleModel {
             gameDifficulty = "Hard";
             startGame = true;
 
+        } else if(option.equals("Exit")){
+            userSelection = "Quit";
         }
 
         this.update();
