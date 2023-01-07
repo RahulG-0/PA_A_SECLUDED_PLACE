@@ -1,5 +1,3 @@
-
-import sun.audio.*;
 import java.io.*;
 import javax.sound.sampled.*;
 

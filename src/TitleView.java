@@ -344,7 +344,6 @@ public class TitleView extends JPanel {
         } else if(this.titleModel.userSelection.equals("Quit")){
             optionsPanel.setVisible(false);
             title.setVisible(true);
-            gameModePanel.setVisible(true);
             buttonsPanel.setVisible(true);
             startNewGame.setVisible(true);
         }
