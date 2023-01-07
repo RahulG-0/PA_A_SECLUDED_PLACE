@@ -2,12 +2,12 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class VolumeModel implements ChangeListener {
+public class VolumeController implements ChangeListener {
 
     private MusicPlayer mPlayer;
     private JSlider slider;
     
-    public VolumeModel(MusicPlayer mPlayer, JSlider slider){
+    public VolumeController(MusicPlayer mPlayer, JSlider slider){
         this.mPlayer = mPlayer;
         this.slider = slider;
     }
