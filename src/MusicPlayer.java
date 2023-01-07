@@ -8,7 +8,7 @@ public class MusicPlayer {
 
     Clip clip;
 
-    // private String directory = System.getProperty("user.dir");
+    private String directory = System.getProperty("user.dir");
 
     public void setVolume(float volume){
 
@@ -18,7 +18,7 @@ public class MusicPlayer {
 
     public void buttonSound(){
         try {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("C:\\Users\\rocki\\Documents\\PA\\PA_A_SECLUDED_PLACE\\src\\Music\\ButtonClick.wav"));
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\ButtonClick.wav"));
             Clip clipButton = AudioSystem.getClip();
             clipButton.open(inputStream);
             clipButton.start();
@@ -28,7 +28,7 @@ public class MusicPlayer {
     public void music(){
 
         try{
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("C:\\Users\\rocki\\Documents\\PA\\PA_A_SECLUDED_PLACE\\src\\Music\\Opening.wav"));
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\Opening.wav"));
             this.clip = AudioSystem.getClip();
             clip.open(inputStream);
 
