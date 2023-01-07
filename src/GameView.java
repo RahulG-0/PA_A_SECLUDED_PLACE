@@ -11,12 +11,15 @@ public class GameView extends JPanel {
 
     // Creates instance variables
     private GameModel gameModel; // Instance of model
+    private TitleModel titleModel;
+
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     // Constructor
-    public GameView(GameModel gameModel) {
+    public GameView(GameModel gameModel,TitleModel titleModel) {
         this.gameModel = gameModel;
+        this.titleModel = titleModel;
         this.gameModel.setGUI(this);
         this.layoutView();
         this.registerControllers();

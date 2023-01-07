@@ -19,7 +19,7 @@ public class TitleView extends JPanel {
     // Creates instance variables
     private TitleModel titleModel; // Instance of model
     private MusicPlayer mPlayer;
-    private VolumeModel volumeModel;
+    private VolumeController volumeModel;
 
     private JLabel loadingScreenImage = new JLabel(); // Background image
     private JLabel title = new JLabel("A Secluded Place"); // Title
@@ -230,7 +230,7 @@ public class TitleView extends JPanel {
         this.hard.addActionListener(controller);
         this.exitOptions.addActionListener(controller);
 
-        volumeModel = new VolumeModel(mPlayer, volume);
+        volumeModel = new VolumeController(mPlayer, volume);
         volume.addChangeListener(volumeModel);
     }
 
@@ -294,6 +294,8 @@ public class TitleView extends JPanel {
     // Updates the GUI with the answer
     public void update() {
         // Updates the GUI based on which button the user selects
+        buttonsPanel.setVisible(true);
+        
         if (this.titleModel.userSelection.equals("new")) {
 
             // Displays buttons to select game mode
@@ -321,7 +323,7 @@ public class TitleView extends JPanel {
         } else if (this.titleModel.userSelection.equals("load")) {
 
             // Checks to see if the file can be loaded
-            gameModePanel.setVisible(false);
+            buttonsPanel.setVisible(false);
             canFileLoad();
             this.mPlayer.stop();
 

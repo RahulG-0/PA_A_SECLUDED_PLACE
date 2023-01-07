@@ -22,7 +22,7 @@ public class TotalView extends JPanel{
         this.gameModel = new GameModel();
 
         this.title = new TitleView(titleModel, gameModel);
-        this.game = new GameView(gameModel);
+        this.game = new GameView(gameModel,titleModel);
 
         this.totalModel = new TotalModel();
         this.layoutView();
