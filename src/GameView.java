@@ -13,7 +13,6 @@ public class GameView extends JPanel {
     private GameModel gameModel; // Instance of model
     private TitleModel titleModel;
 
-
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     // Constructor
@@ -30,6 +29,8 @@ public class GameView extends JPanel {
     public void layoutView() {
         int width = (int)this.screenSize.getWidth();
         int height = (int)this.screenSize.getHeight();
+
+
 
 
         this.setBounds(0,0,width,height);

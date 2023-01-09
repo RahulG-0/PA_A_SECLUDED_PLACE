@@ -30,7 +30,7 @@ public class MusicPlayer {
             this.clip = AudioSystem.getClip();
             clip.open(inputStream);
 
-            clip.start();
+            clip.loop(100);
         } 
         catch (Exception e) {}
     }

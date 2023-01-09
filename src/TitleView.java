@@ -27,6 +27,7 @@ public class TitleView extends JPanel {
     private JButton newGame = new JButton("New Game"); // Buttons on GUI
     private JButton loadGame = new JButton("Continue Game");
     private JButton settings = new JButton("Options");
+    private JButton howTo = new JButton("How To Play");
     private JButton quit = new JButton("Quit");
     private JPanel buttonsPanel = new JPanel(); // JPanel to store buttons
 
@@ -110,14 +111,17 @@ public class TitleView extends JPanel {
         // Adds the buttons to the buttons panel
         buttonsPanel.setBounds((int)Math.round(width*0.416),(int)Math.round(height*0.462),(int)Math.round(width*0.156),(int)Math.round(height*0.509));
         // buttonsPanel.setBounds(800,500,300,550);
-        buttonsPanel.setLayout(new GridLayout(4, 1));
+        buttonsPanel.setLayout(new GridLayout(5, 1));
         buttonsPanel.add(newGame);
         buttonsPanel.add(loadGame);
+        buttonsPanel.add(howTo);
         buttonsPanel.add(settings);
         buttonsPanel.add(quit);
 
 
         startNewGame.setVisible(false);
+        startNewGame.setForeground(new Color(255, 255, 255));
+        startNewGame.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.531),(int)Math.round(width*0.364),(int)Math.round(height*0.185));
 
         //
         gameModePanel.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.462),(int)Math.round(width*0.104),(int)Math.round(height*0.185));
@@ -128,7 +132,7 @@ public class TitleView extends JPanel {
         optionsPanel.setBounds(0,0,width,height);
         optionsPanel.setBackground(new Color(20,20,20,20));
 
-        optionsTitle.setBounds(750,100,(int)Math.round(width*0.625),(int)Math.round(height*0.092)); // setting scaling for Options title
+        optionsTitle.setBounds((int)Math.round(width*0.390),(int)Math.round(height*0.092),(int)Math.round(width*0.625),(int)Math.round(height*0.092)); // setting scaling for Options title
         optionsTitle.setForeground(new Color(139, 0, 0));
 
         try {
@@ -138,7 +142,7 @@ public class TitleView extends JPanel {
             optionsTitle.setFont(sizedFont);
 
             Font font1 = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-            Font LableSizedFont = font1.deriveFont(30f); // original size 30
+            Font LableSizedFont = font1.deriveFont(width*0.015f); // original size 30
 
             fowardKeybind.setFont(LableSizedFont);
             backwardsKeybind.setFont(LableSizedFont);
@@ -148,31 +152,31 @@ public class TitleView extends JPanel {
             exitOptions.setFont(LableSizedFont);
 
             Font font2 = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-            Font volumeFont = font2.deriveFont(15f);
+            Font volumeFont = font2.deriveFont(width*0.007f);
 
             volume.setFont(volumeFont);
         } 
         catch (Exception e) {}
 
-        cFowardKeybind.setBounds(1300, 300, 100, 50);
-        fowardKeybind.setBounds(500, 280, 300, 100);
+        cFowardKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.277), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
+        fowardKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.259), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         fowardKeybind.setForeground(new Color(139, 0, 0));
 
-        cBackwardsKeybind.setBounds(1300, 400, 100, 50);
-        backwardsKeybind.setBounds(500, 380, 400, 100);
+        cBackwardsKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.370), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
+        backwardsKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.351), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         backwardsKeybind.setForeground(new Color(139, 0, 0));
 
-        cLeftKeybind.setBounds(1300, 500, 100, 50);
-        leftKeybind.setBounds(500, 480, 400, 100);
+        cLeftKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.462), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
+        leftKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.444), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         leftKeybind.setForeground(new Color(139, 0, 0));
 
-        cRightKeybind.setBounds(1300, 600, 100, 50);
-        rightKeybind.setBounds(500, 580, 400, 100);
+        cRightKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.555), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
+        rightKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.537), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         rightKeybind.setForeground(new Color(139, 0, 0));
 
-        volumeLable.setBounds(890, 680, 400, 50);
+        volumeLable.setBounds((int)Math.round(width*0.463), (int) Math.round(height*0.629), (int)Math.round(width*0.208), (int) Math.round(height*0.046));
         volumeLable.setForeground(new Color(139, 0, 0));
-        volume.setBounds(500, 780, 900, 50);
+        volume.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.722), (int)Math.round(width*0.468), (int) Math.round(height*0.046));
         volume.setMajorTickSpacing(2);
         volume.setMinorTickSpacing(1);
         volume.setPaintTicks(true);
@@ -224,6 +228,7 @@ public class TitleView extends JPanel {
         this.loadGame.addActionListener(controller);
         this.settings.addActionListener(controller);
         this.quit.addActionListener(controller);
+        this.howTo.addActionListener(controller);
 
         this.easy.addActionListener(controller);
         this.medium.addActionListener(controller);
@@ -254,7 +259,8 @@ public class TitleView extends JPanel {
 
         // If the file is blank meaning the player hasn't played a game yet
         if (!saveFile.hasNext()) {
-
+            
+            gameModePanel.setVisible(false);
             startNewGame.setVisible(true);
 
         } else {
@@ -275,6 +281,8 @@ public class TitleView extends JPanel {
 
             // Passes the information to the GameModel and sets canLoad to true
             this.gameModel.SetInfo(gameMode, numOfKeys, health, flashbangs);
+            buttonsPanel.setVisible(false);
+            this.mPlayer.stop();
             this.gameModel.update();
             canLoad = true;
         }
@@ -295,7 +303,7 @@ public class TitleView extends JPanel {
     public void update() {
         // Updates the GUI based on which button the user selects
         buttonsPanel.setVisible(true);
-        
+
         if (this.titleModel.userSelection.equals("new")) {
 
             // Displays buttons to select game mode
@@ -323,9 +331,7 @@ public class TitleView extends JPanel {
         } else if (this.titleModel.userSelection.equals("load")) {
 
             // Checks to see if the file can be loaded
-            buttonsPanel.setVisible(false);
             canFileLoad();
-            this.mPlayer.stop();
 
         } else if (this.titleModel.userSelection.equals("settings")) {
 
@@ -347,7 +353,7 @@ public class TitleView extends JPanel {
             optionsPanel.setVisible(false);
             title.setVisible(true);
             buttonsPanel.setVisible(true);
-            startNewGame.setVisible(true);
+            startNewGame.setVisible(false);
         }
     }
     

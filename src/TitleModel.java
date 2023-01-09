@@ -67,9 +67,18 @@ public class TitleModel {
 
         } else if(option.equals("Exit")){
             userSelection = "Quit";
+        }else if(option.equals("How To Play")){
+            userSelection = "Game info";
         }
 
         this.update();
+    }
+
+    public String getGameInfo(){
+        
+        String str = "Move: The game will provide a list of directions to move in. Use keybinds to move. \n Defend: Face the direction you hear the audio coming from, click defend and respond to the quick time event. \n Using Flashbangs: If your defense was unsuccessful you will be given an option to use flashbangs";
+        
+        return str;
     }
 
     // Updates the GUI
