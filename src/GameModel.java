@@ -51,6 +51,25 @@ public class GameModel {
     public void setGUI(GameView currentView) {
         this.view = currentView;
     }
+    public boolean canMoveInDirection() {
+        double x = Math.random();
+        if (x > 0.5) {
+            return(true);
+        } else {
+            return(false);
+        }
+    }
+ 
+    // Spawns the monster at random
+    public boolean doesMonsterSpawn() {
+        double x = Math.random();
+        if (x > 0.4) {
+            return(true);
+        } else {
+            return(false);
+        }
+    }
+
 
     // DELETE THIS LATER
     public void getSelected(String option) {
