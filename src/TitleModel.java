@@ -76,7 +76,7 @@ public class TitleModel {
 
     public String getGameInfo(){
         
-        String str = "Move: The game will provide a list of directions to move in. Use keybinds to move. \n Defend: Face the direction you hear the audio coming from, click defend and respond to the quick time event. \n Using Flashbangs: If your defense was unsuccessful you will be given an option to use flashbangs";
+        String str = "Move: The game will provide a list of directions to move in. Use keybinds to move. \n Defend: Face the direction you hear the audio coming from, click defend and respond to the quick time event. \n Using Smoke Bombs: If your defense was unsuccessful you will be given an option to use Smoke Bombs";
         
         return str;
     }

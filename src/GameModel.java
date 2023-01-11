@@ -1,3 +1,5 @@
+import java.util.Timer;
+
 // Program Name: GameModel
 // Last Modified:
 // Name: Rahul Gurukiran & Anirudh Bharadwaj
@@ -15,6 +17,19 @@ public class GameModel {
     public int numOfKeys = 0;
     public int health = 100;
     public int flashbangs = 0;
+    private final int monstrInitHealth = 100;
+    public int monsterHealth = monstrInitHealth;
+
+    private String whichDirection;
+
+    public boolean isAttacked;
+
+    public boolean gameOver;
+
+    public Timer timer;
+
+
+
     // private double time = 0.00; TODO Add this later
 
     // Constructor
@@ -70,20 +85,18 @@ public class GameModel {
         }
     }
 
+    // game
 
-    // DELETE THIS LATER
-    public void getSelected(String option) {
-        if (option.equals("New Game")) {
-            userSelection = "new";
-        } else if (option.equals("Continue Game")) {
-            userSelection = "load";
-        } else if (option.equals("Options")) {
-            userSelection = "settings";
-        } else if (option.equals("Quit")) {
-            userSelection = "exit";
-        }
+    public void game(){
 
-        this.update();
+    }
+
+    public void setUserDirection(String direction){
+        this.whichDirection = direction;
+    }
+
+    public void monsterAttack(){
+        
     }
 
     // Updates the GUI
