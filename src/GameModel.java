@@ -12,13 +12,14 @@ public class GameModel {
 
     // Creates instance variables
     private GameView view; // Instance of GameView
+    // private GameController controller;
     public String userSelection = ""; // Registers which button a user presses
     public String gameMode; // Information for the game
     public int numOfKeys = 0;
     public int health = 100;
-    public int flashbangs = 0;
-    private final int monstrInitHealth = 100;
-    public int monsterHealth = monstrInitHealth;
+    public int smokeBombs = 0;
+    private final int monsterInitHealth = 100;
+    public int monsterHealth = monsterInitHealth;
 
     private String whichDirection;
 
@@ -27,6 +28,10 @@ public class GameModel {
     public boolean gameOver;
 
     public Timer timer;
+
+    public boolean defendSuccessful = true; // If the player was able to defend or not
+
+    public boolean wantToUseSmokeBomb = false; // Flag to display smoke bomb option
 
 
 
@@ -38,11 +43,11 @@ public class GameModel {
     }
 
     // Sets instance variables to information passed in via the file or by starting a new game
-    public void SetInfo(String gameMode, int numOfKeys, int health, int flashbangs) {
+    public void setInfo(String gameMode, int numOfKeys, int health, int smokeBombs) {
         this.gameMode = gameMode;
         this.numOfKeys = numOfKeys;
         this.health = health;
-        this.flashbangs = flashbangs;
+        this.smokeBombs = smokeBombs;
     }
 
     // Getter methods for the information
@@ -58,14 +63,15 @@ public class GameModel {
         return(this.health);
     }
 
-    public int getFlashbangs() {
-        return(this.flashbangs);
+    public int getSmokeBombs() {
+        return(this.smokeBombs);
     }
 
     // Sets the current layout of the GUI
     public void setGUI(GameView currentView) {
         this.view = currentView;
     }
+
     public boolean canMoveInDirection() {
         double x = Math.random();
         if (x > 0.5) {
@@ -88,16 +94,51 @@ public class GameModel {
     // game
 
     public void game(){
-
+        //
     }
 
     public void setUserDirection(String direction){
         this.whichDirection = direction;
     }
 
-    public void monsterAttack(){
-        
+    // TODO We may need this to initialize each floor level
+    // Start the floor
+    public void startFloor() {
+        monsterHealth = monsterInitHealth + (getNumOfKeys() * 25);
     }
+
+    public void monsterAttack() {
+
+        // If the monster attack was unsuccessful, do defendSuccessful
+
+        if (defendSuccessful) {
+            monsterHealth = monsterHealth - 25;
+        } else {
+            if (smokeBombs > 0) {
+                wantToUseSmokeBomb = true;
+                this.view.update();
+            }
+
+            health = health - 10;
+        }
+
+        if (monsterHealth == 0) {
+            numOfKeys++;
+            // Go into next floor and do whatever stuff
+        }
+
+        this.view.update(); // To update GameView with whatever is required
+    }
+
+    public void quickTimeGeneration() {
+        //
+    }
+
+    // Rough estimates: Height * 0.277
+    // Bottom: Height * 0.629
+    // public int generateY() {
+    //     //
+    // }
 
     // Updates the GUI
     public void update() {

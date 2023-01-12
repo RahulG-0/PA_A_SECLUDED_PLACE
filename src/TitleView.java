@@ -246,7 +246,7 @@ public class TitleView extends JPanel {
         String gameMode = ""; // Information for game
         int numOfKeys = 0;
         int health = 100;
-        int flashbangs = 0;
+        int smokeBombs = 0;
         int counter = 0; // Counter to help transfer information from file to variables
         boolean canLoad = false;
 
@@ -273,14 +273,14 @@ public class TitleView extends JPanel {
                 } else if (counter == 2) {
                     health = Integer.parseInt(saveFile.next());
                 } else if (counter == 3) {
-                    flashbangs = Integer.parseInt(saveFile.next());
+                    smokeBombs = Integer.parseInt(saveFile.next());
                 }
 
                 counter++;
             }
 
             // Passes the information to the GameModel and sets canLoad to true
-            this.gameModel.SetInfo(gameMode, numOfKeys, health, flashbangs);
+            this.gameModel.setInfo(gameMode, numOfKeys, health, smokeBombs);
             buttonsPanel.setVisible(false);
             this.mPlayer.stop();
             this.gameModel.update();
@@ -313,17 +313,17 @@ public class TitleView extends JPanel {
             // Creates the game if the user has selected a game difficulty
             if (this.titleModel.gameDifficulty.equals("Easy")) {
                 gameModePanel.setVisible(false);
-                this.gameModel.SetInfo("Easy", 0, 100, 3);
+                this.gameModel.setInfo("Easy", 0, 100, 3);
                 this.gameModel.update();
                 this.mPlayer.stop();
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
                 gameModePanel.setVisible(false);
-                this.gameModel.SetInfo("Medium", 0, 100, 2);
+                this.gameModel.setInfo("Medium", 0, 100, 2);
                 this.gameModel.update();
                 this.mPlayer.stop();
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
                 gameModePanel.setVisible(false);
-                this.gameModel.SetInfo("Hard", 0, 100, 1);
+                this.gameModel.setInfo("Hard", 0, 100, 1);
                 this.gameModel.update();
                 this.mPlayer.stop();
             }
