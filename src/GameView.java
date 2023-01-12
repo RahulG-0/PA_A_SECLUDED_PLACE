@@ -13,7 +13,19 @@ public class GameView extends JPanel {
     private GameModel gameModel; // Instance of model
     private TitleModel titleModel;
 
+    private JLabel backround = new JLabel();
+
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+    private JLabel playerHealth = new JLabel();
+    private JLabel MonsterHealth = new JLabel();
+
+    private JLabel floorLevel = new JLabel();
+
+    private JButton defend = new JButton("Defend");
+
+    
+
 
     // Constructor
     public GameView(GameModel gameModel,TitleModel titleModel) {
@@ -34,6 +46,16 @@ public class GameView extends JPanel {
 
 
         this.setBounds(0,0,width,height);
+
+        // setting the colour of the backround
+        backround.setBounds(0,0,width,height);
+        backround.setBackground(Color(0,0,0));
+
+        
+    }
+
+    private Color Color(int i, int j, int k) {
+        return null;
     }
 
     // Registers controllers
