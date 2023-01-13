@@ -13,7 +13,7 @@ public class GameView extends JPanel {
     private GameModel gameModel; // Instance of model
     private TitleModel titleModel;
 
-    private JLabel backround = new JLabel();
+    private JLabel background = new JLabel();
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -42,20 +42,16 @@ public class GameView extends JPanel {
         int width = (int)this.screenSize.getWidth();
         int height = (int)this.screenSize.getHeight();
 
-
-
-
         this.setBounds(0,0,width,height);
 
+        this.defend.setBounds(100, 400, 30, 40);
+
         // setting the colour of the backround
-        backround.setBounds(0,0,width,height);
-        backround.setBackground(Color(0,0,0));
+        background.setBounds(0,0,width,height);
+        background.setForeground(new Color(255,255,0));
 
-        
-    }
+        this.setBackground(new Color(255, 255, 255));
 
-    private Color Color(int i, int j, int k) {
-        return null;
     }
 
     // Registers controllers

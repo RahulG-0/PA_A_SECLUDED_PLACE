@@ -11,7 +11,10 @@ public class Main {
     public static void main(String[] args) {
         
         // Creates the model and view
-        TotalView view = new TotalView();
+        // TotalView view = new TotalView();
+        TitleModel titleModel = new TitleModel();
+        GameModel model = new GameModel();
+        GameView view = new GameView(model, titleModel);
         JFrame frame = new JFrame("A Secluded Place");
 
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Sets JFrame to be fullscreen by default

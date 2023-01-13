@@ -21,7 +21,7 @@ public class GameModel {
     private final int monsterInitHealth = 100;
     public int monsterHealth = monsterInitHealth;
 
-    private String whichDirection;
+    private String whichDirection; // What keyboard input the player gives
 
     public boolean isAttacked;
 
@@ -29,8 +29,8 @@ public class GameModel {
 
     public Timer timer;
 
+    public String monstAttackDirection = "";
     public boolean defendSuccessful = true; // If the player was able to defend or not
-
     public boolean wantToUseSmokeBomb = false; // Flag to display smoke bomb option
 
 
@@ -91,6 +91,21 @@ public class GameModel {
         }
     }
 
+    // This gets which direction the monster is attacking from
+    public void monsterAttackDirection() {
+        long monstDirection = Math.round((Math.random() * 3) + 1);
+
+        if (monstDirection == 1) {
+            monstAttackDirection = "FORWARD";
+        } else if (monstDirection == 2) {
+            monstAttackDirection = "RIGHT";
+        } else if (monstDirection == 3) {
+            monstAttackDirection = "BACKWARD";
+        } else if (monstDirection == 4) {
+            monstAttackDirection = "LEFT";
+        }
+    }
+
     // game
 
     public void game(){
@@ -108,8 +123,23 @@ public class GameModel {
     }
 
     public void monsterAttack() {
-
         // If the monster attack was unsuccessful, do defendSuccessful
+        this.monsterAttackDirection();
+
+        // Play audio clip
+        // Start timer
+
+        // Compare which direction the user faces and which direction the monster is attacking from
+        // If the user is facing the right direction, check if they clicked the button in time
+        // Stop timer when button is pushed
+        // If they don't meet those requirements, defendSuccessful = false
+
+        // Checks if they met the requirements for the quick time event
+        // if () {
+        //     quickTimeGeneration();
+        // } else {
+        //     defendSuccessful = false;
+        // }
 
         if (defendSuccessful) {
             monsterHealth = monsterHealth - 25;
