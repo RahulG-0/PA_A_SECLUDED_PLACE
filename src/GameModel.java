@@ -116,7 +116,7 @@ public class GameModel {
         } else {
             if (smokeBombs > 0) {
                 wantToUseSmokeBomb = true;
-                this.view.update();
+                this.view.update(); 
             }
 
             health = health - 10;

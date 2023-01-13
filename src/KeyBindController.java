@@ -21,7 +21,7 @@ public class KeyBindController implements KeyListener {
     // Tracks the keys pressed by the user
     public void keyPressed(KeyEvent e) {
         if (this.titleModel.startGame) {
-            // listen to gameModel
+            // listen to gameModel 
         } else {
             // listen to titleModel
         }
