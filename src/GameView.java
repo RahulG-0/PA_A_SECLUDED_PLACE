@@ -13,7 +13,7 @@ public class GameView extends JPanel {
     private GameModel gameModel; // Instance of model
     private TitleModel titleModel;
 
-    private JLabel backround = new JLabel();
+    private JLabel backGround = new JLabel();
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -23,9 +23,6 @@ public class GameView extends JPanel {
     private JLabel floorLevel = new JLabel();
 
     private JButton defend = new JButton("Defend");
-
-    
-
 
     // Constructor
     public GameView(GameModel gameModel,TitleModel titleModel) {
@@ -39,23 +36,34 @@ public class GameView extends JPanel {
 
     // Creates the initial layout of the GUI
     public void layoutView() {
+        this.setLayout(null);
         int width = (int)this.screenSize.getWidth();
         int height = (int)this.screenSize.getHeight();
 
-
-
+        System.out.println(height);
 
         this.setBounds(0,0,width,height);
 
         // setting the colour of the backround
-        backround.setBounds(0,0,width,height);
-        backround.setBackground(Color(0,0,0));
+        backGround.setBounds(0,0,width,height);
+        // backGround.setBorder(getBorder());
+        backGround.setBackground(Color.BLACK);
+        backGround.setOpaque(true);
+
+        playerHealth.setBounds(10,1020,600,50);
+        playerHealth.setBackground(Color.RED);
+        playerHealth.setOpaque(true);
+
+        MonsterHealth.setBounds(1310,1020,600,50);
+        MonsterHealth.setBackground(new Color(170, 34, 34));
+        MonsterHealth.setOpaque(true);
 
         
-    }
-
-    private Color Color(int i, int j, int k) {
-        return null;
+        // backGround.setVisible(true);
+        playerHealth.setVisible(true);
+        this.add(playerHealth);
+        this.add(MonsterHealth);
+        this.add(backGround);
     }
 
     // Registers controllers
