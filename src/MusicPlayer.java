@@ -4,21 +4,27 @@ import javax.sound.sampled.*;
 
 public class MusicPlayer {
 
+    // Initializes clips
+    Clip clipButton;
     Clip clip;
     Clip gameClip;
+    Clip monstPrepClip;
+    Clip monstClip;
+    Clip walkClip;
 
     private String directory = System.getProperty("user.dir");
 
+    // Sets volume
     public void setVolume(float volume){
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        gainControl.setValue(volume); // Reduce volume or increace volume
+        gainControl.setValue(volume); // Reduce volume or increase volume
     }
 
     // Sound for button clicks
     public void buttonSound(){
         try {
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\ButtonClick.wav"));
-            Clip clipButton = AudioSystem.getClip();
+            this.clipButton = AudioSystem.getClip();
             clipButton.open(inputStream);
             clipButton.start();
         } catch (Exception e) {}
@@ -42,18 +48,36 @@ public class MusicPlayer {
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\Ambiance.wav"));
             this.gameClip = AudioSystem.getClip();
             gameClip.open(inputStream);
-
+            // gameClip.start();
             gameClip.loop(5);
         } catch (Exception e) {}
     }
 
+    // TODO Update classpaths for these
     // Sound effects for monster
+    public void monstAttackPrepSounds() {
+        //
+    }
+
     public void monsterSounds() {
         //
     }
 
-    public void stop(){
-        this.clip.stop();
+    // Sound effect for walking
+    public void walkingSounds() {
+        try {
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\Walking.wav"));
+            this.walkClip = AudioSystem.getClip();
+            walkClip.open(inputStream);
+            walkClip.start();
+        } catch (Exception e) {}
+    }
+
+    // Stops whichever audio clip is required to stop
+    public void stop(Clip stopClip){
+        // this.clip.stop(); Initially there was no parameter
+        // Changes in TitleView on lines: 285, 318, 323, 328, 349
+        stopClip.stop();
     }
 
 }

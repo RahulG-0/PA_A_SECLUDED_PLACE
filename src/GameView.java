@@ -12,6 +12,7 @@ public class GameView extends JPanel {
     // Creates instance variables
     private GameModel gameModel; // Instance of model
     private TitleModel titleModel;
+    private MusicPlayer mPlayer;
 
     private JLabel backGround = new JLabel();
 
@@ -28,14 +29,22 @@ public class GameView extends JPanel {
     public GameView(GameModel gameModel,TitleModel titleModel) {
         this.gameModel = gameModel;
         this.titleModel = titleModel;
+        this.mPlayer = new MusicPlayer();
         this.gameModel.setGUI(this);
         this.layoutView();
         this.registerControllers();
         this.update();
+        // this.mPlayer.gameMusic(); TODO Get this to not play over the title screen
     }
 
     // Creates the initial layout of the GUI
     public void layoutView() {
+        // Plays the background ambiance
+        // if (titleModel.startGame) {
+        //     System.out.println("Making it here"); // WAS NOT MAKING IT HERE :(
+        //     this.mPlayer.gameMusic();
+        // }
+
         this.setLayout(null);
         int width = (int)this.screenSize.getWidth();
         int height = (int)this.screenSize.getHeight();

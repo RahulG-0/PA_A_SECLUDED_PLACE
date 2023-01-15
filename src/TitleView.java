@@ -34,6 +34,9 @@ public class TitleView extends JPanel {
     // Error message for if the save file has not been started or is completed
     private JLabel startNewGame = new JLabel("No game in session. Please start a new game.");
     
+    // private JLabel howToPlay = new JLabel(titleModel.getGameInfo());
+    private JLabel howToPlay = new JLabel("Move: The game will provide a list of directions to move in. Use keybinds to move.\nDefend: Face the direction you hear the audio coming from, click defend and respond to the quick time event.\nUsing Smoke Bombs: If your defense was unsuccessful you will be given an option to use Smoke Bombs");
+
     // Difficulty settings
     private JButton easy = new JButton("Easy"); 
     private JButton medium = new JButton("Medium");
@@ -118,10 +121,15 @@ public class TitleView extends JPanel {
         buttonsPanel.add(settings);
         buttonsPanel.add(quit);
 
-
+        // Displays the error message if the user needs to start a new game
         startNewGame.setVisible(false);
         startNewGame.setForeground(new Color(255, 255, 255));
         startNewGame.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.531),(int)Math.round(width*0.364),(int)Math.round(height*0.185));
+
+        // Displays the instructions on how to play
+        howToPlay.setVisible(false);
+        howToPlay.setForeground(new Color(255, 255, 255));
+        howToPlay.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.531),(int)Math.round(width*0.364),(int)Math.round(height*0.185));
 
         //
         gameModePanel.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.462),(int)Math.round(width*0.104),(int)Math.round(height*0.185));
@@ -282,7 +290,7 @@ public class TitleView extends JPanel {
             // Passes the information to the GameModel and sets canLoad to true
             this.gameModel.setInfo(gameMode, numOfKeys, health, smokeBombs);
             buttonsPanel.setVisible(false);
-            this.mPlayer.stop();
+            this.mPlayer.stop(this.mPlayer.clip);
             this.gameModel.update();
             canLoad = true;
         }
@@ -308,6 +316,7 @@ public class TitleView extends JPanel {
 
             // Displays buttons to select game mode
             startNewGame.setVisible(false);
+            howToPlay.setVisible(false);
             gameModePanel.setVisible(true);
 
             // Creates the game if the user has selected a game difficulty
@@ -315,17 +324,17 @@ public class TitleView extends JPanel {
                 gameModePanel.setVisible(false);
                 this.gameModel.setInfo("EASY", 0, 100, 3);
                 this.gameModel.update();
-                this.mPlayer.stop();
+                this.mPlayer.stop(mPlayer.clip);
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
                 gameModePanel.setVisible(false);
                 this.gameModel.setInfo("MEDIUM", 0, 100, 2);
                 this.gameModel.update();
-                this.mPlayer.stop();
+                this.mPlayer.stop(mPlayer.clip);
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
                 gameModePanel.setVisible(false);
                 this.gameModel.setInfo("HARD", 0, 100, 1);
                 this.gameModel.update();
-                this.mPlayer.stop();
+                this.mPlayer.stop(mPlayer.clip);
             }
             
         } else if (this.titleModel.userSelection.equals("load")) {
@@ -333,6 +342,12 @@ public class TitleView extends JPanel {
             // Checks to see if the file can be loaded
             canFileLoad();
 
+        } else if (this.titleModel.userSelection.equals("info")) {
+
+            startNewGame.setVisible(false);
+            gameModePanel.setVisible(false);
+            howToPlay.setVisible(true);
+        
         } else if (this.titleModel.userSelection.equals("settings")) {
 
             // setting settings to visible
@@ -341,12 +356,13 @@ public class TitleView extends JPanel {
             gameModePanel.setVisible(false);
             buttonsPanel.setVisible(false);
             startNewGame.setVisible(false);
+            howToPlay.setVisible(false);
 
 
         } else if (this.titleModel.userSelection.equals("exit")) {
             
             // Closes the program
-            this.mPlayer.stop();
+            this.mPlayer.stop(mPlayer.clip);
             Window win = SwingUtilities.getWindowAncestor(this);
             win.dispose();
         } else if(this.titleModel.userSelection.equals("Quit")){
