@@ -6,7 +6,7 @@ import java.util.Timer;
 // Description: Handles the background processing for the game
 
 // Imports
-// import java.util.*;
+import java.awt.*;
 
 public class GameModel {
 
@@ -32,6 +32,12 @@ public class GameModel {
     public String monstAttackDirection = "";
     public boolean defendSuccessful = true; // If the player was able to defend or not
     public boolean wantToUseSmokeBomb = false; // Flag to display smoke bomb option
+
+    public boolean defendButton = false; // If the player clicked the defend button
+
+    private int numOfButtons = 0;
+
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 
 
@@ -130,7 +136,8 @@ public class GameModel {
         // Start timer
 
         // Compare which direction the user faces and which direction the monster is attacking from
-        // If the user is facing the right direction, check if they clicked the button in time
+        // If the user is facing the right direction, enable the defend buttons
+        // If they clicked the button in time, do something
         // Stop timer when button is pushed
         // If they don't meet those requirements, defendSuccessful = false
 
@@ -140,6 +147,14 @@ public class GameModel {
         // } else {
         //     defendSuccessful = false;
         // }
+
+        if (defendButton) {
+            // Defend here
+            quickTimeGeneration();
+            this.view.update();
+        } else {
+            defendSuccessful = false;
+        }
 
         if (defendSuccessful) {
             monsterHealth = monsterHealth - 25;
@@ -160,8 +175,61 @@ public class GameModel {
         this.view.update(); // To update GameView with whatever is required
     }
 
-    public void quickTimeGeneration() {
-        //
+    // Gets the height and width of the buttons for the quick time event
+    public int[] quickTimeGeneration() {
+        int width = 0;
+        int height = 0;
+        int[] returnDimensions = {0, 0};
+
+        // Based on game mode and floor level, it decides how many buttons to generate
+        if (getGameMode() == "EASY") {
+            if (getNumOfKeys() == 0) {
+                numOfButtons = 4;
+            } else if (getNumOfKeys() == 1) {
+                numOfButtons = 5;
+            } else if (getNumOfKeys() == 2) {
+                numOfButtons = 6;
+            }
+        } else if (getGameMode() == "MEDIUM") {
+            if (getNumOfKeys() == 0) {
+                numOfButtons = 5;
+            } else if (getNumOfKeys() == 1) {
+                numOfButtons = 7;
+            } else if (getNumOfKeys() == 2) {
+                numOfButtons = 9;
+            } else if (getNumOfKeys() == 3) {
+                numOfButtons = 13;
+            }
+        } else if (getGameMode() == "HARD") {
+            if (getNumOfKeys() == 0) {
+                numOfButtons = 7;
+            } else if (getNumOfKeys() == 1) {
+                numOfButtons = 9;
+            } else if (getNumOfKeys() == 2) {
+                numOfButtons = 12;
+            } else if (getNumOfKeys() == 3) {
+                numOfButtons = 15;
+            } else if (getNumOfKeys() == 4) {
+                numOfButtons = 18;
+            }
+        }
+
+        width = (int)screenSize.getWidth()/numOfButtons;
+
+        height = (int)((Math.random()*1100) + 200);
+
+        returnDimensions[0] = width;
+        returnDimensions[1] = height;
+
+        return(returnDimensions);
+
+        // Return int[width, height]
+
+        /*
+         * Check for game mode
+         * In each each game mode, check floor number
+         * Set a variable
+         */
     }
 
     // Rough estimates: Height * 0.277

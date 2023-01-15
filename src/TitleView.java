@@ -313,17 +313,17 @@ public class TitleView extends JPanel {
             // Creates the game if the user has selected a game difficulty
             if (this.titleModel.gameDifficulty.equals("Easy")) {
                 gameModePanel.setVisible(false);
-                this.gameModel.setInfo("Easy", 0, 100, 3);
+                this.gameModel.setInfo("EASY", 0, 100, 3);
                 this.gameModel.update();
                 this.mPlayer.stop();
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
                 gameModePanel.setVisible(false);
-                this.gameModel.setInfo("Medium", 0, 100, 2);
+                this.gameModel.setInfo("MEDIUM", 0, 100, 2);
                 this.gameModel.update();
                 this.mPlayer.stop();
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
                 gameModePanel.setVisible(false);
-                this.gameModel.setInfo("Hard", 0, 100, 1);
+                this.gameModel.setInfo("HARD", 0, 100, 1);
                 this.gameModel.update();
                 this.mPlayer.stop();
             }
