@@ -6,6 +6,9 @@
 // Imports
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GameView extends JPanel {
 
@@ -20,6 +23,9 @@ public class GameView extends JPanel {
 
     private JLabel playerHealth = new JLabel();
     private JLabel MonsterHealth = new JLabel();
+
+    private JButton buttons[] = new JButton[18];
+    private JPanel quicktimeButtonPannel = new JPanel();
 
     private JLabel floorLevel = new JLabel();
 
@@ -69,12 +75,39 @@ public class GameView extends JPanel {
         MonsterHealth.setBackground(new Color(170, 34, 34));
         MonsterHealth.setOpaque(true);
 
+        quicktimeButtonPannel = addButtons();
+        quicktimeButtonPannel.setVisible(false);
+
         
         // backGround.setVisible(true);
         playerHealth.setVisible(true);
         this.add(playerHealth);
         this.add(MonsterHealth);
         this.add(backGround);
+        this.add(quicktimeButtonPannel);
+    }
+
+    public void generateButtons(){
+        for(int i = 0; i<18;i++ ){
+            JButton button = new JButton();
+            button.setText(Integer.toString(i));
+            buttons[i] = button;
+        }
+    }
+
+    public void randomLocations(){
+        for(int i = 0;i<gameModel.numOfButtons;i++){
+            buttons[i].setBounds(gameModel.quickTimeGeneration()[1]*i,gameModel.quickTimeGeneration()[0],gameModel.quickTimeGeneration()[1],100);
+        }
+    }
+
+    public JPanel addButtons(){
+        JPanel panel = new JPanel();
+        generateButtons();
+        for(int i = 0; i<18;i++ ){
+            panel.add(buttons[i]);
+        }
+        return panel;
     }
 
     // Registers controllers
@@ -84,7 +117,21 @@ public class GameView extends JPanel {
 
     // Updates the GUI based on what happens in the game
     public void update() {
-        //
+
+
+        
+        if (gameModel.wantToUseSmokeBomb){
+            quicktimeButtonPannel.setVisible(false);
+        }
+        else if(gameModel.isMonsterAttack){
+            quicktimeButtonPannel.setVisible(false);
+            defend.setVisible(true);
+        }
+
+        else if (gameModel.defendeButton){
+            quicktimeButtonPannel.setVisible(true);
+            randomLocations();
+        }
     }
     
 } // Closes class
