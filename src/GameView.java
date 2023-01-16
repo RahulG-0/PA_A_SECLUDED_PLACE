@@ -40,7 +40,7 @@ public class GameView extends JPanel {
         this.layoutView();
         this.registerControllers();
         this.update();
-        // this.mPlayer.gameMusic(); TODO Get this to not play over the title screen
+        this.mPlayer.gameMusic(); 
     }
 
     // Creates the initial layout of the GUI
@@ -62,7 +62,7 @@ public class GameView extends JPanel {
 
         this.setBounds(0,0,width,height); // setting the size of the game
 
-        this.defend.setBounds(100, 400, 30, 40); // settng the size for the defend buttom
+        this.defend.setBounds(800, 1020, 350, 50); // settng the size for the defend buttom
 
         // setting the colour of the backround
         backGround.setBounds(0,0,width,height);
@@ -78,65 +78,71 @@ public class GameView extends JPanel {
         MonsterHealth.setBackground(new Color(170, 34, 34)); // setting colour of monster health
         MonsterHealth.setOpaque(true);
 
-        quicktimeButtonPannel = addButtons(); // gneratting and adding quicktime buttons
+        addButtons(); // gneratting and adding quicktime buttons
         quicktimeButtonPannel.setVisible(false);
 
         // adding objects to the game
         this.add(playerHealth);
+        this.add(defend);
         this.add(MonsterHealth);
-        this.add(backGround);
         this.add(quicktimeButtonPannel);
+        // this.add(backGround);
     }// end of game view
 
     // generates buttons in an array
     public void generateButtons(){
         for(int i = 0; i<18;i++ ){
             JButton button = new JButton();
-            button.setText(Integer.toString(i));
+            button.setText(Integer.toString(i+1));
             buttons[i] = button;
+
         }
     }
 
     // setting the quicktime location for each button
     public void randomLocations(){
-        for(int i = 0;i<gameModel.numOfButtons;i++){
-            buttons[i].setBounds(gameModel.quickTimeGeneration()[1]*i,gameModel.quickTimeGeneration()[0],gameModel.quickTimeGeneration()[1],100);
+        int numOfButtons = gameModel.quickTimeGeneration()[0];
+        numOfButtons = gameModel.numOfButtons;
+        for(int i = 0;i<4;i++){
+            buttons[i].setBounds(gameModel.quickTimeGeneration()[0]*i,gameModel.quickTimeGeneration()[1],gameModel.quickTimeGeneration()[0],100);
+            System.out.println(Arrays.toString(gameModel.quickTimeGeneration()));
         }
+        // System.out.println(gameModel.numOfButtons);
     }
 
     // add
-    public JPanel addButtons(){
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
+    public void addButtons(){
         generateButtons();
+        quicktimeButtonPannel.setLayout(null);
         for(int i = 0; i<18;i++ ){
-            panel.add(buttons[i]);
+            quicktimeButtonPannel.add(buttons[i]);
         }
-        return panel;
+
     }
 
     // Registers controllers
     private void registerControllers() {
         //
+        buttonGameController bc = new buttonGameController(this.gameModel);
+        defend.addActionListener(bc);
+
     }
 
     // Updates the GUI based on what happens in the game
     public void update() {
-
-
-        
-        // if (gameModel.wantToUseSmokeBomb){
-        //     quicktimeButtonPannel.setVisible(false);
-        // }
+        if (gameModel.wantToUseSmokeBomb){
+            quicktimeButtonPannel.setVisible(false);
+        }
         // else if(gameModel.isMonsterAttack){
         //     quicktimeButtonPannel.setVisible(false);
         //     defend.setVisible(true);
         // }
 
-        // else if (gameModel.defendeButton){
-        //     quicktimeButtonPannel.setVisible(true);
-        //     randomLocations();
-        // }
+        else if (gameModel.defendButton){
+            randomLocations();
+            quicktimeButtonPannel.setVisible(true);
+            // System.out.println("hello");
+        }
     }
     
 } // Closes class

@@ -78,6 +78,7 @@ public class TitleView extends JPanel {
         this.registerControllers();
         this.update();
         this.mPlayer.music();
+        // this.mPlayer.stop(mPlayer.gameClip);
     }
 
     // Creates the initial layout of the GUI
