@@ -33,11 +33,22 @@ public class GameModel {
     public boolean defendSuccessful = true; // If the player was able to defend or not
     public boolean wantToUseSmokeBomb = false; // Flag to display smoke bomb option
 
+    public boolean displayDefendButton = false;
     public boolean defendButton = false; // If the player clicked the defend button
 
     public int numOfButtons = 0;
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+    private boolean canMoveForward = false;
+    private boolean canMoveRight = false;
+    private boolean canMoveLeft = false;
+
+    // Keybinds
+    private String forwardKeyBind = "W";
+    private String rightKeyBind = "D";
+    private String backwardsKeyBind = "S";
+    private String leftKeyBind = "A";
 
 
 
@@ -115,7 +126,11 @@ public class GameModel {
     // game
 
     public void game(){
-        //
+        // UPDATE KEYBINDS HERE
+
+        startFloor();
+
+        walking();
     }
 
     public void setUserDirection(String direction){
@@ -126,6 +141,48 @@ public class GameModel {
     // Start the floor
     public void startFloor() {
         monsterHealth = monsterInitHealth + (getNumOfKeys() * 25);
+    }
+
+    // Code to handle walking
+    public void walking() {
+        // Gets which directions the user can move in
+        canMoveForward = canMoveInDirection();
+        canMoveRight = canMoveInDirection();
+        canMoveLeft = canMoveInDirection();
+
+        // In case all directions are unavailable, the program chooses a direction
+        if (canMoveForward == false && canMoveRight == false && canMoveLeft == false) {
+            double x = Math.random();
+
+            if (x < 0.3) {
+                canMoveLeft = true;
+            } else if (x < 0.6) {
+                canMoveRight = true;
+            } else if (x > 0.6) {
+                canMoveForward = true;
+            }
+        }
+
+        // Updates the view to display available directions
+        update();
+
+        // GET USER SELECTION (whichDirection)
+
+        // Compares which directions the user can move and what they selected
+        if (canMoveForward == true && whichDirection == forwardKeyBind) {
+            // move north
+            // play sound clip of walking
+        } else if (canMoveRight == true && whichDirection == rightKeyBind) {
+            // move right
+            // play sound clip of walking
+        } else if (canMoveLeft == true && whichDirection == leftKeyBind) {
+            // move left
+            // play sound clip of walking
+        }
+
+        if (doesMonsterSpawn()) {
+            monsterAttack();
+        }
     }
 
     public void monsterAttack() {
@@ -147,21 +204,37 @@ public class GameModel {
         // } else {
         //     defendSuccessful = false;
         // }
+        
+        // TODO Implement timer here (timer should be combination of facing direction and clickng button)
+        // All situations where the defense was unsuccessful
+        if (monstAttackDirection == "FORWARD" && whichDirection != forwardKeyBind) {
+            defendSuccessful = false;
+        } else if (monstAttackDirection == "RIGHT" && whichDirection != rightKeyBind) {
+            defendSuccessful = false;
+        } else if (monstAttackDirection == "BACKWARD" && whichDirection != backwardsKeyBind) {
+            defendSuccessful = false;
+        } else if (monstAttackDirection == "LEFT" && whichDirection != leftKeyBind) {
+            defendSuccessful = false;
+        } else {
+            displayDefendButton = true;
+            update();
+        }
 
         if (defendButton) {
             // Defend here
-            quickTimeGeneration();
-            this.view.update();
+            update();
         } else {
             defendSuccessful = false;
         }
 
+        // If the defence was successful, it takes off monster health
         if (defendSuccessful) {
             monsterHealth = monsterHealth - 25;
         } else {
+            // Checks to use a smoke bomb
             if (smokeBombs > 0) {
                 wantToUseSmokeBomb = true;
-                this.view.update();
+                update();
             }
 
             health = health - 10;
@@ -172,7 +245,7 @@ public class GameModel {
             // Go into next floor and do whatever stuff
         }
 
-        this.view.update(); // To update GameView with whatever is required
+        update(); // To update GameView with whatever is required
     }
 
     // Gets the height and width of the buttons for the quick time event
@@ -222,21 +295,7 @@ public class GameModel {
         returnDimensions[1] = height;
 
         return(returnDimensions);
-
-        // Return int[width, height]
-
-        /*
-         * Check for game mode
-         * In each each game mode, check floor number
-         * Set a variable
-         */
     }
-
-    // Rough estimates: Height * 0.277
-    // Bottom: Height * 0.629
-    // public int generateY() {
-    //     //
-    // }
 
     // Updates the GUI
     public void update() {

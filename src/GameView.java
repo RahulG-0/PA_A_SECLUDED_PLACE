@@ -15,6 +15,7 @@ public class GameView extends JPanel {
     // Creates instance variables
     private GameModel gameModel; // Instance of model
     private TitleModel titleModel;
+    private MusicPlayer mPlayer;
 
     private JLabel backGround = new JLabel(); // sets the backround of the game
 
@@ -34,10 +35,12 @@ public class GameView extends JPanel {
     public GameView(GameModel gameModel,TitleModel titleModel) {
         this.gameModel = gameModel;
         this.titleModel = titleModel;
+        this.mPlayer = new MusicPlayer();
         this.gameModel.setGUI(this);
         this.layoutView();
         this.registerControllers();
         this.update();
+        // this.mPlayer.gameMusic(); TODO Get this to not play over the title screen
     }
 
     // Creates the initial layout of the GUI
@@ -47,6 +50,14 @@ public class GameView extends JPanel {
 
         // gettoing the width and height of user diplay
         int width = (int)this.screenSize.getWidth(); 
+        // Plays the background ambiance
+        // if (titleModel.startGame) {
+        //     System.out.println("Making it here"); // WAS NOT MAKING IT HERE :(
+        //     this.mPlayer.gameMusic();
+        // }
+
+        this.setLayout(null);
+        // int width = (int)this.screenSize.getWidth();
         int height = (int)this.screenSize.getHeight();
 
         this.setBounds(0,0,width,height); // setting the size of the game
@@ -114,18 +125,18 @@ public class GameView extends JPanel {
 
 
         
-        if (gameModel.wantToUseSmokeBomb){
-            quicktimeButtonPannel.setVisible(false);
-        }
-        else if(gameModel.isMonsterAttack){
-            quicktimeButtonPannel.setVisible(false);
-            defend.setVisible(true);
-        }
+        // if (gameModel.wantToUseSmokeBomb){
+        //     quicktimeButtonPannel.setVisible(false);
+        // }
+        // else if(gameModel.isMonsterAttack){
+        //     quicktimeButtonPannel.setVisible(false);
+        //     defend.setVisible(true);
+        // }
 
-        else if (gameModel.defendeButton){
-            quicktimeButtonPannel.setVisible(true);
-            randomLocations();
-        }
+        // else if (gameModel.defendeButton){
+        //     quicktimeButtonPannel.setVisible(true);
+        //     randomLocations();
+        // }
     }
     
 } // Closes class
