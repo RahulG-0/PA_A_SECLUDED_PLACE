@@ -35,7 +35,7 @@ public class GameModel {
 
     public boolean defendButton = false; // If the player clicked the defend button
 
-    private int numOfButtons = 0;
+    public int numOfButtons = 0;
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
