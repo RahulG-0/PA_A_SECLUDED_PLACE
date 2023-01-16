@@ -1,0 +1,2 @@
+How To Play button is not working on title screen
+Music for game is not working
