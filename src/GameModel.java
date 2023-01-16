@@ -1,5 +1,3 @@
-import java.util.Timer;
-
 // Program Name: GameModel
 // Last Modified:
 // Name: Rahul Gurukiran & Anirudh Bharadwaj
@@ -27,8 +25,6 @@ public class GameModel {
 
     public boolean gameOver;
 
-    public Timer timer;
-
     public String monstAttackDirection = "";
     public boolean defendSuccessful = true; // If the player was able to defend or not
     public boolean wantToUseSmokeBomb = false; // Flag to display smoke bomb option
@@ -49,6 +45,10 @@ public class GameModel {
     private String rightKeyBind = "D";
     private String backwardsKeyBind = "S";
     private String leftKeyBind = "A";
+
+    public boolean quickTimeState = false;
+
+    public boolean playerDied = false;
 
 
 
@@ -125,8 +125,27 @@ public class GameModel {
 
     // game
 
+    public boolean isGameOver() {
+        if (gameMode == "EASY" && numOfKeys != 3) {
+            gameOver = true;
+        } else if (gameMode == "MEDIUM" && numOfKeys != 4) {
+            gameOver = true;
+        } else if (gameMode == "HARD" && numOfKeys != 5) {
+            gameOver = true;
+        } else if (health == 0) {
+            gameOver = true;
+            playerDied = true;
+        }
+
+        return(gameOver);
+    }
+
+    // Method to run the game
     public void game(){
         // UPDATE KEYBINDS HERE
+        while (!isGameOver()) {
+            // Keep the game going
+        }
 
         startFloor();
 
@@ -140,7 +159,9 @@ public class GameModel {
     // TODO We may need this to initialize each floor level
     // Start the floor
     public void startFloor() {
+        // Updates health for monster and player
         monsterHealth = monsterInitHealth + (getNumOfKeys() * 25);
+        health = health + (health/2);
     }
 
     // Code to handle walking
@@ -170,7 +191,7 @@ public class GameModel {
 
         // Compares which directions the user can move and what they selected
         if (canMoveForward == true && whichDirection == forwardKeyBind) {
-            // move north
+            // move forward
             // play sound clip of walking
         } else if (canMoveRight == true && whichDirection == rightKeyBind) {
             // move right
@@ -207,25 +228,28 @@ public class GameModel {
         
         // TODO Implement timer here (timer should be combination of facing direction and clickng button)
         // All situations where the defense was unsuccessful
-        if (monstAttackDirection == "FORWARD" && whichDirection != forwardKeyBind) {
-            defendSuccessful = false;
-        } else if (monstAttackDirection == "RIGHT" && whichDirection != rightKeyBind) {
-            defendSuccessful = false;
-        } else if (monstAttackDirection == "BACKWARD" && whichDirection != backwardsKeyBind) {
-            defendSuccessful = false;
-        } else if (monstAttackDirection == "LEFT" && whichDirection != leftKeyBind) {
-            defendSuccessful = false;
-        } else {
-            displayDefendButton = true;
-            update();
-        }
+
+        // If timer runs out, defend unsuccesful
+
+        displayDefendButton = true;
+        update();
 
         if (defendButton) {
-            // Defend here
-            update();
-        } else {
-            defendSuccessful = false;
+            if (monstAttackDirection == "FORWARD" && whichDirection != forwardKeyBind) {
+                defendSuccessful = false;
+            } else if (monstAttackDirection == "RIGHT" && whichDirection != rightKeyBind) {
+                defendSuccessful = false;
+            } else if (monstAttackDirection == "BACKWARD" && whichDirection != backwardsKeyBind) {
+                defendSuccessful = false;
+            } else if (monstAttackDirection == "LEFT" && whichDirection != leftKeyBind) {
+                defendSuccessful = false;
+            } else {
+                quickTimeState = true;
+                update();
+            }
         }
+
+        // If the user clicks all the buttons, defendSuccessful
 
         // If the defence was successful, it takes off monster health
         if (defendSuccessful) {
@@ -248,11 +272,18 @@ public class GameModel {
         update(); // To update GameView with whatever is required
     }
 
-    // Gets the height and width of the buttons for the quick time event
-    public int[] quickTimeGeneration() {
-        int width = 0;
+    public int getRandomHeight() {
         int height = 0;
-        int[] returnDimensions = {0, 0};
+
+        height = (int)((Math.random()*1100) + 200);
+
+        return(height);
+    }
+
+    // Gets the height and width of the buttons for the quick time event
+    public int quickTimeGeneration() {
+        int width = 0;
+        // int[] returnDimensions = {0, 0};
 
         // Based on game mode and floor level, it decides how many buttons to generate
         if (getGameMode() == "EASY") {
@@ -289,12 +320,12 @@ public class GameModel {
 
         width = (int)screenSize.getWidth()/numOfButtons;
 
-        height = (int)((Math.random()*1100) + 200);
+        return(width);
 
-        returnDimensions[0] = width;
-        returnDimensions[1] = height;
+        // returnDimensions[0] = width;
+        // returnDimensions[1] = height;
 
-        return(returnDimensions);
+        // return(returnDimensions);
     }
 
     // Updates the GUI
