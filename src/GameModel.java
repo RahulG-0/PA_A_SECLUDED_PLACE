@@ -37,6 +37,7 @@ public class GameModel {
     private boolean canMoveRight = false;
     private boolean canMoveLeft = false;
     public String outputDirections = "You can move ";
+    public boolean displayDirections = false;
 
     // Keybinds
     public String forwardKeyBind = "W";
@@ -208,6 +209,7 @@ public class GameModel {
         }
 
         whichDirections();
+        displayDirections = true;
 
         // Updates the view to display available directions
         update();

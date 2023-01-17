@@ -169,6 +169,10 @@ public class GameView extends JPanel {
             defend.setVisible(false);
         }
 
+        if (gameModel.displayDirections){
+            options.setText(gameModel.outputDirections);
+        }
+
         floorLevel.setText(Integer.toString(gameModel.numOfKeys + 1));
 
         MonsterHealth.setBounds(1310+(1310*((100-gameModel.monsterHealth)/100)),1020,600*(gameModel.monsterHealth/100),50);
