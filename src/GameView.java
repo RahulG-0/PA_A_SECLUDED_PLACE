@@ -6,6 +6,7 @@
 // Imports
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +32,10 @@ public class GameView extends JPanel {
 
     private JButton defend = new JButton("Defend"); // button that allows you to defend
 
+    private String directory = System.getProperty("user.dir");
+
+    private JLabel options = new JLabel("",SwingConstants.CENTER);
+
     // Constructor
     public GameView(GameModel gameModel,TitleModel titleModel) {
         this.gameModel = gameModel;
@@ -48,16 +53,10 @@ public class GameView extends JPanel {
 
         this.setLayout(null); // settoing the layout to null
 
+        File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf");
+
         // gettoing the width and height of user diplay
         int width = (int)this.screenSize.getWidth(); 
-        // Plays the background ambiance
-        // if (titleModel.startGame) {
-        //     System.out.println("Making it here"); // WAS NOT MAKING IT HERE :(
-        //     this.mPlayer.gameMusic();
-        // }
-
-        this.setLayout(null);
-        // int width = (int)this.screenSize.getWidth();
         int height = (int)this.screenSize.getHeight();
 
         this.setBounds(0,0,width,height); // setting the size of the game
@@ -78,41 +77,65 @@ public class GameView extends JPanel {
         MonsterHealth.setBackground(new Color(170, 34, 34)); // setting colour of monster health
         MonsterHealth.setOpaque(true);
 
+        quicktimeButtonPannel.setBounds(0,0,width,height);
         addButtons(); // gneratting and adding quicktime buttons
         quicktimeButtonPannel.setVisible(false);
+        quicktimeButtonPannel.setOpaque(false);
+
+        floorLevel.setText("9");
+        floorLevel.setBounds(1920-100,10,100,90);
+        floorLevel.setForeground(new Color(255,255,255));
+
+        try {
+            // setting font and scaling the font
+            Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            Font sizedFont = font.deriveFont(width*0.052f); // original size 100
+            floorLevel.setFont(sizedFont);
+        } 
+        catch (Exception e) {}
+
+        defend.setVisible(false);
+
+        options.setBounds(660,10,700,200);
 
         // adding objects to the game
         this.add(playerHealth);
         this.add(defend);
         this.add(MonsterHealth);
         this.add(quicktimeButtonPannel);
-        // this.add(backGround);
+        this.add(floorLevel);
+        this.add(options);
+        this.add(backGround);
     }// end of game view
 
     // generates buttons in an array
     public void generateButtons(){
         for(int i = 0; i<18;i++ ){
-            JButton button = new JButton();
-            button.setText(Integer.toString(i+1));
-            buttons[i] = button;
+            buttons[i] = new JButton(String.valueOf(i));
+            buttons[i].setVisible(false);
+        }
+    }
 
+    public void defaultLocations(){
+        for(int i = 0;i<18;i++){
+            buttons[i].setBounds(0,0,100,100);
         }
     }
 
     // setting the quicktime location for each button
     public void randomLocations(){
-        int numOfButtons = gameModel.quickTimeGeneration()[0];
-        numOfButtons = gameModel.numOfButtons;
-        for(int i = 0;i<4;i++){
-            buttons[i].setBounds(gameModel.quickTimeGeneration()[0]*i,gameModel.quickTimeGeneration()[1],gameModel.quickTimeGeneration()[0],100);
-            System.out.println(Arrays.toString(gameModel.quickTimeGeneration()));
+        int width  = gameModel.quickTimeGeneration();
+        for(int i = 0;i<gameModel.numOfButtons;i++){
+            buttons[i].setBounds(width*i,gameModel.getRandomHeight(),width,100);
+            buttons[i].setVisible(true);
+
         }
-        // System.out.println(gameModel.numOfButtons);
     }
 
     // add
     public void addButtons(){
         generateButtons();
+        defaultLocations();
         quicktimeButtonPannel.setLayout(null);
         for(int i = 0; i<18;i++ ){
             quicktimeButtonPannel.add(buttons[i]);
@@ -133,16 +156,25 @@ public class GameView extends JPanel {
         if (gameModel.wantToUseSmokeBomb){
             quicktimeButtonPannel.setVisible(false);
         }
-        // else if(gameModel.isMonsterAttack){
-        //     quicktimeButtonPannel.setVisible(false);
-        //     defend.setVisible(true);
-        // }
+        else if(gameModel.displayDefendButton){
+            quicktimeButtonPannel.setVisible(false);
+            defend.setVisible(true);
+        }
 
         else if (gameModel.defendButton){
             randomLocations();
             quicktimeButtonPannel.setVisible(true);
             // System.out.println("hello");
+            gameModel.defendButton = false;
+            defend.setVisible(false);
         }
+
+        floorLevel.setText(Integer.toString(gameModel.numOfKeys + 1));
+
+        MonsterHealth.setBounds(1310+(1310*((100-gameModel.monsterHealth)/100)),1020,600*(gameModel.monsterHealth/100),50);
+
+        playerHealth.setBounds(10,1020,600*(gameModel.health/100),50);
+
     }
     
 } // Closes class

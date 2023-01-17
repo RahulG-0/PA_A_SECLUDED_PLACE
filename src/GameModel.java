@@ -41,10 +41,10 @@ public class GameModel {
     private boolean canMoveLeft = false;
 
     // Keybinds
-    private String forwardKeyBind = "W";
-    private String rightKeyBind = "D";
-    private String backwardsKeyBind = "S";
-    private String leftKeyBind = "A";
+    public String forwardKeyBind = "W";
+    public String rightKeyBind = "D";
+    public String backwardsKeyBind = "S";
+    public String leftKeyBind = "A";
 
     public boolean quickTimeState = false;
 
@@ -275,7 +275,7 @@ public class GameModel {
     public int getRandomHeight() {
         int height = 0;
 
-        height = (int)((Math.random()*1100) + 200);
+        height = (int)((Math.random()*680) + 200);
 
         return(height);
     }

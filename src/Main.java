@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         
-        // Creates the model and view
+        // Creates the model and view   
         TotalView view = new TotalView();
         // GameModel gameModel = new GameModel();
         // TitleModel titleModel = new TitleModel();

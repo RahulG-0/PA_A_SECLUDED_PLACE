@@ -6,6 +6,8 @@
 // Imports
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -44,10 +46,10 @@ public class TitleView extends JPanel {
     private JPanel gameModePanel = new JPanel(); // Stores buttons for difficulty
 
     private JSlider volume = new JSlider(JSlider.HORIZONTAL,-20, 6,0);
-    private JTextField cFowardKeybind = new JTextField();
-    private JTextField cBackwardsKeybind = new JTextField();
-    private JTextField cRightKeybind = new JTextField();
-    private JTextField cLeftKeybind = new JTextField();
+    private JTextField cFowardKeybind = new JTextField("w");
+    private JTextField cBackwardsKeybind = new JTextField("s");
+    private JTextField cRightKeybind = new JTextField("d");
+    private JTextField cLeftKeybind = new JTextField("a");
 
     private JLabel fowardKeybind = new JLabel("Foward Keybind");
     private JLabel backwardsKeybind = new JLabel("Backward Keybing");
@@ -246,6 +248,36 @@ public class TitleView extends JPanel {
 
         volumeModel = new VolumeController(mPlayer, volume);
         volume.addChangeListener(volumeModel);
+
+        cFowardKeybind.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.forwardKeyBind = cFowardKeybind.getText();
+                System.out.println(gameModel.forwardKeyBind);
+            }
+          });
+        cBackwardsKeybind.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.backwardsKeyBind = cBackwardsKeybind.getText();
+                System.out.println(gameModel.forwardKeyBind);
+            }
+          });
+        cRightKeybind.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.rightKeyBind = cRightKeybind.getText();
+                System.out.println(gameModel.forwardKeyBind);
+            }
+          });
+        cLeftKeybind.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.leftKeyBind = cLeftKeybind.getText();
+                System.out.println(gameModel.forwardKeyBind);
+            }
+          });
+
     }
 
     // This checks if the save file can be used for game information
