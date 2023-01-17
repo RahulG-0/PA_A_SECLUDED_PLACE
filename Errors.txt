@@ -1,2 +1,4 @@
 How To Play button is not working on title screen
 Music for game is not working
+Monster health always increases but add a check to make sure that if it is already at 100, it should not go up
+Make monster health display on GUI work

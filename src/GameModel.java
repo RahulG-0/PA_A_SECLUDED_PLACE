@@ -10,7 +10,6 @@ public class GameModel {
 
     // Creates instance variables
     private GameView view; // Instance of GameView
-    // private GameController controller;
     public String userSelection = ""; // Registers which button a user presses
     public String gameMode; // Information for the game
     public int numOfKeys = 0;
@@ -21,8 +20,6 @@ public class GameModel {
 
     private String whichDirection; // What keyboard input the player gives
 
-    public boolean isAttacked;
-
     public boolean gameOver;
 
     public String monstAttackDirection = "";
@@ -32,13 +29,14 @@ public class GameModel {
     public boolean displayDefendButton = false;
     public boolean defendButton = false; // If the player clicked the defend button
 
-    public int numOfButtons = 0;
-
+    // Screensize
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
+    // Booleans for which directions the user can travel
     private boolean canMoveForward = false;
     private boolean canMoveRight = false;
     private boolean canMoveLeft = false;
+    public String outputDirections = "You can move ";
 
     // Keybinds
     private String forwardKeyBind = "W";
@@ -46,13 +44,13 @@ public class GameModel {
     private String backwardsKeyBind = "S";
     private String leftKeyBind = "A";
 
+    // Flag to activate the quick time buttons
     public boolean quickTimeState = false;
+    public int numOfButtons = 0; // Number of buttons for the quick time generation
 
+    // Flags to check if the player or the monster have died
     public boolean playerDied = false;
-
-
-
-    // private double time = 0.00; TODO Add this later
+    public boolean monsterDied = false;
 
     // Constructor
     public GameModel() {
@@ -125,6 +123,7 @@ public class GameModel {
 
     // game
 
+    // Checks if the game is over
     public boolean isGameOver() {
         if (gameMode == "EASY" && numOfKeys != 3) {
             gameOver = true;
@@ -143,13 +142,17 @@ public class GameModel {
     // Method to run the game
     public void game(){
         // UPDATE KEYBINDS HERE
+        // Keeps playing as long as the game is not over
         while (!isGameOver()) {
             // Keep the game going
+            walking();
+
+            if (monsterDied) {
+                numOfKeys++;
+                startFloor();
+                // Play the elevator music
+            }
         }
-
-        startFloor();
-
-        walking();
     }
 
     public void setUserDirection(String direction){
@@ -160,8 +163,28 @@ public class GameModel {
     // Start the floor
     public void startFloor() {
         // Updates health for monster and player
+        monsterDied = false;
         monsterHealth = monsterInitHealth + (getNumOfKeys() * 25);
         health = health + (health/2);
+    }
+
+    // Message for which directions the user can move in
+    public String whichDirections() {
+        if (canMoveForward == true) {
+            this.outputDirections.concat("forward, ");
+        }
+
+        if (canMoveLeft == true) {
+            this.outputDirections.concat("left, ");
+        }
+
+        if (canMoveRight == true) {
+            this.outputDirections.concat("right, ");
+        }
+
+        this.outputDirections.substring(0, (this.outputDirections.length()-2));
+    
+        return(outputDirections);
     }
 
     // Code to handle walking
@@ -184,10 +207,15 @@ public class GameModel {
             }
         }
 
+        whichDirections();
+
         // Updates the view to display available directions
         update();
 
         // GET USER SELECTION (whichDirection)
+
+        // TODO Consider deleting this if statement cuz it doesn't matter
+        // Just play the audio clip since the user's direction doesn't matter
 
         // Compares which directions the user can move and what they selected
         if (canMoveForward == true && whichDirection == forwardKeyBind) {
@@ -265,7 +293,7 @@ public class GameModel {
         }
 
         if (monsterHealth == 0) {
-            numOfKeys++;
+            monsterDied = true;
             // Go into next floor and do whatever stuff
         }
 
