@@ -13,7 +13,7 @@ public class Main {
         // Creates the model and view   
         TotalView view = new TotalView();
         // GameModel gameModel = new GameModel();
-        // TitleModel titleModel = new TitleModel();
+        // TitleModel titleModel = new Titl eModel();
         // GameView view  = new GameView(gameModel, titleModel);
         JFrame frame = new JFrame("A Secluded Place");
 

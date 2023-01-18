@@ -49,6 +49,11 @@ public class TotalView extends JPanel{
         game.addMouseListener(mc);
         title.addMouseListener(mc);
         this.addMouseListener(new MouseController(this.totalModel) );
+
+        // keyboardInput keyboardInput = new keyboardInput(this.gameModel);
+        // this.addKeyListener(keyboardInput);
+
+
     }
 
     // Updates the TotalView by switching which view is displayed

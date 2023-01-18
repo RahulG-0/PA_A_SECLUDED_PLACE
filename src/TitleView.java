@@ -80,6 +80,8 @@ public class TitleView extends JPanel {
         this.registerControllers();
         this.update();
         this.mPlayer.music();
+        this.mPlayer.gameMusic();
+        this.mPlayer.stop(mPlayer.gameClip);
         // this.mPlayer.stop(mPlayer.gameClip);
     }
 
@@ -324,6 +326,7 @@ public class TitleView extends JPanel {
             this.gameModel.setInfo(gameMode, numOfKeys, health, smokeBombs);
             buttonsPanel.setVisible(false);
             this.mPlayer.stop(this.mPlayer.clip);
+            this.mPlayer.gameMusic();
             this.gameModel.update();
             canLoad = true;
         }
@@ -358,16 +361,19 @@ public class TitleView extends JPanel {
                 this.gameModel.setInfo("EASY", 0, 100, 3);
                 this.gameModel.update();
                 this.mPlayer.stop(mPlayer.clip);
+                this.mPlayer.gameMusic();
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
                 gameModePanel.setVisible(false);
                 this.gameModel.setInfo("MEDIUM", 0, 100, 2);
                 this.gameModel.update();
                 this.mPlayer.stop(mPlayer.clip);
+                this.mPlayer.gameMusic();
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
                 gameModePanel.setVisible(false);
                 this.gameModel.setInfo("HARD", 0, 100, 1);
                 this.gameModel.update();
                 this.mPlayer.stop(mPlayer.clip);
+                this.mPlayer.gameMusic();
             }
             
         } else if (this.titleModel.userSelection.equals("load")) {
@@ -396,6 +402,7 @@ public class TitleView extends JPanel {
             
             // Closes the program
             this.mPlayer.stop(mPlayer.clip);
+            this.mPlayer.stop(mPlayer.gameClip);
             Window win = SwingUtilities.getWindowAncestor(this);
             win.dispose();
         } else if(this.titleModel.userSelection.equals("Quit")){
