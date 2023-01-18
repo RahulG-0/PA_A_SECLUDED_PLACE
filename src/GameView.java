@@ -36,6 +36,8 @@ public class GameView extends JPanel {
 
     private JLabel options = new JLabel("",SwingConstants.CENTER);
 
+    private boolean once = true;
+
     // Constructor
     public GameView(GameModel gameModel,TitleModel titleModel) {
         this.gameModel = gameModel;
@@ -45,7 +47,6 @@ public class GameView extends JPanel {
         this.layoutView();
         this.registerControllers();
         this.update();
-        this.mPlayer.gameMusic(); 
     }
 
     // Creates the initial layout of the GUI
@@ -97,6 +98,8 @@ public class GameView extends JPanel {
         defend.setVisible(false);
 
         options.setBounds(660,10,700,200);
+        options.setText("helo");
+        options.setForeground(Color.white);
 
         // adding objects to the game
         this.add(playerHealth);
@@ -143,16 +146,38 @@ public class GameView extends JPanel {
 
     }
 
+    public void addActionForArray(){
+        for(int i = 0;i<18;i++){
+            buttons[i].addActionListener(new buttonGameController(gameModel, buttons[i]));
+        }
+    }
+
+
+
     // Registers controllers
     private void registerControllers() {
         //
-        buttonGameController bc = new buttonGameController(this.gameModel);
+        buttonGameController bc = new buttonGameController(this.gameModel, defend);
         defend.addActionListener(bc);
+
+        keyboardInput keyboardInput = new keyboardInput(this.gameModel);
+        this.addKeyListener(keyboardInput);
+        this.setFocusable(true);
+        
+        addActionForArray();
 
     }
 
     // Updates the GUI based on what happens in the game
     public void update() {
+
+
+        if (titleModel.startGame && once == true){
+            once =false;
+            System.out.println("trye");
+            gameModel.game();
+        }
+
         if (gameModel.wantToUseSmokeBomb){
             quicktimeButtonPannel.setVisible(false);
         }
@@ -172,6 +197,8 @@ public class GameView extends JPanel {
         if (gameModel.displayDirections){
             options.setText(gameModel.outputDirections);
         }
+
+        
 
         floorLevel.setText(Integer.toString(gameModel.numOfKeys + 1));
 

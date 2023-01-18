@@ -5,6 +5,7 @@
 
 // Imports
 import java.awt.*;
+import java.util.Timer;
 
 public class GameModel {
 
@@ -20,7 +21,7 @@ public class GameModel {
 
     private String whichDirection; // What keyboard input the player gives
 
-    public boolean gameOver;
+    public boolean gameOver = false;
 
     public String monstAttackDirection = "";
     public boolean defendSuccessful = true; // If the player was able to defend or not
@@ -52,6 +53,15 @@ public class GameModel {
     // Flags to check if the player or the monster have died
     public boolean playerDied = false;
     public boolean monsterDied = false;
+
+    // SWITCHING BETWEEN going a direction and getting direction
+    private boolean  flip = false;
+    private boolean flipV2 = false;
+    private boolean flipV3 = false;
+
+    public int amountClicked = 0;
+    
+    public boolean[] buttonVisible = new boolean[18];
 
     // Constructor
     public GameModel() {
@@ -126,15 +136,17 @@ public class GameModel {
 
     // Checks if the game is over
     public boolean isGameOver() {
-        if (gameMode == "EASY" && numOfKeys != 3) {
+        if (gameMode == "EASY" && numOfKeys == 3) {
             gameOver = true;
-        } else if (gameMode == "MEDIUM" && numOfKeys != 4) {
+        } else if (gameMode == "MEDIUM" && numOfKeys == 4) {
             gameOver = true;
-        } else if (gameMode == "HARD" && numOfKeys != 5) {
+        } else if (gameMode == "HARD" && numOfKeys == 5) {
             gameOver = true;
         } else if (health == 0) {
             gameOver = true;
             playerDied = true;
+        } else{
+            gameOver = false;
         }
 
         return(gameOver);
@@ -146,10 +158,12 @@ public class GameModel {
         // Keeps playing as long as the game is not over
         while (!isGameOver()) {
             // Keep the game going
+            System.out.println("hello");
             walking();
 
             if (monsterDied) {
                 numOfKeys++;
+                System.out.println("123");
                 startFloor();
                 // Play the elevator music
             }
@@ -167,6 +181,7 @@ public class GameModel {
         monsterDied = false;
         monsterHealth = monsterInitHealth + (getNumOfKeys() * 25);
         health = health + (health/2);
+        amountClicked = 0;
     }
 
     // Message for which directions the user can move in
@@ -184,56 +199,70 @@ public class GameModel {
         }
 
         this.outputDirections.substring(0, (this.outputDirections.length()-2));
-    
+        this.outputDirections.concat(".");
         return(outputDirections);
     }
 
     // Code to handle walking
     public void walking() {
-        // Gets which directions the user can move in
-        canMoveForward = canMoveInDirection();
-        canMoveRight = canMoveInDirection();
-        canMoveLeft = canMoveInDirection();
+        
+        if(!flip){
+            // Gets which directions the user can move in
+            canMoveForward = canMoveInDirection();
+            canMoveRight = canMoveInDirection();
+            canMoveLeft = canMoveInDirection();
 
-        // In case all directions are unavailable, the program chooses a direction
-        if (canMoveForward == false && canMoveRight == false && canMoveLeft == false) {
-            double x = Math.random();
+            // In case all directions are unavailable, the program chooses a direction
+            if (canMoveForward == false && canMoveRight == false && canMoveLeft == false) {
+                double x = Math.random();
 
-            if (x < 0.3) {
-                canMoveLeft = true;
-            } else if (x < 0.6) {
-                canMoveRight = true;
-            } else if (x > 0.6) {
-                canMoveForward = true;
+                if (x < 0.3) {
+                    canMoveLeft = true;
+                } else if (x < 0.6) {
+                    canMoveRight = true;
+                } else if (x > 0.6) {
+                    canMoveForward = true;
+                }
             }
+            whichDirection = null;
+            whichDirections();
+            displayDirections = true;
+
+            // Updates the view to display available directions
+            update();
+            flip = true;
         }
-
-        whichDirections();
-        displayDirections = true;
-
-        // Updates the view to display available directions
-        update();
 
         // GET USER SELECTION (whichDirection)
 
         // TODO Consider deleting this if statement cuz it doesn't matter
         // Just play the audio clip since the user's direction doesn't matter
+        if(whichDirection != null){
+            // Compares which directions the user can move and what they selected
+            if (canMoveForward == true && whichDirection == forwardKeyBind) {
+                // move forward
+                // play sound clip of walking
+                flip = false;
+                
+            } else if (canMoveRight == true && whichDirection == rightKeyBind) {
+                // move right
+                // play sound clip of walking
+                flip = false;
+                
+            } else if (canMoveLeft == true && whichDirection == leftKeyBind) {
+                // move left
+                // play sound clip of walking
+                flip = false;
 
-        // Compares which directions the user can move and what they selected
-        if (canMoveForward == true && whichDirection == forwardKeyBind) {
-            // move forward
-            // play sound clip of walking
-        } else if (canMoveRight == true && whichDirection == rightKeyBind) {
-            // move right
-            // play sound clip of walking
-        } else if (canMoveLeft == true && whichDirection == leftKeyBind) {
-            // move left
-            // play sound clip of walking
+            }
+            
         }
-
         if (doesMonsterSpawn()) {
             monsterAttack();
+        } else{
+            flip = false;
         }
+    
     }
 
     public void monsterAttack() {
@@ -263,21 +292,54 @@ public class GameModel {
 
         displayDefendButton = true;
         update();
-
-        if (defendButton) {
-            if (monstAttackDirection == "FORWARD" && whichDirection != forwardKeyBind) {
-                defendSuccessful = false;
-            } else if (monstAttackDirection == "RIGHT" && whichDirection != rightKeyBind) {
-                defendSuccessful = false;
-            } else if (monstAttackDirection == "BACKWARD" && whichDirection != backwardsKeyBind) {
-                defendSuccessful = false;
-            } else if (monstAttackDirection == "LEFT" && whichDirection != leftKeyBind) {
-                defendSuccessful = false;
-            } else {
-                quickTimeState = true;
-                update();
+        
+        long targetTime =  java.lang.System.currentTimeMillis() + 5000;
+        
+        while (java.lang.System.currentTimeMillis() != targetTime){
+            if (defendButton) {
+                if (monstAttackDirection == "FORWARD" && whichDirection != forwardKeyBind) {
+                    defendSuccessful = false;
+                    break;
+                } else if (monstAttackDirection == "RIGHT" && whichDirection != rightKeyBind) {
+                    defendSuccessful = false;
+                    break;
+                } else if (monstAttackDirection == "BACKWARD" && whichDirection != backwardsKeyBind) {
+                    defendSuccessful = false;
+                    break;
+                } else if (monstAttackDirection == "LEFT" && whichDirection != leftKeyBind) {
+                    defendSuccessful = false;
+                    break;
+                } else {
+                    quickTimeState = true;
+                    update();
+                    break;
+                }
             }
         }
+
+        if (!defendButton){
+            defendSuccessful = false;
+            displayDefendButton = false;
+            update();
+        }
+
+        if(quickTimeState){
+
+            targetTime =  java.lang.System.currentTimeMillis() + getAddTime();
+            while(java.lang.System.currentTimeMillis() != targetTime){
+                if (amountClicked == numOfButtons){
+                    defendSuccessful = true;
+                    break;
+                }
+            }
+            quickTimeState = false;
+
+            if (amountClicked != numOfButtons){
+                defendSuccessful = false;
+            }
+        }
+        
+
 
         // If the user clicks all the buttons, defendSuccessful
 
@@ -300,6 +362,44 @@ public class GameModel {
         }
 
         update(); // To update GameView with whatever is required
+    }
+
+    private int getAddTime() {
+        int addTime = 0;
+
+        if (getGameMode() == "EASY") {
+            if (getNumOfKeys() == 0) {
+                addTime = 7;
+            } else if (getNumOfKeys() == 1) {
+                addTime = 6;
+            } else if (getNumOfKeys() == 2) {
+                addTime = 6;
+            }
+        } else if (getGameMode() == "MEDIUM") {
+            if (getNumOfKeys() == 0) {
+                addTime = 6;
+            } else if (getNumOfKeys() == 1) {
+                addTime = 7;
+            } else if (getNumOfKeys() == 2) {
+                addTime = 8;
+            } else if (getNumOfKeys() == 3) {
+                addTime = 12;
+            }
+        } else if (getGameMode() == "HARD") {
+            if (getNumOfKeys() == 0) {
+                addTime = 7;
+            } else if (getNumOfKeys() == 1) {
+                addTime = 8;
+            } else if (getNumOfKeys() == 2) {
+                addTime = 10;
+            } else if (getNumOfKeys() == 3) {
+                addTime= 10;
+            } else if (getNumOfKeys() == 4) {
+                addTime= 8;
+            }
+        }
+
+        return addTime;
     }
 
     public int getRandomHeight() {
@@ -356,6 +456,12 @@ public class GameModel {
         // returnDimensions[1] = height;
 
         // return(returnDimensions);
+    }
+
+    public void setFalseVisible(){
+        for (int i = 0; i<18;i++){
+            buttonVisible[i] = false;
+        }
     }
 
     // Updates the GUI
