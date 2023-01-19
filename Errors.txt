@@ -16,3 +16,18 @@ Write to save file (also rename the folder to TextFiles and add the output text 
 set the dipplay buttons to true only once per canFileLoad
 
 in game model make monster health a double
+
+Make monster health not shake
+
+Last monster attack
+
+Fix directions output
+
+Format and get rid of flipV3
+
+Priorities:
+1. Options Panel
+2. Monster health
+3. Add audio for walking
+4. Game Over screen
+5. Optional features
