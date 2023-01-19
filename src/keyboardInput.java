@@ -30,6 +30,11 @@ public class keyboardInput implements KeyListener{
         else if (gModel.leftKeyBind.equals(KeyEvent.getKeyText(e.getKeyCode()))){
             gModel.setUserDirection(gModel.leftKeyBind);
         }
+        else if (KeyEvent.getKeyText(e.getKeyCode()).equals("Escape")){
+            gModel.displayOptionsPannel = true;
+        }
+        System.out.println(KeyEvent.getKeyText(e.getKeyCode()));
+
         gModel.update();
 
     }

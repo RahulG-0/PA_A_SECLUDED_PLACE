@@ -60,6 +60,8 @@ public class GameModel {
     private boolean flipV2 = false;
     private boolean flipV3 = false;
 
+    public boolean displayOptionsPannel = false;
+
     public boolean randomise = false;
 
     public int amountClicked = 0;
@@ -205,6 +207,7 @@ public class GameModel {
         flip = false;
         flipV2 = false;
         flipV3 = false;
+
     }
 
     // Message for which directions the user can move in
@@ -363,6 +366,7 @@ public class GameModel {
                 if (amountClicked == numOfButtons){
                     defendSuccessful = true;
                     update();
+                    System.out.println("got here");
                     break;
                 }
                 update();

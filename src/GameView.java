@@ -10,6 +10,8 @@ import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GameView extends JPanel {
 
@@ -17,6 +19,24 @@ public class GameView extends JPanel {
     private GameModel gameModel; // Instance of model
     private TitleModel titleModel;
     private MusicPlayer mPlayer;
+
+    private JSlider volume = new JSlider(JSlider.HORIZONTAL,-20, 6,0);
+    private JTextField cFowardKeybind = new JTextField("w");
+    private JTextField cBackwardsKeybind = new JTextField("s");
+    private JTextField cRightKeybind = new JTextField("d");
+    private JTextField cLeftKeybind = new JTextField("a");
+
+    private JLabel fowardKeybind = new JLabel("Foward Keybind");
+    private JLabel backwardsKeybind = new JLabel("Backward Keybing");
+    private JLabel rightKeybind = new JLabel("Right Keybind");
+    private JLabel leftKeybind = new JLabel("Left Keybind"); 
+    private JLabel volumeLable = new JLabel("Volume"); 
+
+    private JButton exitOptions = new JButton("Exit");
+
+    private JLabel optionsTitle = new JLabel("Options");
+    private JPanel optionsPanel = new JPanel();
+
 
     private JLabel backGround = new JLabel(); // sets the backround of the game
 
@@ -100,6 +120,82 @@ public class GameView extends JPanel {
         options.setBounds(660,10,700,200);
         options.setForeground(Color.white);
 
+        optionsPanel.setLayout(null);
+        optionsPanel.setBounds(0,0,width,height);
+        optionsPanel.setBackground(new Color(20,20,20,20));
+
+        optionsTitle.setBounds((int)Math.round(width*0.390),(int)Math.round(height*0.092),(int)Math.round(width*0.625),(int)Math.round(height*0.092)); // setting scaling for Options title
+        optionsTitle.setForeground(new Color(139, 0, 0));
+
+        try {
+            // setting font and scaling the font
+            Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            Font sizedFont = font.deriveFont(width*0.052f); // original size 100
+            optionsTitle.setFont(sizedFont);
+
+            Font font1 = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            Font LableSizedFont = font1.deriveFont(width*0.015f); // original size 30
+
+            fowardKeybind.setFont(LableSizedFont);
+            backwardsKeybind.setFont(LableSizedFont);
+            leftKeybind.setFont(LableSizedFont);
+            rightKeybind.setFont(LableSizedFont);
+            volumeLable.setFont(LableSizedFont);
+            exitOptions.setFont(LableSizedFont);
+
+            Font font2 = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            Font volumeFont = font2.deriveFont(width*0.007f);
+
+            volume.setFont(volumeFont);
+        } 
+        catch (Exception e) {}
+
+        cFowardKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.277), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
+        fowardKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.259), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
+        fowardKeybind.setForeground(new Color(139, 0, 0));
+
+        cBackwardsKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.370), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
+        backwardsKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.351), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
+        backwardsKeybind.setForeground(new Color(139, 0, 0));
+
+        cLeftKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.462), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
+        leftKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.444), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
+        leftKeybind.setForeground(new Color(139, 0, 0));
+
+        cRightKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.555), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
+        rightKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.537), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
+        rightKeybind.setForeground(new Color(139, 0, 0));
+
+        volumeLable.setBounds((int)Math.round(width*0.463), (int) Math.round(height*0.629), (int)Math.round(width*0.208), (int) Math.round(height*0.046));
+        volumeLable.setForeground(new Color(139, 0, 0));
+        volume.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.722), (int)Math.round(width*0.468), (int) Math.round(height*0.046));
+        volume.setMajorTickSpacing(2);
+        volume.setMinorTickSpacing(1);
+        volume.setPaintTicks(true);
+        volume.setPaintLabels(true);
+        volume.setForeground(new Color(139, 0, 0));
+
+        exitOptions.setBounds(10,10,150,90);
+        exitOptions.setForeground(new Color(139, 0, 0));
+
+        fowardKeybind.setText("Foward Keybind");
+        backwardsKeybind.setText("Backward Keybind");
+
+        optionsPanel.add(optionsTitle);
+        optionsPanel.add(cFowardKeybind);
+        optionsPanel.add(fowardKeybind);
+        optionsPanel.add(cBackwardsKeybind);
+        optionsPanel.add(backwardsKeybind);
+        optionsPanel.add(cLeftKeybind);
+        optionsPanel.add(leftKeybind);
+        optionsPanel.add(cRightKeybind);
+        optionsPanel.add(rightKeybind);
+        optionsPanel.add(volume);
+        optionsPanel.add(volumeLable);
+        optionsPanel.add(exitOptions);
+
+        optionsPanel.setVisible(false);
+
         // adding objects to the game
         this.add(playerHealth);
         this.add(defend);
@@ -107,6 +203,7 @@ public class GameView extends JPanel {
         this.add(quicktimeButtonPannel);
         this.add(floorLevel);
         this.add(options);
+        this.add(optionsPanel);
         this.add(backGround);
     }// end of game view
 
@@ -162,8 +259,36 @@ public class GameView extends JPanel {
         keyboardInput keyboardInput = new keyboardInput(this.gameModel);
         this.addKeyListener(keyboardInput);
         this.setFocusable(true);
+
+        buttonGameController exitButtonGameController = new buttonGameController(gameModel, exitOptions);
+        exitOptions.addActionListener(exitButtonGameController);
         
         addActionForArray();
+
+        cFowardKeybind.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.forwardKeyBind = cFowardKeybind.getText();
+            }
+          });
+        cBackwardsKeybind.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.backwardsKeyBind = cBackwardsKeybind.getText();
+            }
+          });
+        cRightKeybind.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.rightKeyBind = cRightKeybind.getText();
+            }
+          });
+        cLeftKeybind.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.leftKeyBind = cLeftKeybind.getText();
+            }
+          });
 
     }
 
@@ -188,6 +313,22 @@ public class GameView extends JPanel {
         if (gameModel.displayDirections){
             options.setText(gameModel.outputDirections);
             options.setVisible(true);
+        }
+
+        if (gameModel.displayOptionsPannel){
+            optionsPanel.setVisible(true);
+            defend.setVisible(false);
+            quicktimeButtonPannel.setVisible(false);
+            playerHealth.setVisible(false);
+            MonsterHealth.setVisible(false);
+            options.setVisible(false);
+        }
+        else{
+            playerHealth.setVisible(true);
+            MonsterHealth.setVisible(true);
+            options.setVisible(true);
+            optionsPanel.setVisible(false);
+
         }
 
         

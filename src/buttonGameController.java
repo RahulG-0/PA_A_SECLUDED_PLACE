@@ -21,6 +21,12 @@ public class buttonGameController implements ActionListener {
             this.gameModel.displayDefendButton = false;
 
         }
+
+        if(((JButton)aButton).toString().contains("text=Exit")){
+            gameModel.displayOptionsPannel = false;
+
+        }
+
         for(int i = 0; i<18;i++){
             if(((JButton)aButton).toString().contains("text="+(i))){
                 gameModel.buttonVisible[i] = false;
