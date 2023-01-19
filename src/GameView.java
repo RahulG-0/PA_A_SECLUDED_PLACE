@@ -98,7 +98,6 @@ public class GameView extends JPanel {
         defend.setVisible(false);
 
         options.setBounds(660,10,700,200);
-        options.setText("helo");
         options.setForeground(Color.white);
 
         // adding objects to the game
@@ -173,38 +172,37 @@ public class GameView extends JPanel {
 
 
         if (titleModel.startGame && once == true){
-            once =false;
-            System.out.println("trye");
+            once = false;
             gameModel.game();
         }
 
         if (gameModel.wantToUseSmokeBomb){
             quicktimeButtonPannel.setVisible(false);
         }
-        else if(gameModel.displayDefendButton){
+        if(gameModel.displayDefendButton){
             quicktimeButtonPannel.setVisible(false);
             defend.setVisible(true);
         }
 
-        else if (gameModel.defendButton){
+        if (gameModel.defendButton){
             randomLocations();
             quicktimeButtonPannel.setVisible(true);
-            // System.out.println("hello");
-            gameModel.defendButton = false;
-            defend.setVisible(false);
         }
 
         if (gameModel.displayDirections){
             options.setText(gameModel.outputDirections);
+            options.setVisible(true);
         }
 
         
 
         floorLevel.setText(Integer.toString(gameModel.numOfKeys + 1));
 
-        MonsterHealth.setBounds(1310+(1310*((100-gameModel.monsterHealth)/100)),1020,600*(gameModel.monsterHealth/100),50);
+        MonsterHealth.setBounds((int)1310+(1310*((100-gameModel.monsterHealth)/100)),1020,(int)600*(gameModel.monsterHealth/100),50);
 
-        playerHealth.setBounds(10,1020,600*(gameModel.health/100),50);
+        playerHealth.setBounds(10,1020,(int)Math.round(600*(gameModel.health/100)),50);
+
+
 
     }
     
