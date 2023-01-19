@@ -45,5 +45,15 @@ public class keyboardInput implements KeyListener{
         gModel.update();
         
     }
+
+    /* Implement now
+     * if (gameModel.canEscape) {
+	pass  back escape key press
+} else {
+	play a noise or smth to indicate they can't escape
+}
+     * 
+     * 
+     */
     
 }

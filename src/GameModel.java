@@ -68,6 +68,9 @@ public class GameModel {
     
     public boolean[] buttonVisible = new boolean[18];
 
+    // A boolean to check if the player can escape
+    public boolean canEscape = true;
+
     // Constructor
     public GameModel() {
         super();
@@ -314,6 +317,8 @@ public class GameModel {
         long targetTime =  java.lang.System.currentTimeMillis() + 5000;
         
         while (java.lang.System.currentTimeMillis() <= targetTime){
+            canEscape = false;
+
             if (defendButton) {
                 if (monstAttackDirection == "FORWARD" && whichDirection != forwardKeyBind) {
                     defendSuccessful = false;
@@ -343,6 +348,8 @@ public class GameModel {
             }
         }
 
+        canEscape = true;
+
         if (!defendButton){
             defendSuccessful = false;
             flipV3 = true;
@@ -362,6 +369,7 @@ public class GameModel {
             amountClicked = 0;
 
             while(java.lang.System.currentTimeMillis() <= targetTime){
+                canEscape = false;
                 
                 if (amountClicked == numOfButtons){
                     defendSuccessful = true;
@@ -372,6 +380,8 @@ public class GameModel {
                 update();
 
             }
+
+            canEscape = true;
             quickTimeState = false;
             update();
 
@@ -394,9 +404,24 @@ public class GameModel {
         } else {
             // Checks to use a smoke bomb
             if (smokeBombs > 0) {
-                wantToUseSmokeBomb = true;
-                update();
+                long waitTime = System.currentTimeMillis() + 5000;
+
+                while (System.currentTimeMillis() < waitTime) {
+                    canEscape = false;
+                    wantToUseSmokeBomb = true;
+                    update(); ////////////// MIGHT NOT BE IDEAL
+
+                    //CHECK WHAT THEY DO
+                }
+
+                canEscape = true;
+
             }
+
+            // IF THE USER USED THE SMOKE BOMB
+            // if (user used smoke bomb) {
+            //     smokeBombs--;
+            // }
 
             health = health - 10;
 
