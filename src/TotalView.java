@@ -28,6 +28,8 @@ public class TotalView extends JPanel{
         this.layoutView();
         totalModel.setGUI(this);
 
+        this.gameModel.addTotalModel(totalModel);
+
         this.registerControllers();
 
         this.update();

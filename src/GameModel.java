@@ -11,10 +11,11 @@ public class GameModel {
 
     // Creates instance variables
     private GameView view; // Instance of GameView
+    private TotalModel totalModel;
     public String userSelection = ""; // Registers which button a user presses
     public String gameMode; // Information for the game
     public int numOfKeys = 0;
-    public int health = 100;
+    public double health = 100;
     public int smokeBombs = 0;
     private final int monsterInitHealth = 100;
     public int monsterHealth = monsterInitHealth;
@@ -37,7 +38,7 @@ public class GameModel {
     private boolean canMoveForward = false;
     private boolean canMoveRight = false;
     private boolean canMoveLeft = false;
-    public String outputDirections = "You can move ";
+    public String outputDirections = "";
     public boolean displayDirections = false;
 
     // Keybinds
@@ -75,6 +76,9 @@ public class GameModel {
         this.health = health;
         this.smokeBombs = smokeBombs;
     }
+    public void addTotalModel(TotalModel totalModel){
+        this.totalModel = totalModel;
+    }
 
     // Getter methods for the information
     public String getGameMode() {
@@ -85,7 +89,7 @@ public class GameModel {
         return(this.numOfKeys);
     }
 
-    public int getHealth() {
+    public double getHealth() {
         return(this.health);
     }
 
@@ -154,20 +158,27 @@ public class GameModel {
 
     // Method to run the game
     public void game(){
-        // UPDATE KEYBINDS HERE
-        // Keeps playing as long as the game is not over
-        while (!isGameOver()) {
-            // Keep the game going
-            System.out.println("hello");
-            walking();
 
-            if (monsterDied) {
-                numOfKeys++;
-                System.out.println("123");
-                startFloor();
-                // Play the elevator music
+        Runnable myRunnable =
+    new Runnable(){
+        public void run(){
+            while (!isGameOver()) {
+                // Keep the game going
+                walking();
+    
+                if (monsterDied) {
+                    numOfKeys++;
+                    startFloor();
+                    // Play the elevator music
+                }
             }
         }
+    };
+        // UPDATE KEYBINDS HERE
+        // Keeps playing as long as the game is not over
+        Thread thread  = new Thread(myRunnable);
+
+        thread.start();
     }
 
     public void setUserDirection(String direction){
@@ -186,20 +197,27 @@ public class GameModel {
 
     // Message for which directions the user can move in
     public String whichDirections() {
+        this.outputDirections = "You can move ";
+
         if (canMoveForward == true) {
-            this.outputDirections.concat("forward, ");
+            // this.outputDirections.concat("forward, ");
+            this.outputDirections = outputDirections + "forward, ";
         }
 
         if (canMoveLeft == true) {
             this.outputDirections.concat("left, ");
+            this.outputDirections = outputDirections + "left, ";
         }
 
         if (canMoveRight == true) {
             this.outputDirections.concat("right, ");
+            this.outputDirections = outputDirections + "right, ";
+            
         }
 
         this.outputDirections.substring(0, (this.outputDirections.length()-2));
-        this.outputDirections.concat(".");
+        this.outputDirections = outputDirections + ".";
+
         return(outputDirections);
     }
 
@@ -243,26 +261,31 @@ public class GameModel {
                 // move forward
                 // play sound clip of walking
                 flip = false;
+                flipV2 = true;
                 
             } else if (canMoveRight == true && whichDirection == rightKeyBind) {
                 // move right
                 // play sound clip of walking
                 flip = false;
+                flipV2 = true;
                 
             } else if (canMoveLeft == true && whichDirection == leftKeyBind) {
                 // move left
                 // play sound clip of walking
                 flip = false;
-
+                flipV2 = true;
             }
-            
         }
-        if (doesMonsterSpawn()) {
-            monsterAttack();
-        } else{
-            displayDirections = false;
-            flip = false;
-            update();
+
+        if(!flip && flipV2){
+            if (doesMonsterSpawn()) {
+                monsterAttack();
+            } else{
+                displayDirections = false;
+                flip = false;
+                update();
+            }
+            flipV2 = false;
         }
     
     }
@@ -270,7 +293,6 @@ public class GameModel {
     public void monsterAttack() {
         // If the monster attack was unsuccessful, do defendSuccessful
         this.monsterAttackDirection();
-
         // Play audio clip
         // Start timer
 
@@ -297,7 +319,7 @@ public class GameModel {
         
         long targetTime =  java.lang.System.currentTimeMillis() + 5000;
         
-        while (java.lang.System.currentTimeMillis() != targetTime){
+        while (java.lang.System.currentTimeMillis() <= targetTime){
             if (defendButton) {
                 if (monstAttackDirection == "FORWARD" && whichDirection != forwardKeyBind) {
                     defendSuccessful = false;
@@ -324,15 +346,18 @@ public class GameModel {
             displayDefendButton = false;
             update();
         }
+        update();
 
         if(quickTimeState){
 
             targetTime =  java.lang.System.currentTimeMillis() + getAddTime();
-            while(java.lang.System.currentTimeMillis() != targetTime){
+            while(java.lang.System.currentTimeMillis() <= targetTime){
                 if (amountClicked == numOfButtons){
                     defendSuccessful = true;
                     break;
                 }
+                update();
+
             }
             quickTimeState = false;
 
@@ -341,6 +366,7 @@ public class GameModel {
             }
         }
         
+        update();
 
 
         // If the user clicks all the buttons, defendSuccessful
@@ -456,6 +482,7 @@ public class GameModel {
                 numOfButtons = 18;
             }
         }
+        setAmountVisible();
 
         width = (int)screenSize.getWidth()/numOfButtons;
 
@@ -470,6 +497,11 @@ public class GameModel {
     public void setFalseVisible(){
         for (int i = 0; i<18;i++){
             buttonVisible[i] = false;
+        }
+    }
+    public void setAmountVisible(){
+        for (int i = 0; i<numOfButtons;i++){
+            buttonVisible[i] = true;
         }
     }
 

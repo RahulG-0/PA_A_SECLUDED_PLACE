@@ -12,3 +12,7 @@ when going to game set game ambiance to true
 display directions to fase
 
 Write to save file (also rename the folder to TextFiles and add the output text file in there as well)
+
+set the dipplay buttons to true only once per canFileLoad
+
+in game model make monster health a double

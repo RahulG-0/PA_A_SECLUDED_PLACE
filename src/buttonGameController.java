@@ -18,10 +18,13 @@ public class buttonGameController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(((JButton)aButton).toString().contains("text=Defend")){
             this.gameModel.defendButton = true;
+
         }
         for(int i = 0; i<18;i++){
-            if(((JButton)aButton).toString().contains("text="+(i+1))){
+            if(((JButton)aButton).toString().contains("text="+(i))){
                 gameModel.buttonVisible[i] = false;
+                System.out.println("bob");
+                gameModel.amountClicked++;
             }
         }
         

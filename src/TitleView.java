@@ -255,28 +255,24 @@ public class TitleView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameModel.forwardKeyBind = cFowardKeybind.getText();
-                System.out.println(gameModel.forwardKeyBind);
             }
           });
         cBackwardsKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameModel.backwardsKeyBind = cBackwardsKeybind.getText();
-                System.out.println(gameModel.forwardKeyBind);
             }
           });
         cRightKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameModel.rightKeyBind = cRightKeybind.getText();
-                System.out.println(gameModel.forwardKeyBind);
             }
           });
         cLeftKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameModel.leftKeyBind = cLeftKeybind.getText();
-                System.out.println(gameModel.forwardKeyBind);
             }
           });
 

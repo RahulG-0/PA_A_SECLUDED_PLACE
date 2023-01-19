@@ -30,6 +30,7 @@ public class keyboardInput implements KeyListener{
             gModel.setUserDirection(gModel.leftKeyBind);
         }
         gModel.update();
+
     }
 
     @Override
