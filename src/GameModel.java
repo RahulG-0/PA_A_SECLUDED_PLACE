@@ -350,6 +350,7 @@ public class GameModel {
             update();
 
             targetTime =  java.lang.System.currentTimeMillis() + getAddTime(); 
+            amountClicked = 0;
 
             while(java.lang.System.currentTimeMillis() <= targetTime){
                 
