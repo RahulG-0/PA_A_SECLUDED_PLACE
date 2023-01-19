@@ -60,6 +60,8 @@ public class GameModel {
     private boolean flipV2 = false;
     private boolean flipV3 = false;
 
+    public boolean randomise = false;
+
     public int amountClicked = 0;
     
     public boolean[] buttonVisible = new boolean[18];
@@ -286,6 +288,7 @@ public class GameModel {
                 update();
             }
             flipV2 = false;
+            update();
         }
     
     }
@@ -314,12 +317,12 @@ public class GameModel {
 
         // If timer runs out, defend unsuccesful
 
-        displayDefendButton = true;
         update();
         
         long targetTime =  java.lang.System.currentTimeMillis() + 5000;
         
         while (java.lang.System.currentTimeMillis() <= targetTime){
+            displayDefendButton = true;
             if (defendButton) {
                 if (monstAttackDirection == "FORWARD" && whichDirection != forwardKeyBind) {
                     defendSuccessful = false;
@@ -349,9 +352,15 @@ public class GameModel {
         update();
 
         if(quickTimeState){
+            displayDefendButton = false;
+            randomise = true;
+            update();
+            randomise = false;
 
-            targetTime =  java.lang.System.currentTimeMillis() + getAddTime();
+            targetTime =  java.lang.System.currentTimeMillis() + 5000;
+
             while(java.lang.System.currentTimeMillis() <= targetTime){
+                
                 if (amountClicked == numOfButtons){
                     defendSuccessful = true;
                     break;
@@ -374,6 +383,7 @@ public class GameModel {
         // If the defence was successful, it takes off monster health
         if (defendSuccessful) {
             monsterHealth = monsterHealth - 25;
+            update();
         } else {
             // Checks to use a smoke bomb
             if (smokeBombs > 0) {
@@ -386,9 +396,12 @@ public class GameModel {
             // Adds health for the monster if the defense was unsuccessful
             if (monsterHealth < 90) {
                 monsterHealth = monsterHealth + 10;
+                update();
             } else {
                 monsterHealth = monsterHealth + (100 - monsterHealth);
+                update();
             }
+            update();
         }
 
         if (monsterHealth == 0) {

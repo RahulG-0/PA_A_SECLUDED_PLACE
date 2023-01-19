@@ -176,18 +176,14 @@ public class GameView extends JPanel {
             gameModel.game();
         }
 
-        if (gameModel.wantToUseSmokeBomb){
-            quicktimeButtonPannel.setVisible(false);
-        }
-        if(gameModel.displayDefendButton){
-            quicktimeButtonPannel.setVisible(false);
-            defend.setVisible(true);
+
+
+        if (gameModel.randomise){
+            randomLocations();
         }
 
-        if (gameModel.defendButton){
-            randomLocations();
-            quicktimeButtonPannel.setVisible(true);
-        }
+        quicktimeButtonPannel.setVisible(gameModel.quickTimeState);
+        defend.setVisible(gameModel.displayDefendButton);
 
         if (gameModel.displayDirections){
             options.setText(gameModel.outputDirections);
