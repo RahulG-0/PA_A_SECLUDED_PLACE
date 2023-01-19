@@ -260,7 +260,9 @@ public class GameModel {
         if (doesMonsterSpawn()) {
             monsterAttack();
         } else{
+            displayDirections = false;
             flip = false;
+            update();
         }
     
     }
@@ -354,6 +356,13 @@ public class GameModel {
             }
 
             health = health - 10;
+
+            // Adds health for the monster if the defense was unsuccessful
+            if (monsterHealth < 90) {
+                monsterHealth = monsterHealth + 10;
+            } else {
+                monsterHealth = monsterHealth + (100 - monsterHealth);
+            }
         }
 
         if (monsterHealth == 0) {
