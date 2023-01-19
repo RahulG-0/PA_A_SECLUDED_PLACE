@@ -194,7 +194,7 @@ public class GameView extends JPanel {
 
         floorLevel.setText(Integer.toString(gameModel.numOfKeys + 1));
 
-        MonsterHealth.setBounds((int)1310+(1310*((100-gameModel.monsterHealth)/100)),1020,(int)600*(gameModel.monsterHealth/100),50);
+        MonsterHealth.setBounds((int)Math.round(1310+(1310*((100-gameModel.monsterHealth)/100))),1020,(int)Math.round(600*(gameModel.monsterHealth/100)),50);
 
         playerHealth.setBounds(10,1020,(int)Math.round(600*(gameModel.health/100)),50);
 

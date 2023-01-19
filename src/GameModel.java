@@ -18,7 +18,7 @@ public class GameModel {
     public double health = 100;
     public int smokeBombs = 0;
     private final int monsterInitHealth = 100;
-    public int monsterHealth = monsterInitHealth;
+    public double monsterHealth = monsterInitHealth;
 
     private String whichDirection; // What keyboard input the player gives
 
@@ -129,12 +129,16 @@ public class GameModel {
 
         if (monstDirection == 1) {
             monstAttackDirection = "FORWARD";
+            System.out.println("f");
         } else if (monstDirection == 2) {
             monstAttackDirection = "RIGHT";
+            System.out.println("r");
         } else if (monstDirection == 3) {
             monstAttackDirection = "BACKWARD";
+            System.out.println("b");
         } else if (monstDirection == 4) {
             monstAttackDirection = "LEFT";
+            System.out.println("l");
         }
     }
 
@@ -254,9 +258,6 @@ public class GameModel {
         }
 
         // GET USER SELECTION (whichDirection)
-
-        // TODO Consider deleting this if statement cuz it doesn't matter
-        // Just play the audio clip since the user's direction doesn't matter
         if(whichDirection != null){
             // Compares which directions the user can move and what they selected
             if (canMoveForward == true && whichDirection == forwardKeyBind) {
@@ -281,10 +282,11 @@ public class GameModel {
 
         if(!flip && flipV2){
             if (doesMonsterSpawn()) {
+                flip = false;
                 monsterAttack();
             } else{
                 displayDirections = false;
-                flip = false;
+                flip =false;
                 update();
             }
             flipV2 = false;
@@ -296,45 +298,33 @@ public class GameModel {
     public void monsterAttack() {
         // If the monster attack was unsuccessful, do defendSuccessful
         this.monsterAttackDirection();
-        // Play audio clip
-        // Start timer
-
-        // Compare which direction the user faces and which direction the monster is attacking from
-        // If the user is facing the right direction, enable the defend buttons
-        // If they clicked the button in time, do something
-        // Stop timer when button is pushed
-        // If they don't meet those requirements, defendSuccessful = false
-
-        // Checks if they met the requirements for the quick time event
-        // if () {
-        //     quickTimeGeneration();
-        // } else {
-        //     defendSuccessful = false;
-        // }
-        
-        // TODO Implement timer here (timer should be combination of facing direction and clickng button)
-        // All situations where the defense was unsuccessful
-
-        // If timer runs out, defend unsuccesful
-
+  
+        displayDefendButton = true;
         update();
         
         long targetTime =  java.lang.System.currentTimeMillis() + 5000;
         
         while (java.lang.System.currentTimeMillis() <= targetTime){
-            displayDefendButton = true;
             if (defendButton) {
                 if (monstAttackDirection == "FORWARD" && whichDirection != forwardKeyBind) {
                     defendSuccessful = false;
+                    displayDefendButton = false;
+                    flipV3 = true;
                     break;
                 } else if (monstAttackDirection == "RIGHT" && whichDirection != rightKeyBind) {
                     defendSuccessful = false;
+                    displayDefendButton = false;
+                    flipV3 = true;
                     break;
                 } else if (monstAttackDirection == "BACKWARD" && whichDirection != backwardsKeyBind) {
                     defendSuccessful = false;
+                    displayDefendButton = false;
+                    flipV3 = true;
                     break;
                 } else if (monstAttackDirection == "LEFT" && whichDirection != leftKeyBind) {
                     defendSuccessful = false;
+                    displayDefendButton = false;
+                    flipV3 = true;
                     break;
                 } else {
                     quickTimeState = true;
@@ -346,9 +336,10 @@ public class GameModel {
 
         if (!defendButton){
             defendSuccessful = false;
-            displayDefendButton = false;
-            update();
+            flipV3 = true;
         }
+        displayDefendButton = false;
+        defendButton = false;
         update();
 
         if(quickTimeState){
@@ -356,23 +347,28 @@ public class GameModel {
             randomise = true;
             update();
             randomise = false;
+            update();
 
-            targetTime =  java.lang.System.currentTimeMillis() + 5000;
+            targetTime =  java.lang.System.currentTimeMillis() + getAddTime(); 
 
             while(java.lang.System.currentTimeMillis() <= targetTime){
                 
                 if (amountClicked == numOfButtons){
                     defendSuccessful = true;
+                    update();
                     break;
                 }
                 update();
 
             }
             quickTimeState = false;
+            update();
 
             if (amountClicked != numOfButtons){
                 defendSuccessful = false;
             }
+
+            flipV3 = true;
         }
         
         update();
@@ -394,12 +390,11 @@ public class GameModel {
             health = health - 10;
 
             // Adds health for the monster if the defense was unsuccessful
-            if (monsterHealth < 90) {
+            if (monsterHealth <= 90) {
                 monsterHealth = monsterHealth + 10;
-                update();
+
             } else {
                 monsterHealth = monsterHealth + (100 - monsterHealth);
-                update();
             }
             update();
         }
@@ -417,33 +412,33 @@ public class GameModel {
 
         if (getGameMode() == "EASY") {
             if (getNumOfKeys() == 0) {
-                addTime = 7;
+                addTime = 7000;
             } else if (getNumOfKeys() == 1) {
-                addTime = 6;
+                addTime = 6000;
             } else if (getNumOfKeys() == 2) {
-                addTime = 6;
+                addTime = 6000;
             }
         } else if (getGameMode() == "MEDIUM") {
             if (getNumOfKeys() == 0) {
-                addTime = 6;
+                addTime = 6000;
             } else if (getNumOfKeys() == 1) {
-                addTime = 7;
+                addTime = 7000;
             } else if (getNumOfKeys() == 2) {
-                addTime = 8;
+                addTime = 8000;
             } else if (getNumOfKeys() == 3) {
-                addTime = 12;
+                addTime = 12000;
             }
         } else if (getGameMode() == "HARD") {
             if (getNumOfKeys() == 0) {
-                addTime = 7;
+                addTime = 7000;
             } else if (getNumOfKeys() == 1) {
-                addTime = 8;
+                addTime = 8000;
             } else if (getNumOfKeys() == 2) {
-                addTime = 10;
+                addTime = 10000;
             } else if (getNumOfKeys() == 3) {
-                addTime= 10;
+                addTime= 10000;
             } else if (getNumOfKeys() == 4) {
-                addTime= 8;
+                addTime= 8000;
             }
         }
 
