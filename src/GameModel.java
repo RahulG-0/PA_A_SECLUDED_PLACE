@@ -169,6 +169,7 @@ public class GameModel {
     new Runnable(){
         public void run(){
             while (!isGameOver()) {
+                // System.nanoTime();
                 // Keep the game going
                 walking();
     
@@ -197,8 +198,13 @@ public class GameModel {
         // Updates health for monster and player
         monsterDied = false;
         monsterHealth = monsterInitHealth + (getNumOfKeys() * 25);
-        health = health + (health/2);
+        if (health + (health /4) <=100){
+            health = health + (health/4);
+        }
         amountClicked = 0;
+        flip = false;
+        flipV2 = false;
+        flipV3 = false;
     }
 
     // Message for which directions the user can move in

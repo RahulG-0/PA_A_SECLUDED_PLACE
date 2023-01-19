@@ -24,7 +24,7 @@ public class buttonGameController implements ActionListener {
         for(int i = 0; i<18;i++){
             if(((JButton)aButton).toString().contains("text="+(i))){
                 gameModel.buttonVisible[i] = false;
-                System.out.println("bob");
+                // System.out.println("bob");
                 gameModel.amountClicked++;
             }
         }
