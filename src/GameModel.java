@@ -68,6 +68,8 @@ public class GameModel {
     
     public boolean[] buttonVisible = new boolean[18];
 
+    private MusicPlayer mPlayer = new MusicPlayer();
+
     // A boolean to check if the player can escape
     public boolean canEscape = true;
 
@@ -83,7 +85,7 @@ public class GameModel {
         this.health = health;
         this.smokeBombs = smokeBombs;
     }
-    
+
     public void addTotalModel(TotalModel totalModel){
         this.totalModel = totalModel;
     }
@@ -274,8 +276,8 @@ public class GameModel {
         if(whichDirection != null){
             // Compares which directions the user can move and what they selected
             if (canMoveForward == true && whichDirection == forwardKeyBind) {
-                // move forward
-                // play sound clip of walking
+                mPlayer.walkingSounds();
+                // while(mPlayer.walkClip.isActive()){}
                 flip = false;
                 flipV2 = true;
                 

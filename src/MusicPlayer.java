@@ -97,7 +97,9 @@ public class MusicPlayer {
             this.walkClip = AudioSystem.getClip();
             walkClip.open(inputStream);
             walkClip.start();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            
+        }
     }
 
     // Stops whichever audio clip is required to stop
