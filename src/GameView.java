@@ -84,7 +84,7 @@ public class GameView extends JPanel {
 
         this.setBounds(0,0,width,height); // setting the size of the game
 
-        this.defend.setBounds(800, 1020, 350, 50); // settng the size for the defend buttom
+        this.defend.setBounds((int)Math.round(width*0.416), (int)Math.round(height*0.944), (int)Math.round(width*0.182), (int)Math.round(height*0.046)); // settng the size for the defend buttom
 
         // setting the colour of the backround
         backGround.setBounds(0,0,width,height);
@@ -92,11 +92,11 @@ public class GameView extends JPanel {
         backGround.setOpaque(true);
 
         
-        playerHealth.setBounds(10,1020,600,50); // setting the location of player health
+        playerHealth.setBounds((int)Math.round(width*0.005),(int)Math.round(height*0.944),(int)Math.round(width*0.312),(int)Math.round(height*0.046)); // setting the location of player health
         playerHealth.setBackground(Color.RED); // setting colour of player health
         playerHealth.setOpaque(true);
 
-        MonsterHealth.setBounds(1310,1020,600,50); // setting the location of monster health
+        MonsterHealth.setBounds((int)Math.round(width*0.682),(int)Math.round(height*0.944),(int)Math.round(width*0.312),(int)Math.round(height*0.046)); // setting the location of monster health
         MonsterHealth.setBackground(new Color(170, 34, 34)); // setting colour of monster health
         MonsterHealth.setOpaque(true);
 
@@ -106,7 +106,7 @@ public class GameView extends JPanel {
         quicktimeButtonPannel.setOpaque(false);
 
         floorLevel.setText("9");
-        floorLevel.setBounds(1920-100,10,100,90);
+        floorLevel.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.009),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
         floorLevel.setForeground(new Color(255,255,255));
 
         try {
@@ -182,10 +182,10 @@ public class GameView extends JPanel {
         volume.setPaintLabels(true);
         volume.setForeground(new Color(139, 0, 0));
 
-        exitOptions.setBounds(10,10,150,90);
+        exitOptions.setBounds((int)Math.round(width*0.005),(int) Math.round(height*0.009),(int)Math.round(width*0.078),(int) Math.round(height*0.084));
         exitOptions.setForeground(new Color(139, 0, 0));
 
-        quitGame.setBounds(10,110,200,90);
+        quitGame.setBounds((int)Math.round(width*0.005),(int) Math.round(height*0.101),(int)Math.round(width*0.156),(int) Math.round(height*0.084));
         quitGame.setForeground(new Color(139, 0, 0));
 
         fowardKeybind.setText("Foward Keybind");

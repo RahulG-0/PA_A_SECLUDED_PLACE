@@ -197,7 +197,7 @@ public class TitleView extends JPanel {
         volume.setPaintLabels(true);
         volume.setForeground(new Color(139, 0, 0));
 
-        exitOptions.setBounds(10,10,150,90);
+        exitOptions.setBounds((int)Math.round(width*0.005),(int) Math.round(height*0.009),(int)Math.round(width*0.078),(int) Math.round(height*0.084));
         exitOptions.setForeground(new Color(139, 0, 0));
 
         fowardKeybind.setText("Foward Keybind");
