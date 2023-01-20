@@ -11,6 +11,10 @@ Make sure that monsterHealth is actually increasing (should take 5 turns to kill
 
 Make the buttons look nice
 
+Fix scaling
+
+Display smoke bombs
+
 Priorities:
 2. Monster health
 3. Add audio for walking

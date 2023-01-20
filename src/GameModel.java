@@ -5,7 +5,9 @@
 
 // Imports
 import java.awt.*;
+import java.io.FileWriter;
 import java.util.Timer;
+import java.io.*;
 
 public class GameModel {
 
@@ -73,6 +75,9 @@ public class GameModel {
     // A boolean to check if the player can escape
     public boolean canEscape = true;
 
+    // Gets the user's directory
+    private String directory = System.getProperty("user.dir");
+
     // Constructor
     public GameModel() {
         super();
@@ -110,6 +115,15 @@ public class GameModel {
     // Sets the current layout of the GUI
     public void setGUI(GameView currentView) {
         this.view = currentView;
+    }
+
+    public PrintWriter getPrintWriter(File file) {
+        PrintWriter output = null; ///////////////////////////////// MAY CAUSE NULL POINTER EXCEPTION
+        try {
+            output = new PrintWriter(file);
+        } catch (FileNotFoundException e) {}
+
+        return(output);
     }
 
     public boolean canMoveInDirection() {
@@ -214,6 +228,19 @@ public class GameModel {
         flipV2 = false;
         flipV3 = false;
 
+        // This outputs the information to the file
+        File saveFile = new File(directory + "\\src\\TextFiles\\SaveFile.txt");
+        File outputFile = new File(directory + "\\src\\TextFiles\\OutputFile.txt");
+
+        // Output to save file and output file
+        PrintWriter output = getPrintWriter(saveFile);
+        output.println(gameMode + "\n" + numOfKeys + "\n" + health + "\n" + smokeBombs + "\n" + monsterHealth);
+        output.close();
+
+        output = getPrintWriter(outputFile);
+        output.print("Game Mode: " + gameMode + "\nNumber of Keys: " + numOfKeys + "\nYour Health: " + health);
+        output.print("\nNumber of Smoke Bombs: " + smokeBombs);
+        output.close();
     }
 
     // Message for which directions the user can move in
@@ -439,6 +466,11 @@ public class GameModel {
         }
 
         if (monsterHealth == 0) {
+            mPlayer.monsterDeath();
+            long time = System.currentTimeMillis() + (mPlayer.monstClip.getMicrosecondLength()/1000);
+
+            while (System.currentTimeMillis() <= time) {}
+
             monsterDied = true;
             // Go into next floor and do whatever stuff
         }
