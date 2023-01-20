@@ -473,9 +473,9 @@ public class GameModel {
 
         if (monsterHealth == 0) {
             mPlayer.monsterDeath();
-            long time = System.currentTimeMillis() + (mPlayer.monstClip.getMicrosecondLength()/1000);
+            long monstDeathTime = System.currentTimeMillis() + (mPlayer.monstClip.getMicrosecondLength()/1000);
 
-            while (System.currentTimeMillis() <= time) {}
+            while (System.currentTimeMillis() <= monstDeathTime) {}
 
             monsterDied = true;
             // Go into next floor and do whatever stuff
