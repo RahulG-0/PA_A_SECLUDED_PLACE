@@ -5,7 +5,6 @@ import javax.sound.sampled.*;
 public class MusicPlayer {
 
     // Initializes clips
-    private GameModel gameModel = new GameModel();
     Clip clipButton;
     Clip clip;
     Clip gameClip;
@@ -56,17 +55,17 @@ public class MusicPlayer {
 
     // TODO Create instance of model to get the direction
     // Plays sound effect for which direction the monster is coming from
-    public void monstAttackPrepSounds() {
+    public void monstAttackPrepSounds(String dir) {
         AudioInputStream inputStream = null; /////////////////// MIGHT CREATE A NULL POINTER EXCEPTION
         
         try {
-            if (gameModel.monstAttackDirection.equals("FORWARD")) {
+            if (dir.equals("FORWARD")) {
                 inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningFront.wav"));
-            } else if (gameModel.monstAttackDirection.equals("LEFT")) {
+            } else if (dir.equals("LEFT")) {
                 inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningLeft.wav"));
-            } else if (gameModel.monstAttackDirection.equals("RIGHT")) {
+            } else if (dir.equals("RIGHT")) {
                 inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningRight.wav"));
-            } else if (gameModel.monstAttackDirection.equals("BACKWARD")) {
+            } else if (dir.equals("BACKWARD")) {
                 inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningBack.wav"));
             }
 
