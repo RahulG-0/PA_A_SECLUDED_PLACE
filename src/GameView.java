@@ -19,6 +19,7 @@ public class GameView extends JPanel {
     private GameModel gameModel; // Instance of model
     private TitleModel titleModel;
     private MusicPlayer mPlayer;
+    private VolumeController volumeModel;
 
     private JSlider volume = new JSlider(JSlider.HORIZONTAL,-20, 6,0);
     private JTextField cFowardKeybind = new JTextField("w");
@@ -31,6 +32,7 @@ public class GameView extends JPanel {
     private JLabel rightKeybind = new JLabel("Right Keybind");
     private JLabel leftKeybind = new JLabel("Left Keybind"); 
     private JLabel volumeLable = new JLabel("Volume"); 
+    private JButton quitGame = new JButton("Quit_Game");
 
     private JButton exitOptions = new JButton("Exit");
 
@@ -142,6 +144,7 @@ public class GameView extends JPanel {
             rightKeybind.setFont(LableSizedFont);
             volumeLable.setFont(LableSizedFont);
             exitOptions.setFont(LableSizedFont);
+            quitGame.setFont(LableSizedFont);
 
             Font font2 = Font.createFont(Font.TRUETYPE_FONT, fontFile);
             Font volumeFont = font2.deriveFont(width*0.007f);
@@ -182,6 +185,9 @@ public class GameView extends JPanel {
         exitOptions.setBounds(10,10,150,90);
         exitOptions.setForeground(new Color(139, 0, 0));
 
+        quitGame.setBounds(10,110,200,90);
+        quitGame.setForeground(new Color(139, 0, 0));
+
         fowardKeybind.setText("Foward Keybind");
         backwardsKeybind.setText("Backward Keybind");
 
@@ -197,6 +203,7 @@ public class GameView extends JPanel {
         optionsPanel.add(volume);
         optionsPanel.add(volumeLable);
         optionsPanel.add(exitOptions);
+        optionsPanel.add(quitGame);
 
         optionsPanel.setVisible(false);
 
@@ -249,7 +256,7 @@ public class GameView extends JPanel {
 
     public void addActionForArray(){
         for(int i = 0;i<18;i++){
-            buttons[i].addActionListener(new buttonGameController(gameModel, buttons[i]));
+            buttons[i].addActionListener(new buttonGameController(gameModel,titleModel, buttons[i]));
         }
     }
 
@@ -258,15 +265,18 @@ public class GameView extends JPanel {
     // Registers controllers
     private void registerControllers() {
         //
-        buttonGameController bc = new buttonGameController(this.gameModel, defend);
+        buttonGameController bc = new buttonGameController(this.gameModel, titleModel,defend);
         defend.addActionListener(bc);
 
         keyboardInput keyboardInput = new keyboardInput(this.gameModel);
         this.addKeyListener(keyboardInput);
         this.setFocusable(true);
 
-        buttonGameController exitButtonGameController = new buttonGameController(this.gameModel, exitOptions);
+        buttonGameController exitButtonGameController = new buttonGameController(this.gameModel,titleModel,exitOptions);
         exitOptions.addActionListener(exitButtonGameController);
+
+        buttonGameController quiButtonGameController = new buttonGameController(this.gameModel,titleModel,quitGame);
+        quitGame.addActionListener(quiButtonGameController);
         
         addActionForArray();
 
@@ -294,6 +304,9 @@ public class GameView extends JPanel {
                 gameModel.leftKeyBind = cLeftKeybind.getText().toUpperCase();
             }
           });
+
+        volumeModel = new VolumeController(mPlayer, volume);
+        volume.addChangeListener(volumeModel);
 
     }
 

@@ -314,9 +314,7 @@ public class TitleView extends JPanel {
         // Accesses the save file
         try {
             saveFile = new Scanner(sFile);
-        } catch (FileNotFoundException ex) {
-            System.out.println("Error.");
-        }
+        } catch (FileNotFoundException ex) {}
 
         // If the file is blank meaning the player hasn't played a game yet
         if (!saveFile.hasNext()) {

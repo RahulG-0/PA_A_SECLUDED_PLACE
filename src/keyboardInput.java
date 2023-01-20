@@ -39,8 +39,6 @@ public class keyboardInput implements KeyListener{
 
         }
 
-        System.out.println(KeyEvent.getKeyText(e.getKeyCode()));
-
         gModel.update();
 
     }

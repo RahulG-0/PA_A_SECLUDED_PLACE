@@ -151,16 +151,12 @@ public class GameModel {
 
         if (monstDirection == 1) {
             monstAttackDirection = "FORWARD";
-            System.out.println("f");
         } else if (monstDirection == 2) {
             monstAttackDirection = "RIGHT";
-            System.out.println("r");
         } else if (monstDirection == 3) {
             monstAttackDirection = "BACKWARD";
-            System.out.println("b");
         } else if (monstDirection == 4) {
             monstAttackDirection = "LEFT";
-            System.out.println("l");
         }
     }
 
@@ -303,20 +299,25 @@ public class GameModel {
         if(whichDirection != null){
             // Compares which directions the user can move and what they selected
             if (canMoveForward == true && whichDirection == forwardKeyBind) {
+
+
                 mPlayer.walkingSounds();
-                // while(mPlayer.walkClip.isActive()){}
+                long time = java.lang.System.currentTimeMillis() + (mPlayer.walkClip.getMicrosecondLength()/1000);
+                while(java.lang.System.currentTimeMillis()<= time){}
                 flip = false;
                 flipV2 = true;
                 
             } else if (canMoveRight == true && whichDirection == rightKeyBind) {
-                // move right
-                // play sound clip of walking
+                mPlayer.walkingSounds();
+                long time = java.lang.System.currentTimeMillis() + (mPlayer.walkClip.getMicrosecondLength()/1000);
+                while(java.lang.System.currentTimeMillis()<= time){}
                 flip = false;
                 flipV2 = true;
                 
             } else if (canMoveLeft == true && whichDirection == leftKeyBind) {
-                // move left
-                // play sound clip of walking
+                mPlayer.walkingSounds();
+                long time = java.lang.System.currentTimeMillis() + (mPlayer.walkClip.getMicrosecondLength()/1000);
+                while(java.lang.System.currentTimeMillis()<= time){}
                 flip = false;
                 flipV2 = true;
             }
@@ -340,6 +341,12 @@ public class GameModel {
     public void monsterAttack() {
         // If the monster attack was unsuccessful, do defendSuccessful
         this.monsterAttackDirection();
+
+        mPlayer.monstAttackPrepSounds(this.monstAttackDirection);
+
+        long time = java.lang.System.currentTimeMillis() + (mPlayer.monstPrepClip.getMicrosecondLength()/1000);
+        
+        while(java.lang.System.currentTimeMillis()<= time){}
   
         displayDefendButton = true;
         update();
@@ -404,7 +411,6 @@ public class GameModel {
                 if (amountClicked == numOfButtons){
                     defendSuccessful = true;
                     update();
-                    System.out.println("got here");
                     break;
                 }
                 update();
