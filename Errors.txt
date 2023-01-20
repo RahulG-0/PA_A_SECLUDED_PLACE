@@ -1,25 +1,18 @@
 Priorities:
-2. Monster health
-3. Add audio for walking - Done
-4. Write to text files - Done but just confirm
-5. Game Over screen
-6. Optional features
+- Monster health
+- Game Over screen
+- Fix scaling
+- Display smoke bombs
+- Format
+- How To Play button is not working on title screen
+
+Test:
+- Make sure that it writes to OutputFile after the each round
+- Make sure last monster attack works proper
 
 Optional Features:
-How To Play button is not working on title screen
-Make it so that when entering keybinds, it can only be a single character
-
-Last monster attack - Might be done
-
-Format
-
-Make sure that monsterHealth is actually increasing (should take 5 turns to kill monster on 2nd floor)
-
-Make the buttons look nice
-
-Fix scaling
-
-Display smoke bombs
+- Make it so that when entering keybinds, it can only be a single character
+- Make the buttons look nice
 
 Fix audio for switching from GameModel to TitleModel
 
@@ -30,3 +23,4 @@ Fix the text at the top
 Make the text at the top acc update
 
 Game ambiance .start is being called twice
+    - This is because if the save file is empty, when new game is pressed it starts audio

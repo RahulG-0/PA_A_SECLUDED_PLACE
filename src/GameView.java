@@ -39,7 +39,6 @@ public class GameView extends JPanel {
     private JLabel optionsTitle = new JLabel("Options");
     private JPanel optionsPanel = new JPanel();
 
-
     private JLabel backGround = new JLabel(); // sets the backround of the game
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // getting the screen sice of the users device
@@ -59,6 +58,8 @@ public class GameView extends JPanel {
     private JLabel options = new JLabel("",SwingConstants.CENTER);
 
     private boolean once = true;
+
+    private JLabel smokeBombs = new JLabel("");
 
     // Constructor
     public GameView(GameModel gameModel,TitleModel titleModel) {
@@ -105,7 +106,7 @@ public class GameView extends JPanel {
         quicktimeButtonPannel.setVisible(false);
         quicktimeButtonPannel.setOpaque(false);
 
-        floorLevel.setText("9");
+        floorLevel.setText("");
         floorLevel.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.009),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
         floorLevel.setForeground(new Color(255,255,255));
 
@@ -116,6 +117,17 @@ public class GameView extends JPanel {
             floorLevel.setFont(sizedFont);
         } 
         catch (Exception e) {}
+
+        // Smoke Bombs
+        smokeBombs.setText("");
+        smokeBombs.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.194),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
+        smokeBombs.setForeground(new Color(255,255,255));
+
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            Font sizedFont = font.deriveFont(width*0.052f);
+            smokeBombs.setFont(sizedFont);
+        } catch (Exception e) {}
 
         defend.setVisible(false);
 
@@ -371,6 +383,7 @@ public class GameView extends JPanel {
             healthBarWidth = (int)Math.round(600*(gameModel.monsterHealth/200));
         }
 
+        // TODO Fix the monster health scaling
         MonsterHealth.setBounds(1910-healthBarWidth, 1020, healthBarWidth, 50);
 
         playerHealth.setBounds(10,1020,(int)Math.round(600*(gameModel.health/100)),50);

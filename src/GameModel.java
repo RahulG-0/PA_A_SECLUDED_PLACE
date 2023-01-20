@@ -208,7 +208,6 @@ public class GameModel {
         this.whichDirection = direction;
     }
 
-    // TODO We may need this to initialize each floor level
     // Start the floor
     public void startFloor() {
         // Updates health for monster and player
