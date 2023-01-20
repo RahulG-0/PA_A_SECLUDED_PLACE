@@ -47,10 +47,10 @@ public class TitleView extends JPanel {
 
     private JSlider volume = new JSlider(JSlider.HORIZONTAL,-20, 6,0);
 
-    private JTextField cFowardKeybind = new JTextField("w");
-    private JTextField cBackwardsKeybind = new JTextField("s");
-    private JTextField cRightKeybind = new JTextField("d");
-    private JTextField cLeftKeybind = new JTextField("a");
+    private JTextField cFowardKeybind = new JTextField();
+    private JTextField cBackwardsKeybind = new JTextField();
+    private JTextField cRightKeybind = new JTextField();
+    private JTextField cLeftKeybind = new JTextField();
 
     private JLabel fowardKeybind = new JLabel("Foward Keybind");
     private JLabel backwardsKeybind = new JLabel("Backward Keybing");
