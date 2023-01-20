@@ -82,6 +82,8 @@ public class GameView extends JPanel {
         int width = (int)this.screenSize.getWidth(); 
         int height = (int)this.screenSize.getHeight();
 
+        System.out.println((int)Math.round(width*0.005)+" "+ (int)Math.round(height*0.944));
+
         this.setBounds(0,0,width,height); // setting the size of the game
 
         this.defend.setBounds((int)Math.round(width*0.416), (int)Math.round(height*0.944), (int)Math.round(width*0.182), (int)Math.round(height*0.046)); // settng the size for the defend buttom
@@ -313,6 +315,9 @@ public class GameView extends JPanel {
     // Updates the GUI based on what happens in the game
     public void update() {
 
+        int width = (int)this.screenSize.getWidth(); 
+        int height = (int)this.screenSize.getHeight();
+
 
         if (titleModel.startGame && once == true){
             once = false;
@@ -360,20 +365,20 @@ public class GameView extends JPanel {
         // Changes the health bar width for the monster depending on the total health
         int healthBarWidth = 0;
         if (gameModel.numOfKeys == 0) {
-            healthBarWidth = (int)Math.round(600*(gameModel.monsterHealth/100));
+            healthBarWidth = (int)Math.round((width*0.312)*(gameModel.monsterHealth/100));
         } else if (gameModel.numOfKeys == 1) {
-            healthBarWidth = (int)Math.round(600*(gameModel.monsterHealth/125));
+            healthBarWidth = (int)Math.round((width*0.312)*(gameModel.monsterHealth/125));
         } else if (gameModel.numOfKeys == 2) {
-            healthBarWidth = (int)Math.round(600*(gameModel.monsterHealth/150));
+            healthBarWidth = (int)Math.round((width*0.312)*(gameModel.monsterHealth/150));
         } else if (gameModel.numOfKeys == 3) {
-            healthBarWidth = (int)Math.round(600*(gameModel.monsterHealth/175));
+            healthBarWidth = (int)Math.round((width*0.312)*(gameModel.monsterHealth/175));
         } else if (gameModel.numOfKeys == 4) {
-            healthBarWidth = (int)Math.round(600*(gameModel.monsterHealth/200));
+            healthBarWidth = (int)Math.round((width*0.312)*(gameModel.monsterHealth/200));
         }
 
-        MonsterHealth.setBounds(1910-healthBarWidth, 1020, healthBarWidth, 50);
+        MonsterHealth.setBounds((int)Math.round(width*0.682)-healthBarWidth, (int)Math.round(height*0.944), healthBarWidth, 50);
 
-        playerHealth.setBounds(10,1020,(int)Math.round(600*(gameModel.health/100)),50);
+        playerHealth.setBounds((int)Math.round(width*0.005),(int)Math.round(height*0.944),(int)Math.round((width*0.312)*(gameModel.health/100)),50);
 
         cFowardKeybind.setText(gameModel.forwardKeyBind);
         cBackwardsKeybind.setText(gameModel.backwardsKeyBind);
