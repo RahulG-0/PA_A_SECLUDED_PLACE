@@ -7,6 +7,7 @@ public class TitleModel {
 
     // Creates instance variables
     private TitleView view; // Instance of TitleView
+    private GameModel gameModel;
     public String userSelection = ""; // Stores which button the user selected
     public String gameDifficulty = ""; // Stores difficulty chosen if new game was selected
 
@@ -65,11 +66,22 @@ public class TitleModel {
             gameDifficulty = "Hard";
             startGame = true;
 
-        } else if(option.equals("Exit")){
+        } else if (option.equals("Exit")){
+
             userSelection = "Quit";
+
+        } else if (option.equals("How To Play")){
+            userSelection = "info";
         }
 
         this.update();
+    }
+
+    public String getGameInfo(){
+        
+        String str = "Move: The game will provide a list of directions to move in. Use keybinds to move.\nDefend: Face the direction you hear the audio coming from, click defend and respond to the quick time event.\nUsing Smoke Bombs: If your defense was unsuccessful you will be given an option to use Smoke Bombs";
+        
+        return str;
     }
 
     // Updates the GUI

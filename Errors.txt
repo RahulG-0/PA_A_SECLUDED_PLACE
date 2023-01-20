@@ -1,0 +1,32 @@
+How To Play button is not working on title screen
+Make it so that when entering keybinds, it can only be a single character
+
+how to fix music
+
+get music class from total view
+
+stop game clip at the start of title view
+
+when going to game set game ambiance to true
+
+display directions to fase
+
+Write to save file (also rename the folder to TextFiles and add the output text file in there as well)
+
+set the dipplay buttons to true only once per canFileLoad
+
+in game model make monster health a double
+
+Make monster health not shake
+
+Last monster attack
+
+Fix directions output
+
+Format and get rid of flipV3
+
+Priorities:
+2. Monster health
+3. Add audio for walking
+4. Game Over screen
+5. Optional features

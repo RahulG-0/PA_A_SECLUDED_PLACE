@@ -6,6 +6,8 @@
 // Imports
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,7 +21,7 @@ public class TitleView extends JPanel {
     // Creates instance variables
     private TitleModel titleModel; // Instance of model
     private MusicPlayer mPlayer;
-    private VolumeModel volumeModel;
+    private VolumeController volumeModel;
 
     private JLabel loadingScreenImage = new JLabel(); // Background image
     private JLabel title = new JLabel("A Secluded Place"); // Title
@@ -27,12 +29,16 @@ public class TitleView extends JPanel {
     private JButton newGame = new JButton("New Game"); // Buttons on GUI
     private JButton loadGame = new JButton("Continue Game");
     private JButton settings = new JButton("Options");
+    private JButton howTo = new JButton("How To Play");
     private JButton quit = new JButton("Quit");
     private JPanel buttonsPanel = new JPanel(); // JPanel to store buttons
 
     // Error message for if the save file has not been started or is completed
     private JLabel startNewGame = new JLabel("No game in session. Please start a new game.");
     
+    // private JLabel howToPlay = new JLabel(titleModel.getGameInfo());
+    private JLabel howToPlay = new JLabel("Move: The game will provide a list of directions to move in. Use keybinds to move.\nDefend: Face the direction you hear the audio coming from, click defend and respond to the quick time event.\nUsing Smoke Bombs: If your defense was unsuccessful you will be given an option to use Smoke Bombs");
+
     // Difficulty settings
     private JButton easy = new JButton("Easy"); 
     private JButton medium = new JButton("Medium");
@@ -40,10 +46,11 @@ public class TitleView extends JPanel {
     private JPanel gameModePanel = new JPanel(); // Stores buttons for difficulty
 
     private JSlider volume = new JSlider(JSlider.HORIZONTAL,-20, 6,0);
-    private JTextField cFowardKeybind = new JTextField();
-    private JTextField cBackwardsKeybind = new JTextField();
-    private JTextField cRightKeybind = new JTextField();
-    private JTextField cLeftKeybind = new JTextField();
+
+    private JTextField cFowardKeybind = new JTextField("w");
+    private JTextField cBackwardsKeybind = new JTextField("s");
+    private JTextField cRightKeybind = new JTextField("d");
+    private JTextField cLeftKeybind = new JTextField("a");
 
     private JLabel fowardKeybind = new JLabel("Foward Keybind");
     private JLabel backwardsKeybind = new JLabel("Backward Keybing");
@@ -74,6 +81,9 @@ public class TitleView extends JPanel {
         this.registerControllers();
         this.update();
         this.mPlayer.music();
+        this.mPlayer.gameMusic();
+        this.mPlayer.stop(mPlayer.gameClip);
+        // this.mPlayer.stop(mPlayer.gameClip);
     }
 
     // Creates the initial layout of the GUI
@@ -110,14 +120,22 @@ public class TitleView extends JPanel {
         // Adds the buttons to the buttons panel
         buttonsPanel.setBounds((int)Math.round(width*0.416),(int)Math.round(height*0.462),(int)Math.round(width*0.156),(int)Math.round(height*0.509));
         // buttonsPanel.setBounds(800,500,300,550);
-        buttonsPanel.setLayout(new GridLayout(4, 1));
+        buttonsPanel.setLayout(new GridLayout(5, 1));
         buttonsPanel.add(newGame);
         buttonsPanel.add(loadGame);
+        buttonsPanel.add(howTo);
         buttonsPanel.add(settings);
         buttonsPanel.add(quit);
 
-
+        // Displays the error message if the user needs to start a new game
         startNewGame.setVisible(false);
+        startNewGame.setForeground(new Color(255, 255, 255));
+        startNewGame.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.531),(int)Math.round(width*0.364),(int)Math.round(height*0.185));
+
+        // Displays the instructions on how to play
+        howToPlay.setVisible(false);
+        howToPlay.setForeground(new Color(255, 255, 255));
+        howToPlay.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.531),(int)Math.round(width*0.364),(int)Math.round(height*0.185));
 
         //
         gameModePanel.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.462),(int)Math.round(width*0.104),(int)Math.round(height*0.185));
@@ -128,7 +146,7 @@ public class TitleView extends JPanel {
         optionsPanel.setBounds(0,0,width,height);
         optionsPanel.setBackground(new Color(20,20,20,20));
 
-        optionsTitle.setBounds(750,100,(int)Math.round(width*0.625),(int)Math.round(height*0.092)); // setting scaling for Options title
+        optionsTitle.setBounds((int)Math.round(width*0.390),(int)Math.round(height*0.092),(int)Math.round(width*0.625),(int)Math.round(height*0.092)); // setting scaling for Options title
         optionsTitle.setForeground(new Color(139, 0, 0));
 
         try {
@@ -138,7 +156,7 @@ public class TitleView extends JPanel {
             optionsTitle.setFont(sizedFont);
 
             Font font1 = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-            Font LableSizedFont = font1.deriveFont(30f); // original size 30
+            Font LableSizedFont = font1.deriveFont(width*0.015f); // original size 30
 
             fowardKeybind.setFont(LableSizedFont);
             backwardsKeybind.setFont(LableSizedFont);
@@ -148,31 +166,31 @@ public class TitleView extends JPanel {
             exitOptions.setFont(LableSizedFont);
 
             Font font2 = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-            Font volumeFont = font2.deriveFont(15f);
+            Font volumeFont = font2.deriveFont(width*0.007f);
 
             volume.setFont(volumeFont);
         } 
         catch (Exception e) {}
 
-        cFowardKeybind.setBounds(1300, 300, 100, 50);
-        fowardKeybind.setBounds(500, 280, 300, 100);
+        cFowardKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.277), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
+        fowardKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.259), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         fowardKeybind.setForeground(new Color(139, 0, 0));
 
-        cBackwardsKeybind.setBounds(1300, 400, 100, 50);
-        backwardsKeybind.setBounds(500, 380, 400, 100);
+        cBackwardsKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.370), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
+        backwardsKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.351), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         backwardsKeybind.setForeground(new Color(139, 0, 0));
 
-        cLeftKeybind.setBounds(1300, 500, 100, 50);
-        leftKeybind.setBounds(500, 480, 400, 100);
+        cLeftKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.462), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
+        leftKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.444), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         leftKeybind.setForeground(new Color(139, 0, 0));
 
-        cRightKeybind.setBounds(1300, 600, 100, 50);
-        rightKeybind.setBounds(500, 580, 400, 100);
+        cRightKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.555), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
+        rightKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.537), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         rightKeybind.setForeground(new Color(139, 0, 0));
 
-        volumeLable.setBounds(890, 680, 400, 50);
+        volumeLable.setBounds((int)Math.round(width*0.463), (int) Math.round(height*0.629), (int)Math.round(width*0.208), (int) Math.round(height*0.046));
         volumeLable.setForeground(new Color(139, 0, 0));
-        volume.setBounds(500, 780, 900, 50);
+        volume.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.722), (int)Math.round(width*0.468), (int) Math.round(height*0.046));
         volume.setMajorTickSpacing(2);
         volume.setMinorTickSpacing(1);
         volume.setPaintTicks(true);
@@ -184,6 +202,11 @@ public class TitleView extends JPanel {
 
         fowardKeybind.setText("Foward Keybind");
         backwardsKeybind.setText("Backward Keybind");
+
+        cFowardKeybind.setText(gameModel.forwardKeyBind);
+        cBackwardsKeybind.setText(gameModel.backwardsKeyBind);
+        cLeftKeybind.setText(gameModel.leftKeyBind);
+        cRightKeybind.setText(gameModel.rightKeyBind);
 
         optionsPanel.add(optionsTitle);
         optionsPanel.add(cFowardKeybind);
@@ -224,14 +247,41 @@ public class TitleView extends JPanel {
         this.loadGame.addActionListener(controller);
         this.settings.addActionListener(controller);
         this.quit.addActionListener(controller);
+        this.howTo.addActionListener(controller);
 
         this.easy.addActionListener(controller);
         this.medium.addActionListener(controller);
         this.hard.addActionListener(controller);
         this.exitOptions.addActionListener(controller);
 
-        volumeModel = new VolumeModel(mPlayer, volume);
+        volumeModel = new VolumeController(mPlayer, volume);
         volume.addChangeListener(volumeModel);
+
+        cFowardKeybind.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.forwardKeyBind = cFowardKeybind.getText().toUpperCase();
+            }
+          });
+        cBackwardsKeybind.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.backwardsKeyBind = cBackwardsKeybind.getText().toUpperCase();
+            }
+          });
+        cRightKeybind.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.rightKeyBind = cRightKeybind.getText().toUpperCase();
+            }
+          });
+        cLeftKeybind.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.leftKeyBind = cLeftKeybind.getText().toUpperCase();
+            }
+          });
+
     }
 
     // This checks if the save file can be used for game information
@@ -241,7 +291,7 @@ public class TitleView extends JPanel {
         String gameMode = ""; // Information for game
         int numOfKeys = 0;
         int health = 100;
-        int flashbangs = 0;
+        int smokeBombs = 0;
         int counter = 0; // Counter to help transfer information from file to variables
         boolean canLoad = false;
 
@@ -254,7 +304,8 @@ public class TitleView extends JPanel {
 
         // If the file is blank meaning the player hasn't played a game yet
         if (!saveFile.hasNext()) {
-
+            
+            gameModePanel.setVisible(false);
             startNewGame.setVisible(true);
 
         } else {
@@ -267,14 +318,17 @@ public class TitleView extends JPanel {
                 } else if (counter == 2) {
                     health = Integer.parseInt(saveFile.next());
                 } else if (counter == 3) {
-                    flashbangs = Integer.parseInt(saveFile.next());
+                    smokeBombs = Integer.parseInt(saveFile.next());
                 }
 
                 counter++;
             }
 
             // Passes the information to the GameModel and sets canLoad to true
-            this.gameModel.SetInfo(gameMode, numOfKeys, health, flashbangs);
+            this.gameModel.setInfo(gameMode, numOfKeys, health, smokeBombs);
+            buttonsPanel.setVisible(false);
+            this.mPlayer.stop(this.mPlayer.clip);
+            this.mPlayer.gameMusic();
             this.gameModel.update();
             canLoad = true;
         }
@@ -294,37 +348,47 @@ public class TitleView extends JPanel {
     // Updates the GUI with the answer
     public void update() {
         // Updates the GUI based on which button the user selects
+        buttonsPanel.setVisible(true);
+
         if (this.titleModel.userSelection.equals("new")) {
 
             // Displays buttons to select game mode
             startNewGame.setVisible(false);
+            howToPlay.setVisible(false);
             gameModePanel.setVisible(true);
 
             // Creates the game if the user has selected a game difficulty
             if (this.titleModel.gameDifficulty.equals("Easy")) {
                 gameModePanel.setVisible(false);
-                this.gameModel.SetInfo("Easy", 0, 100, 3);
+                this.gameModel.setInfo("EASY", 0, 100, 3);
                 this.gameModel.update();
-                this.mPlayer.stop();
+                this.mPlayer.stop(mPlayer.clip);
+                this.mPlayer.gameMusic();
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
                 gameModePanel.setVisible(false);
-                this.gameModel.SetInfo("Medium", 0, 100, 2);
+                this.gameModel.setInfo("MEDIUM", 0, 100, 2);
                 this.gameModel.update();
-                this.mPlayer.stop();
+                this.mPlayer.stop(mPlayer.clip);
+                this.mPlayer.gameMusic();
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
                 gameModePanel.setVisible(false);
-                this.gameModel.SetInfo("Hard", 0, 100, 1);
+                this.gameModel.setInfo("HARD", 0, 100, 1);
                 this.gameModel.update();
-                this.mPlayer.stop();
+                this.mPlayer.stop(mPlayer.clip);
+                this.mPlayer.gameMusic();
             }
             
         } else if (this.titleModel.userSelection.equals("load")) {
 
             // Checks to see if the file can be loaded
-            gameModePanel.setVisible(false);
             canFileLoad();
-            this.mPlayer.stop();
 
+        } else if (this.titleModel.userSelection.equals("info")) {
+
+            startNewGame.setVisible(false);
+            gameModePanel.setVisible(false);
+            howToPlay.setVisible(true);
+        
         } else if (this.titleModel.userSelection.equals("settings")) {
 
             // setting settings to visible
@@ -333,20 +397,26 @@ public class TitleView extends JPanel {
             gameModePanel.setVisible(false);
             buttonsPanel.setVisible(false);
             startNewGame.setVisible(false);
+            howToPlay.setVisible(false);
 
 
         } else if (this.titleModel.userSelection.equals("exit")) {
             
             // Closes the program
-            this.mPlayer.stop();
+            this.mPlayer.stop(mPlayer.clip);
+            this.mPlayer.stop(mPlayer.gameClip);
             Window win = SwingUtilities.getWindowAncestor(this);
             win.dispose();
         } else if(this.titleModel.userSelection.equals("Quit")){
             optionsPanel.setVisible(false);
             title.setVisible(true);
             buttonsPanel.setVisible(true);
-            startNewGame.setVisible(true);
+            startNewGame.setVisible(false);
         }
-    }
+        cFowardKeybind.setText(gameModel.forwardKeyBind);
+        cBackwardsKeybind.setText(gameModel.backwardsKeyBind);
+        cLeftKeybind.setText(gameModel.leftKeyBind);
+        cRightKeybind.setText(gameModel.rightKeyBind);
+    }// end of update
     
 } // Closes class
