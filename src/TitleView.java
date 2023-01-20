@@ -306,8 +306,9 @@ public class TitleView extends JPanel {
         Scanner saveFile = null;
         String gameMode = ""; // Information for game
         int numOfKeys = 0;
-        int health = 100;
+        double health = 100;
         int smokeBombs = 0;
+        double monsterHealth = 100;
         int counter = 0; // Counter to help transfer information from file to variables
         boolean canLoad = false;
 
@@ -330,16 +331,20 @@ public class TitleView extends JPanel {
                 } else if (counter == 1) {
                     numOfKeys = Integer.parseInt(saveFile.next());
                 } else if (counter == 2) {
-                    health = Integer.parseInt(saveFile.next());
+                    health = Double.parseDouble(saveFile.next());
+                    // health = Integer.parseInt(saveFile.next());
                 } else if (counter == 3) {
                     smokeBombs = Integer.parseInt(saveFile.next());
+                } else if (counter == 4) {
+                    // monsterHealth = Integer.parseInt(saveFile.next());
+                    monsterHealth = Double.parseDouble(saveFile.next());
                 }
 
                 counter++;
             }
 
             // Passes the information to the GameModel and sets canLoad to true
-            this.gameModel.setInfo(gameMode, numOfKeys, health, smokeBombs);
+            this.gameModel.setInfo(gameMode, numOfKeys, health, smokeBombs, monsterHealth);
             buttonsPanel.setVisible(false);
             this.mPlayer.stop(this.mPlayer.clip);
             this.mPlayer.gameMusic();
@@ -374,19 +379,19 @@ public class TitleView extends JPanel {
             // Creates the game if the user has selected a game difficulty
             if (this.titleModel.gameDifficulty.equals("Easy")) {
                 gameModePanel.setVisible(false);
-                this.gameModel.setInfo("EASY", 0, 100, 3);
+                this.gameModel.setInfo("EASY", 0, 100, 3, 100);
                 this.gameModel.update();
                 this.mPlayer.stop(mPlayer.clip);
                 this.mPlayer.gameMusic();
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
                 gameModePanel.setVisible(false);
-                this.gameModel.setInfo("MEDIUM", 0, 100, 2);
+                this.gameModel.setInfo("MEDIUM", 0, 100, 2, 100);
                 this.gameModel.update();
                 this.mPlayer.stop(mPlayer.clip);
                 this.mPlayer.gameMusic();
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
                 gameModePanel.setVisible(false);
-                this.gameModel.setInfo("HARD", 0, 100, 1);
+                this.gameModel.setInfo("HARD", 0, 100, 1, 100);
                 this.gameModel.update();
                 this.mPlayer.stop(mPlayer.clip);
                 this.mPlayer.gameMusic();
