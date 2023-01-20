@@ -5,6 +5,7 @@ import javax.sound.sampled.*;
 public class MusicPlayer {
 
     // Initializes clips
+    private GameModel gameModel = new GameModel();
     Clip clipButton;
     Clip clip;
     Clip gameClip;
@@ -53,20 +54,46 @@ public class MusicPlayer {
         } catch (Exception e) {}
     }
 
-    // TODO Update classpaths for these
-    // Sound effects for monster
+    // TODO Create instance of model to get the direction
+    // Plays sound effect for which direction the monster is coming from
     public void monstAttackPrepSounds() {
-        //
+        AudioInputStream inputStream = null; /////////////////// MIGHT CREATE A NULL POINTER EXCEPTION
+        
+        try {
+            if (gameModel.monstAttackDirection.equals("FORWARD")) {
+                inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningFront.wav"));
+            } else if (gameModel.monstAttackDirection.equals("LEFT")) {
+                inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningLeft.wav"));
+            } else if (gameModel.monstAttackDirection.equals("RIGHT")) {
+                inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningRight.wav"));
+            } else if (gameModel.monstAttackDirection.equals("BACKWARD")) {
+                inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningBack.wav"));
+            }
+
+            this.monstPrepClip = AudioSystem.getClip();
+            monstPrepClip.open(inputStream);
+            monstPrepClip.start();
+        } catch (Exception e) {}
     }
 
-    public void monsterSounds() {
-        //
+    // Monster death sound effect
+    public void monsterDeath() {
+        try {
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\MonsterDeath.wav"));
+            this.monstClip = AudioSystem.getClip();
+            monstClip.open(inputStream);
+            monstClip.start();
+        } catch (Exception e) {}
     }
 
     // Sound effect for walking
     public void walkingSounds() {
+        // MAYBE HAVE A RANDOM NUMBER GENERATOR IN HERE
+        // AND CYCLE THROUGH A FEW DIFFERENT TYPES OF WALKING NOISES
+        int randNum = (int)(Math.round(((Math.random() * 2) + 1)));
+        
         try {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\Walking.wav"));
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\Walking" + randNum + ".wav"));
             this.walkClip = AudioSystem.getClip();
             walkClip.open(inputStream);
             walkClip.start();
