@@ -260,25 +260,41 @@ public class TitleView extends JPanel {
         cFowardKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModel.forwardKeyBind = cFowardKeybind.getText().toUpperCase();
+                if (gameModel.forwardKeyBind == gameModel.backwardsKeyBind || gameModel.forwardKeyBind == gameModel.rightKeyBind || gameModel.forwardKeyBind == gameModel.leftKeyBind) {
+                    cFowardKeybind.selectAll();
+                } else {
+                    gameModel.forwardKeyBind = cFowardKeybind.getText().toUpperCase();
+                }
             }
           });
         cBackwardsKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModel.backwardsKeyBind = cBackwardsKeybind.getText().toUpperCase();
+                if (gameModel.backwardsKeyBind == gameModel.forwardKeyBind || gameModel.backwardsKeyBind == gameModel.rightKeyBind || gameModel.backwardsKeyBind == gameModel.leftKeyBind) {
+                    cBackwardsKeybind.selectAll();
+                } else {
+                    gameModel.backwardsKeyBind = cBackwardsKeybind.getText().toUpperCase();
+                }
             }
           });
         cRightKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModel.rightKeyBind = cRightKeybind.getText().toUpperCase();
+                if (gameModel.rightKeyBind == gameModel.forwardKeyBind || gameModel.rightKeyBind == gameModel.backwardsKeyBind || gameModel.rightKeyBind == gameModel.leftKeyBind) {
+                    cRightKeybind.selectAll();
+                } else {
+                    gameModel.rightKeyBind = cRightKeybind.getText().toUpperCase();
+                }
             }
           });
         cLeftKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModel.leftKeyBind = cLeftKeybind.getText().toUpperCase();
+                if (gameModel.leftKeyBind == gameModel.forwardKeyBind || gameModel.leftKeyBind == gameModel.rightKeyBind || gameModel.leftKeyBind == gameModel.backwardsKeyBind) {
+                    cLeftKeybind.selectAll();
+                } else {
+                    gameModel.leftKeyBind = cLeftKeybind.getText().toUpperCase();
+                }
             }
           });
 
@@ -286,7 +302,7 @@ public class TitleView extends JPanel {
 
     // This checks if the save file can be used for game information
     public boolean canFileLoad() {
-        File sFile = new File(directory + "\\src\\SaveFile\\SaveFile.txt"); // Directory of file
+        File sFile = new File(directory + "\\src\\TextFiles\\SaveFile.txt"); // Directory of file
         Scanner saveFile = null;
         String gameMode = ""; // Information for game
         int numOfKeys = 0;
