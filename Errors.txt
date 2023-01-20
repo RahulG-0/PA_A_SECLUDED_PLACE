@@ -2,9 +2,10 @@ Priorities:
 - Monster health
 - Game Over screen
 - Fix scaling
-- Display smoke bombs
+- Display smoke bomb panel
 - Format
-- How To Play button is not working on title screen
+- How To Play button is not working - It is being set to visible and has info stored
+- None of the buttons work when returned to title from game
 
 Test:
 - Make sure that it writes to OutputFile after the each round
@@ -21,6 +22,3 @@ Continue game does not register the key controllers
 Fix the text at the top
 
 Make the text at the top acc update
-
-Game ambiance .start is being called twice
-    - This is because if the save file is empty, when new game is pressed it starts audio

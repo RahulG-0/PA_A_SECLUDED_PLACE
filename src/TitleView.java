@@ -56,7 +56,7 @@ public class TitleView extends JPanel {
     private JLabel backwardsKeybind = new JLabel("Backward Keybing");
     private JLabel rightKeybind = new JLabel("Right Keybind");
     private JLabel leftKeybind = new JLabel("Left Keybind"); 
-    private JLabel volumeLable = new JLabel("Volume"); 
+    private JLabel volumeLabel = new JLabel("Volume"); 
 
     private JButton exitOptions = new JButton("Exit");
 
@@ -162,7 +162,7 @@ public class TitleView extends JPanel {
             backwardsKeybind.setFont(LableSizedFont);
             leftKeybind.setFont(LableSizedFont);
             rightKeybind.setFont(LableSizedFont);
-            volumeLable.setFont(LableSizedFont);
+            volumeLabel.setFont(LableSizedFont);
             exitOptions.setFont(LableSizedFont);
 
             Font font2 = Font.createFont(Font.TRUETYPE_FONT, fontFile);
@@ -188,8 +188,8 @@ public class TitleView extends JPanel {
         rightKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.537), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         rightKeybind.setForeground(new Color(139, 0, 0));
 
-        volumeLable.setBounds((int)Math.round(width*0.463), (int) Math.round(height*0.629), (int)Math.round(width*0.208), (int) Math.round(height*0.046));
-        volumeLable.setForeground(new Color(139, 0, 0));
+        volumeLabel.setBounds((int)Math.round(width*0.463), (int) Math.round(height*0.629), (int)Math.round(width*0.208), (int) Math.round(height*0.046));
+        volumeLabel.setForeground(new Color(139, 0, 0));
         volume.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.722), (int)Math.round(width*0.468), (int) Math.round(height*0.046));
         volume.setMajorTickSpacing(2);
         volume.setMinorTickSpacing(1);
@@ -218,7 +218,7 @@ public class TitleView extends JPanel {
         optionsPanel.add(cRightKeybind);
         optionsPanel.add(rightKeybind);
         optionsPanel.add(volume);
-        optionsPanel.add(volumeLable);
+        optionsPanel.add(volumeLabel);
         optionsPanel.add(exitOptions);
 
         optionsPanel.setVisible(false);
@@ -235,6 +235,7 @@ public class TitleView extends JPanel {
         this.add(gameModePanel);
         this.add(buttonsPanel);
         this.add(startNewGame);
+        this.add(howToPlay);
         this.add(loadingScreenImage);
 
     }
@@ -344,23 +345,28 @@ public class TitleView extends JPanel {
             }
 
             // Passes the information to the GameModel and sets canLoad to true
-            this.gameModel.setInfo(gameMode, numOfKeys, health, smokeBombs, monsterHealth);
-            buttonsPanel.setVisible(false);
-            this.mPlayer.stop(this.mPlayer.clip);
-            this.mPlayer.gameMusic();
-            this.gameModel.update();
-            canLoad = true;
+            if (this.titleModel.userSelection.equals("load")) {
+                this.mPlayer.stop(this.mPlayer.clip);
+                this.mPlayer.gameMusic();
+                this.gameModel.setInfo(gameMode, numOfKeys, health, smokeBombs, monsterHealth);
+                buttonsPanel.setVisible(false);
+                this.gameModel.update();
+                canLoad = true;
+            } else {
+                canLoad = true;
+            }
         }
 
         // Closes the file
         saveFile.close();
 
         // Returns whether the file can be loaded or not
-        if (canLoad) {
-            return(true);
-        } else {
-            return(false);
-        }
+        return(canLoad);
+        // if (canLoad) {
+        //     return(true);
+        // } else {
+        //     return(false);
+        // }
     }
     
 
@@ -398,7 +404,6 @@ public class TitleView extends JPanel {
             }
             
         } else if (this.titleModel.userSelection.equals("load")) {
-
             // Checks to see if the file can be loaded
             canFileLoad();
 
@@ -407,6 +412,8 @@ public class TitleView extends JPanel {
             startNewGame.setVisible(false);
             gameModePanel.setVisible(false);
             howToPlay.setVisible(true);
+            // System.out.println(this.howToPlay.isVisible());
+            // System.out.println(this.howToPlay.getText());
         
         } else if (this.titleModel.userSelection.equals("settings")) {
 

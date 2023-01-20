@@ -6,6 +6,7 @@ import javax.swing.JButton;
 public class buttonGameController implements ActionListener {
     private GameModel gameModel;
     TitleModel titleModel;
+    // TotalView totalView = new TotalView();
     private MusicPlayer mPlayer;
     private JButton aButton;
 
@@ -35,6 +36,7 @@ public class buttonGameController implements ActionListener {
             gameModel.displayOptionsPannel = false;
             titleModel.startGame = false;
             titleModel.gameDifficulty = "";
+            // totalView.update();
 
             // Output to save file and output file
             File saveFile = new File(gameModel.directory + "\\src\\TextFiles\\SaveFile.txt");
@@ -42,6 +44,15 @@ public class buttonGameController implements ActionListener {
             output.println(gameModel.gameMode + "\n" + gameModel.numOfKeys + "\n" + gameModel.health + "\n" + gameModel.smokeBombs + "\n" + gameModel.monsterHealth);
             output.close();
 
+        }
+
+        // Uses smoke bomb
+        if (((JButton)aButton).toString().contains("text=Yes")) {
+            gameModel.useSmokeBomb = true;
+        }
+
+        if (((JButton)aButton).toString().contains("text=No")) {
+            gameModel.useSmokeBomb = false;
         }
 
         for(int i = 0; i<18;i++){

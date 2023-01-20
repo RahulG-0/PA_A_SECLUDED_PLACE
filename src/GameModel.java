@@ -27,6 +27,7 @@ public class GameModel {
     public String monstAttackDirection = "";
     public boolean defendSuccessful = true; // If the player was able to defend or not
     public boolean wantToUseSmokeBomb = false; // Flag to display smoke bomb option
+    public boolean useSmokeBomb = false;
 
     public boolean displayDefendButton = false;
     public boolean defendButton = false; // If the player clicked the defend button
@@ -238,25 +239,52 @@ public class GameModel {
     // Message for which directions the user can move in
     public String whichDirections() {
         this.outputDirections = "You can move ";
+        String tempVal = "";
+        int numOfDirections = 0;
+        int commaCounter = 0;
+        String tempString = "";
 
         if (canMoveForward == true) {
-            // this.outputDirections.concat("forward, ");
             this.outputDirections = outputDirections + "forward, ";
+            numOfDirections++;
         }
 
         if (canMoveLeft == true) {
-            this.outputDirections.concat("left, ");
             this.outputDirections = outputDirections + "left, ";
+            numOfDirections++;
         }
 
         if (canMoveRight == true) {
-            this.outputDirections.concat("right, ");
             this.outputDirections = outputDirections + "right, ";
-            
+            numOfDirections++;            
         }
 
-        this.outputDirections.substring(0, (this.outputDirections.length()-2));
+        // this.outputDirections.substring(0, (this.outputDirections.length()-2));
+
+        // Gets rid of the last two characters and replaces it with a space
+        for (int i = 0; i < outputDirections.length() - 2; i++) {
+            tempVal = tempVal + outputDirections.charAt(i);
+        }
+        this.outputDirections = tempVal;
         this.outputDirections = outputDirections + ".";
+
+        // Adds in an and
+        for (int i = 0; i < outputDirections.length(); i++) {
+            // If "," is the last comma, then replace it with and
+            if (outputDirections.charAt(i) == ',') {
+                commaCounter++;
+
+                if (commaCounter == numOfDirections) {
+                    // outputDirections.substring(outputDirections.charAt(i-1), outputDirections.charAt());
+                    tempString = outputDirections.substring(i);
+                    tempString.replace(",", " and");
+
+                    // Add it back to the string
+                    outputDirections.replace(outputDirections.substring(i), "");
+                    outputDirections = outputDirections + tempString;
+                }
+            }
+        }
 
         return(outputDirections);
     }
@@ -322,6 +350,7 @@ public class GameModel {
         if(!flip && flipV2){
             if (doesMonsterSpawn()) {
                 flip = false;
+                this.outputDirections = "You are being attacked!";
                 monsterAttack();
             } else{
                 displayDirections = false;
@@ -429,16 +458,20 @@ public class GameModel {
         } else {
             // Checks to use a smoke bomb
             if (smokeBombs > 0) {
+                this.outputDirections = "Would you like to use a smoke bomb?";
                 long waitTime = System.currentTimeMillis() + 5000;
+                wantToUseSmokeBomb = true;
+                update();
 
                 while (System.currentTimeMillis() < waitTime) {
                     canEscape = false;
-                    wantToUseSmokeBomb = true;
-                    update(); ////////////// MIGHT NOT BE IDEAL
+                    // wantToUseSmokeBomb = true;
+                    // update(); ////////////// MIGHT NOT BE IDEAL
 
                     //CHECK WHAT THEY DO
                 }
 
+                wantToUseSmokeBomb = false;
                 canEscape = true;
 
             }

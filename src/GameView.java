@@ -7,9 +7,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,7 +28,7 @@ public class GameView extends JPanel {
     private JLabel backwardsKeybind = new JLabel("Backward Keybing");
     private JLabel rightKeybind = new JLabel("Right Keybind");
     private JLabel leftKeybind = new JLabel("Left Keybind"); 
-    private JLabel volumeLable = new JLabel("Volume"); 
+    private JLabel volumeLabel = new JLabel("Volume"); 
     private JButton quitGame = new JButton("Quit_Game");
 
     private JButton exitOptions = new JButton("Exit");
@@ -60,6 +57,9 @@ public class GameView extends JPanel {
     private boolean once = true;
 
     private JLabel smokeBombs = new JLabel("");
+    private JPanel smokeBombsPanel = new JPanel();
+    private JButton yesButton = new JButton("Yes");
+    private JButton noButton = new JButton("No");
 
     // Constructor
     public GameView(GameModel gameModel,TitleModel titleModel) {
@@ -122,7 +122,8 @@ public class GameView extends JPanel {
 
         // Smoke Bombs
         smokeBombs.setText("");
-        smokeBombs.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.194),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
+        // smokeBombs.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.194),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
+        smokeBombs.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.14),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
         smokeBombs.setForeground(new Color(255,255,255));
 
         try {
@@ -133,7 +134,9 @@ public class GameView extends JPanel {
 
         defend.setVisible(false);
 
+        // TODO Add scaling to this and change the size of the font to something realistic
         options.setBounds(660,10,700,200);
+        options.setFont(new Font("Serif", Font.PLAIN, 30));
         options.setForeground(Color.white);
 
         optionsPanel.setLayout(null);
@@ -156,7 +159,7 @@ public class GameView extends JPanel {
             backwardsKeybind.setFont(LableSizedFont);
             leftKeybind.setFont(LableSizedFont);
             rightKeybind.setFont(LableSizedFont);
-            volumeLable.setFont(LableSizedFont);
+            volumeLabel.setFont(LableSizedFont);
             exitOptions.setFont(LableSizedFont);
             quitGame.setFont(LableSizedFont);
 
@@ -187,8 +190,8 @@ public class GameView extends JPanel {
         rightKeybind.setForeground(new Color(139, 0, 0));
         cRightKeybind.setText(gameModel.rightKeyBind);
 
-        volumeLable.setBounds((int)Math.round(width*0.463), (int) Math.round(height*0.629), (int)Math.round(width*0.208), (int) Math.round(height*0.046));
-        volumeLable.setForeground(new Color(139, 0, 0));
+        volumeLabel.setBounds((int)Math.round(width*0.463), (int) Math.round(height*0.629), (int)Math.round(width*0.208), (int) Math.round(height*0.046));
+        volumeLabel.setForeground(new Color(139, 0, 0));
         volume.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.722), (int)Math.round(width*0.468), (int) Math.round(height*0.046));
         volume.setMajorTickSpacing(2);
         volume.setMinorTickSpacing(1);
@@ -215,12 +218,17 @@ public class GameView extends JPanel {
         optionsPanel.add(cRightKeybind);
         optionsPanel.add(rightKeybind);
         optionsPanel.add(volume);
-        optionsPanel.add(volumeLable);
+        optionsPanel.add(volumeLabel);
         optionsPanel.add(exitOptions);
         optionsPanel.add(quitGame);
 
         optionsPanel.setVisible(false);
-
+        
+        // Sets up the smoke bomb panel
+        smokeBombsPanel.add(yesButton);
+        smokeBombsPanel.add(noButton);
+        smokeBombsPanel.setVisible(false);
+        smokeBombsPanel.setBounds(620,30,700,200); //////// TODO Add scaling
 
         // adding objects to the game
         this.add(playerHealth);
@@ -228,9 +236,11 @@ public class GameView extends JPanel {
         this.add(MonsterHealth);
         this.add(quicktimeButtonPannel);
         this.add(floorLevel);
+        this.add(smokeBombs);
         this.add(options);
         this.add(optionsPanel);
         this.add(backGround);
+        this.add(smokeBombsPanel);
     }// end of game view
 
     // generates buttons in an array
@@ -336,7 +346,12 @@ public class GameView extends JPanel {
             gameModel.game();
         }
 
-
+        if (gameModel.wantToUseSmokeBomb) {
+            smokeBombsPanel.setVisible(true);
+            System.out.println(smokeBombsPanel.isVisible());
+        } else {
+            smokeBombsPanel.setVisible(false);
+        }
 
         if (gameModel.randomise){
             randomLocations();
@@ -369,6 +384,7 @@ public class GameView extends JPanel {
         
 
         floorLevel.setText(Integer.toString(gameModel.numOfKeys + 1));
+        smokeBombs.setText(Integer.toString(gameModel.smokeBombs));
 
         // MonsterHealth.setBounds((int)Math.round(1310+(1310*((100-gameModel.monsterHealth)/100))),1020,(int)Math.round(600*(gameModel.monsterHealth/100)),50);
 
@@ -388,12 +404,7 @@ public class GameView extends JPanel {
             healthBarWidth = (int)Math.round((width*0.312)*(gameModel.monsterHealth/200));
         }
 
-<<<<<<< HEAD
-        // TODO Fix the monster health scaling
-        MonsterHealth.setBounds(1910-healthBarWidth, 1020, healthBarWidth, 50);
-=======
         MonsterHealth.setBounds((int)Math.round(width*0.682)-healthBarWidth, (int)Math.round(height*0.944), healthBarWidth, 50);
->>>>>>> bd5d299e4c2bab4e059b9cc1d6efed4d0e813093
 
         playerHealth.setBounds((int)Math.round(width*0.005),(int)Math.round(height*0.944),(int)Math.round((width*0.312)*(gameModel.health/100)),50);
 
