@@ -83,6 +83,7 @@ public class GameModel {
         this.health = health;
         this.smokeBombs = smokeBombs;
     }
+    
     public void addTotalModel(TotalModel totalModel){
         this.totalModel = totalModel;
     }
@@ -128,7 +129,7 @@ public class GameModel {
         }
     }
 
-    // This gets which direction the monster is attacking from
+
     public void monsterAttackDirection() {
         long monstDirection = Math.round((Math.random() * 3) + 1);
 
