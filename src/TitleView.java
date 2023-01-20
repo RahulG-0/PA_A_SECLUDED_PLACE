@@ -46,6 +46,7 @@ public class TitleView extends JPanel {
     private JPanel gameModePanel = new JPanel(); // Stores buttons for difficulty
 
     private JSlider volume = new JSlider(JSlider.HORIZONTAL,-20, 6,0);
+
     private JTextField cFowardKeybind = new JTextField("w");
     private JTextField cBackwardsKeybind = new JTextField("s");
     private JTextField cRightKeybind = new JTextField("d");
@@ -202,6 +203,11 @@ public class TitleView extends JPanel {
         fowardKeybind.setText("Foward Keybind");
         backwardsKeybind.setText("Backward Keybind");
 
+        cFowardKeybind.setText(gameModel.forwardKeyBind);
+        cBackwardsKeybind.setText(gameModel.backwardsKeyBind);
+        cLeftKeybind.setText(gameModel.leftKeyBind);
+        cRightKeybind.setText(gameModel.rightKeyBind);
+
         optionsPanel.add(optionsTitle);
         optionsPanel.add(cFowardKeybind);
         optionsPanel.add(fowardKeybind);
@@ -254,25 +260,25 @@ public class TitleView extends JPanel {
         cFowardKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModel.forwardKeyBind = cFowardKeybind.getText();
+                gameModel.forwardKeyBind = cFowardKeybind.getText().toUpperCase();
             }
           });
         cBackwardsKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModel.backwardsKeyBind = cBackwardsKeybind.getText();
+                gameModel.backwardsKeyBind = cBackwardsKeybind.getText().toUpperCase();
             }
           });
         cRightKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModel.rightKeyBind = cRightKeybind.getText();
+                gameModel.rightKeyBind = cRightKeybind.getText().toUpperCase();
             }
           });
         cLeftKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModel.leftKeyBind = cLeftKeybind.getText();
+                gameModel.leftKeyBind = cLeftKeybind.getText().toUpperCase();
             }
           });
 
@@ -407,6 +413,10 @@ public class TitleView extends JPanel {
             buttonsPanel.setVisible(true);
             startNewGame.setVisible(false);
         }
-    }
+        cFowardKeybind.setText(gameModel.forwardKeyBind);
+        cBackwardsKeybind.setText(gameModel.backwardsKeyBind);
+        cLeftKeybind.setText(gameModel.leftKeyBind);
+        cRightKeybind.setText(gameModel.rightKeyBind);
+    }// end of update
     
 } // Closes class

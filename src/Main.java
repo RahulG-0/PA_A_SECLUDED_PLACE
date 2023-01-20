@@ -16,7 +16,7 @@ public class Main {
         // TitleModel titleModel = new Titl eModel();
         // GameView view  = new GameView(gameModel, titleModel);
         JFrame frame = new JFrame("A Secluded Place");
-
+        
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Sets JFrame to be fullscreen by default
         frame.setUndecorated(true); // Gets rid of the top bar of the JFrame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

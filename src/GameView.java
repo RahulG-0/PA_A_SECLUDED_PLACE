@@ -153,18 +153,22 @@ public class GameView extends JPanel {
         cFowardKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.277), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
         fowardKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.259), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         fowardKeybind.setForeground(new Color(139, 0, 0));
+        cFowardKeybind.setText(gameModel.forwardKeyBind);
 
         cBackwardsKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.370), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
         backwardsKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.351), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         backwardsKeybind.setForeground(new Color(139, 0, 0));
+        cBackwardsKeybind.setText(gameModel.backwardsKeyBind);
 
         cLeftKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.462), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
         leftKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.444), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         leftKeybind.setForeground(new Color(139, 0, 0));
+        cLeftKeybind.setText(gameModel.leftKeyBind);
 
         cRightKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.555), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
         rightKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.537), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         rightKeybind.setForeground(new Color(139, 0, 0));
+        cRightKeybind.setText(gameModel.rightKeyBind);
 
         volumeLable.setBounds((int)Math.round(width*0.463), (int) Math.round(height*0.629), (int)Math.round(width*0.208), (int) Math.round(height*0.046));
         volumeLable.setForeground(new Color(139, 0, 0));
@@ -195,6 +199,7 @@ public class GameView extends JPanel {
         optionsPanel.add(exitOptions);
 
         optionsPanel.setVisible(false);
+
 
         // adding objects to the game
         this.add(playerHealth);
@@ -260,7 +265,7 @@ public class GameView extends JPanel {
         this.addKeyListener(keyboardInput);
         this.setFocusable(true);
 
-        buttonGameController exitButtonGameController = new buttonGameController(gameModel, exitOptions);
+        buttonGameController exitButtonGameController = new buttonGameController(this.gameModel, exitOptions);
         exitOptions.addActionListener(exitButtonGameController);
         
         addActionForArray();
@@ -268,25 +273,25 @@ public class GameView extends JPanel {
         cFowardKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModel.forwardKeyBind = cFowardKeybind.getText();
+                gameModel.forwardKeyBind = cFowardKeybind.getText().toUpperCase();
             }
           });
         cBackwardsKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModel.backwardsKeyBind = cBackwardsKeybind.getText();
+                gameModel.backwardsKeyBind = cBackwardsKeybind.getText().toUpperCase();
             }
           });
         cRightKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModel.rightKeyBind = cRightKeybind.getText();
+                gameModel.rightKeyBind = cRightKeybind.getText().toUpperCase();
             }
           });
         cLeftKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModel.leftKeyBind = cLeftKeybind.getText();
+                gameModel.leftKeyBind = cLeftKeybind.getText().toUpperCase();
             }
           });
 
@@ -346,7 +351,10 @@ public class GameView extends JPanel {
 
         playerHealth.setBounds(10,1020,(int)Math.round(600*(gameModel.health/100)),50);
 
-
+        cFowardKeybind.setText(gameModel.forwardKeyBind);
+        cBackwardsKeybind.setText(gameModel.backwardsKeyBind);
+        cLeftKeybind.setText(gameModel.leftKeyBind);
+        cRightKeybind.setText(gameModel.rightKeyBind);
 
     }
     
