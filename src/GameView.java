@@ -341,12 +341,23 @@ public class GameView extends JPanel {
         floorLevel.setText(Integer.toString(gameModel.numOfKeys + 1));
 
         // MonsterHealth.setBounds((int)Math.round(1310+(1310*((100-gameModel.monsterHealth)/100))),1020,(int)Math.round(600*(gameModel.monsterHealth/100)),50);
-        MonsterHealth.setBounds(1310,1020,(int)Math.round(600*(gameModel.monsterHealth/100)),50);
 
         // TODO The monster health is not always 100
         // 610 in
-        int healthBarWidth = (int)Math.round(600*(gameModel.monsterHealth/100));
-        
+        // Changes the health bar width for the monster depending on the total health
+        int healthBarWidth = 0;
+        if (gameModel.numOfKeys == 0) {
+            healthBarWidth = (int)Math.round(600*(gameModel.monsterHealth/100));
+        } else if (gameModel.numOfKeys == 1) {
+            healthBarWidth = (int)Math.round(600*(gameModel.monsterHealth/125));
+        } else if (gameModel.numOfKeys == 2) {
+            healthBarWidth = (int)Math.round(600*(gameModel.monsterHealth/150));
+        } else if (gameModel.numOfKeys == 3) {
+            healthBarWidth = (int)Math.round(600*(gameModel.monsterHealth/175));
+        } else if (gameModel.numOfKeys == 4) {
+            healthBarWidth = (int)Math.round(600*(gameModel.monsterHealth/200));
+        }
+
         MonsterHealth.setBounds(1910-healthBarWidth, 1020, healthBarWidth, 50);
 
         playerHealth.setBounds(10,1020,(int)Math.round(600*(gameModel.health/100)),50);

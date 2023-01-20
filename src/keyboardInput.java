@@ -31,8 +31,14 @@ public class keyboardInput implements KeyListener{
             gModel.setUserDirection(gModel.leftKeyBind);
         }
         else if (KeyEvent.getKeyText(e.getKeyCode()).equals("Escape")){
-            gModel.displayOptionsPannel = true;
+            if (gModel.canEscape) {
+                gModel.displayOptionsPannel = true;
+            }
+
+            // OPTIONAL ADD ERROR SOUND
+
         }
+
         System.out.println(KeyEvent.getKeyText(e.getKeyCode()));
 
         gModel.update();
@@ -44,16 +50,5 @@ public class keyboardInput implements KeyListener{
         // TODO Auto-generated method stub
         gModel.update();
         
-    }
-
-    /* Implement now
-     * if (gameModel.canEscape) {
-	pass  back escape key press
-} else {
-	play a noise or smth to indicate they can't escape
-}
-     * 
-     * 
-     */
-    
+    }    
 }
