@@ -7,7 +7,7 @@ public class TitleModel {
 
     // Creates instance variables
     private TitleView view; // Instance of TitleView
-    private GameModel gameModel;
+    // private GameModel gameModel;
     public String userSelection = ""; // Stores which button the user selected
     public String gameDifficulty = ""; // Stores difficulty chosen if new game was selected
 

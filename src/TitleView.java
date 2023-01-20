@@ -20,7 +20,7 @@ public class TitleView extends JPanel {
 
     // Creates instance variables
     private TitleModel titleModel; // Instance of model
-    private MusicPlayer mPlayer;
+    public MusicPlayer mPlayer;
     private VolumeController volumeModel;
 
     private JLabel loadingScreenImage = new JLabel(); // Background image
@@ -346,6 +346,8 @@ public class TitleView extends JPanel {
 
             // Passes the information to the GameModel and sets canLoad to true
             if (this.titleModel.userSelection.equals("load")) {
+                gameModel.once = true;
+                gameModel.gameOver = false;
                 this.mPlayer.stop(this.mPlayer.clip);
                 this.mPlayer.gameMusic();
                 this.gameModel.setInfo(gameMode, numOfKeys, health, smokeBombs, monsterHealth);
@@ -384,18 +386,24 @@ public class TitleView extends JPanel {
 
             // Creates the game if the user has selected a game difficulty
             if (this.titleModel.gameDifficulty.equals("Easy")) {
+                gameModel.gameOver = false;
+                gameModel.once = true;
                 gameModePanel.setVisible(false);
                 this.gameModel.setInfo("EASY", 0, 100, 3, 100);
                 this.gameModel.update();
                 this.mPlayer.stop(mPlayer.clip);
                 this.mPlayer.gameMusic();
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
+                gameModel.gameOver = false;
+                gameModel.once = true;
                 gameModePanel.setVisible(false);
                 this.gameModel.setInfo("MEDIUM", 0, 100, 2, 100);
                 this.gameModel.update();
                 this.mPlayer.stop(mPlayer.clip);
                 this.mPlayer.gameMusic();
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
+                gameModel.gameOver = false;
+                gameModel.once = true;
                 gameModePanel.setVisible(false);
                 this.gameModel.setInfo("HARD", 0, 100, 1, 100);
                 this.gameModel.update();

@@ -6,7 +6,8 @@ import javax.swing.JButton;
 public class buttonGameController implements ActionListener {
     private GameModel gameModel;
     TitleModel titleModel;
-    // TotalView totalView = new TotalView();
+    // TotalView totalView;
+    TitleView titleView;
     private MusicPlayer mPlayer;
     private JButton aButton;
 
@@ -28,7 +29,6 @@ public class buttonGameController implements ActionListener {
 
         if(((JButton)aButton).toString().contains("text=Exit")){
             gameModel.displayOptionsPannel = false;
-
         }
 
         if(((JButton)aButton).toString().contains("text=Quit_Game")){
@@ -36,6 +36,11 @@ public class buttonGameController implements ActionListener {
             gameModel.displayOptionsPannel = false;
             titleModel.startGame = false;
             titleModel.gameDifficulty = "";
+            // mPlayer.gameClip.stop();
+            // gameModel.mPlayer.gameClip.stop();
+            // mPlayer.music(); TODO Add this in title view and update
+            // gameModel.mPlayer.gameClip.stop();
+            // titleView.mPlayer.music();
             // totalView.update();
 
             // Output to save file and output file
@@ -43,6 +48,12 @@ public class buttonGameController implements ActionListener {
             PrintWriter output = gameModel.getPrintWriter(saveFile);
             output.println(gameModel.gameMode + "\n" + gameModel.numOfKeys + "\n" + gameModel.health + "\n" + gameModel.smokeBombs + "\n" + gameModel.monsterHealth);
             output.close();
+
+            // gameModel.quitThread();
+            gameModel.gameOver = true;
+            gameModel.isGameOver();
+
+            // totalView.switchGameType();
 
         }
 

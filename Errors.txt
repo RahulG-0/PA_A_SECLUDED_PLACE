@@ -4,7 +4,6 @@ Priorities:
 - Fix scaling
 - Display smoke bomb panel
 - Format
-- How To Play button is not working - It is being set to visible and has info stored
 - None of the buttons work when returned to title from game
 
 Test:
@@ -14,11 +13,9 @@ Test:
 Optional Features:
 - Make it so that when entering keybinds, it can only be a single character
 - Make the buttons look nice
+- Make things look cleaner
+- Somehow make it so that after the second to last direction, it says "and"
 
 Fix audio for switching from GameModel to TitleModel
 
 Continue game does not register the key controllers
-
-Fix the text at the top
-
-Make the text at the top acc update
