@@ -68,13 +68,19 @@ public class GameModel {
     
     public boolean[] buttonVisible = new boolean[18];
 
-    private MusicPlayer mPlayer = new MusicPlayer();
+    public MusicPlayer mPlayer = new MusicPlayer();
 
     // A boolean to check if the player can escape
     public boolean canEscape = true;
 
     // Gets the user's directory
     public String directory = System.getProperty("user.dir");
+
+    public boolean once = true;
+
+    // Thread for running the game
+    // Runnable myRunnable;
+    // Thread thread = new Thread(myRunnable);
 
     // Constructor
     public GameModel() {
@@ -163,6 +169,10 @@ public class GameModel {
 
     // Checks if the game is over
     public boolean isGameOver() {
+        if (gameOver == true) {
+            return(gameOver);
+        }
+
         if (gameMode == "EASY" && numOfKeys == 3) {
             gameOver = true;
         } else if (gameMode == "MEDIUM" && numOfKeys == 4) {
@@ -181,30 +191,36 @@ public class GameModel {
 
     // Method to run the game
     public void game(){
+        Runnable myRunnable = new Runnable() {
+            public void run(){
+                int counter = 0;
+                while (!isGameOver()) {
+                    // System.out.println("Still doing this: " + counter);
+                    // System.nanoTime();
+                    // Keep the game going
+                    walking();
+        
+                    if (monsterDied) {
+                        numOfKeys++;
+                        startFloor();
+                        // Play the elevator music
+                    }
 
-        Runnable myRunnable =
-    new Runnable(){
-        public void run(){
-            while (!isGameOver()) {
-                // System.nanoTime();
-                // Keep the game going
-                walking();
-    
-                if (monsterDied) {
-                    numOfKeys++;
-                    startFloor();
-                    // Play the elevator music
+                    counter++;
                 }
             }
-        }
-    };
+        };
         // UPDATE KEYBINDS HERE
         // Keeps playing as long as the game is not over
-        Thread thread  = new Thread(myRunnable);
+        Thread thread = new Thread(myRunnable);
 
         thread.start();
 
     }
+
+    // public void quitThread() {
+    //     // Quit the gameModel thread and call this in quit game
+    // }
 
     public void setUserDirection(String direction){
         this.whichDirection = direction;
@@ -260,33 +276,13 @@ public class GameModel {
             numOfDirections++;            
         }
 
-        // this.outputDirections.substring(0, (this.outputDirections.length()-2));
-
-        // Gets rid of the last two characters and replaces it with a space
-        for (int i = 0; i < outputDirections.length() - 2; i++) {
-            tempVal = tempVal + outputDirections.charAt(i);
+        for (int i1 = 0; i1 < outputDirections.length() - 2; i1++) {
+            tempVal = tempVal + outputDirections.charAt(i1);
         }
+
         this.outputDirections = tempVal;
         this.outputDirections = outputDirections + ".";
         commaCounter-=1;
-
-        // Adds in an and
-        for (int i = 0; i < outputDirections.length(); i++) {
-            // If "," is the last comma, then replace it with and
-            if (outputDirections.charAt(i) == ',') {
-                commaCounter++;
-
-                if (commaCounter == numOfDirections) {
-                    // outputDirections.substring(outputDirections.charAt(i-1), outputDirections.charAt());
-                    tempString = outputDirections.substring(i);
-                    tempString.replace(",", " and");
-
-                    // Add it back to the string
-                    outputDirections.replace(outputDirections.substring(i), "");
-                    outputDirections = outputDirections + tempString;
-                }
-            }
-        }
 
         return(outputDirections);
     }

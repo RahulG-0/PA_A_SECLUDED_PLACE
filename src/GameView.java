@@ -58,7 +58,7 @@ public class GameView extends JPanel {
 
     private JLabel options = new JLabel("",SwingConstants.CENTER);
 
-    private boolean once = true;
+    // private boolean once = true;
 
     private JLabel smokeBombs = new JLabel("");
     private JPanel smokeBombsPanel = new JPanel();
@@ -360,8 +360,13 @@ public class GameView extends JPanel {
         int height = (int)this.screenSize.getHeight();
 
 
-        if (titleModel.startGame && once == true){
-            once = false;
+        // if (titleModel.startGame && once == true){
+        //     once = false;
+        //     gameModel.game();
+        // }
+
+        if (titleModel.startGame && gameModel.once == true) {
+            gameModel.once = false;
             gameModel.game();
         }
 
