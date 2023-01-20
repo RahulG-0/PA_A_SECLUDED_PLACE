@@ -83,7 +83,7 @@ public class GameView extends JPanel {
         int width = (int)this.screenSize.getWidth(); 
         int height = (int)this.screenSize.getHeight();
 
-        System.out.println((int)Math.round(width*0.005)+" "+ (int)Math.round(height*0.944));
+        System.out.println(width+" "+ (int)Math.round(height*0.944));
 
         this.setBounds(0,0,width,height); // setting the size of the game
 
@@ -135,7 +135,7 @@ public class GameView extends JPanel {
         defend.setVisible(false);
 
         // TODO Add scaling to this and change the size of the font to something realistic
-        options.setBounds(660,10,700,200);
+        options.setBounds((int)Math.round(width*0.343),(int)Math.round(height*0.009),(int)Math.round(width*0.364),(int)Math.round(height*0.185));
         options.setFont(new Font("Serif", Font.PLAIN, 30));
         options.setForeground(Color.white);
 
@@ -259,9 +259,10 @@ public class GameView extends JPanel {
 
     // setting the quicktime location for each button
     public void randomLocations(){
+        int height = (int)this.screenSize.getHeight();
         int width  = gameModel.quickTimeGeneration();
         for(int i = 0;i<gameModel.numOfButtons;i++){
-            buttons[i].setBounds(width*i,gameModel.getRandomHeight(),width,100);
+            buttons[i].setBounds(width*i,gameModel.getRandomHeight(),width,(int) Math.round(height*0.092));
             buttons[i].setVisible(true);
 
         }
@@ -404,9 +405,9 @@ public class GameView extends JPanel {
             healthBarWidth = (int)Math.round((width*0.312)*(gameModel.monsterHealth/200));
         }
 
-        MonsterHealth.setBounds((int)Math.round(width*0.682)-healthBarWidth, (int)Math.round(height*0.944), healthBarWidth, 50);
+        MonsterHealth.setBounds((int)Math.round(width-(width*0.007))-healthBarWidth, (int)Math.round(height*0.944), healthBarWidth, (int)Math.round(height*0.046));
 
-        playerHealth.setBounds((int)Math.round(width*0.005),(int)Math.round(height*0.944),(int)Math.round((width*0.312)*(gameModel.health/100)),50);
+        playerHealth.setBounds((int)Math.round(width*0.005),(int)Math.round(height*0.944),(int)Math.round((width*0.312)*(gameModel.health/100)),(int)Math.round(height*0.046));
 
         cFowardKeybind.setText(gameModel.forwardKeyBind);
         cBackwardsKeybind.setText(gameModel.backwardsKeyBind);

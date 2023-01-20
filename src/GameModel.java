@@ -267,6 +267,7 @@ public class GameModel {
         }
         this.outputDirections = tempVal;
         this.outputDirections = outputDirections + ".";
+        commaCounter-=1;
 
         // Adds in an and
         for (int i = 0; i < outputDirections.length(); i++) {
@@ -545,9 +546,10 @@ public class GameModel {
     }
 
     public int getRandomHeight() {
-        int height = 0;
+        int width = (int)this.screenSize.getWidth(); 
+        int height = (int)this.screenSize.getHeight();
 
-        height = (int)((Math.random()*680) + 200);
+        height = (int)((Math.random()*(height*0.629)) + (height*0.185));
 
         return(height);
     }
