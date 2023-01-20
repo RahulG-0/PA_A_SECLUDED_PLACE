@@ -11,6 +11,7 @@ public class MusicPlayer {
     Clip monstPrepClip;
     Clip monstClip;
     Clip walkClip;
+    Clip defendClip;
 
     private String directory = System.getProperty("user.dir");
 
@@ -53,7 +54,6 @@ public class MusicPlayer {
         } catch (Exception e) {}
     }
 
-    // TODO Create instance of model to get the direction
     // Plays sound effect for which direction the monster is coming from
     public void monstAttackPrepSounds(String dir) {
         AudioInputStream inputStream = null; /////////////////// MIGHT CREATE A NULL POINTER EXCEPTION
@@ -99,6 +99,15 @@ public class MusicPlayer {
         } catch (Exception e) {
             
         }
+    }
+
+    public void defendButtonClick() {
+        try {
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\DefendingButtons.wav"));
+            this.defendClip = AudioSystem.getClip();
+            defendClip.open(inputStream);
+            defendClip.start();
+        } catch (Exception e) {}
     }
 
     // Stops whichever audio clip is required to stop

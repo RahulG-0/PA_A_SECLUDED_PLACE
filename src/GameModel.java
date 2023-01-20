@@ -5,8 +5,6 @@
 
 // Imports
 import java.awt.*;
-import java.io.FileWriter;
-import java.util.Timer;
 import java.io.*;
 
 public class GameModel {
@@ -60,7 +58,6 @@ public class GameModel {
     // SWITCHING BETWEEN going a direction and getting direction
     private boolean  flip = false;
     private boolean flipV2 = false;
-    private boolean flipV3 = false;
 
     public boolean displayOptionsPannel = false;
 
@@ -76,7 +73,7 @@ public class GameModel {
     public boolean canEscape = true;
 
     // Gets the user's directory
-    private String directory = System.getProperty("user.dir");
+    public String directory = System.getProperty("user.dir");
 
     // Constructor
     public GameModel() {
@@ -84,11 +81,12 @@ public class GameModel {
     }
 
     // Sets instance variables to information passed in via the file or by starting a new game
-    public void setInfo(String gameMode, int numOfKeys, int health, int smokeBombs) {
+    public void setInfo(String gameMode, int numOfKeys, double health, int smokeBombs, double monsterHealth) {
         this.gameMode = gameMode;
         this.numOfKeys = numOfKeys;
         this.health = health;
         this.smokeBombs = smokeBombs;
+        this.monsterHealth = monsterHealth;
     }
 
     public void addTotalModel(TotalModel totalModel){
@@ -222,7 +220,6 @@ public class GameModel {
         amountClicked = 0;
         flip = false;
         flipV2 = false;
-        flipV3 = false;
 
         // This outputs the information to the file
         File saveFile = new File(directory + "\\src\\TextFiles\\SaveFile.txt");
@@ -360,22 +357,18 @@ public class GameModel {
                 if (monstAttackDirection == "FORWARD" && whichDirection != forwardKeyBind) {
                     defendSuccessful = false;
                     displayDefendButton = false;
-                    flipV3 = true;
                     break;
                 } else if (monstAttackDirection == "RIGHT" && whichDirection != rightKeyBind) {
                     defendSuccessful = false;
                     displayDefendButton = false;
-                    flipV3 = true;
                     break;
                 } else if (monstAttackDirection == "BACKWARD" && whichDirection != backwardsKeyBind) {
                     defendSuccessful = false;
                     displayDefendButton = false;
-                    flipV3 = true;
                     break;
                 } else if (monstAttackDirection == "LEFT" && whichDirection != leftKeyBind) {
                     defendSuccessful = false;
                     displayDefendButton = false;
-                    flipV3 = true;
                     break;
                 } else {
                     quickTimeState = true;
@@ -389,7 +382,6 @@ public class GameModel {
 
         if (!defendButton){
             defendSuccessful = false;
-            flipV3 = true;
         }
         displayDefendButton = false;
         defendButton = false;
@@ -424,8 +416,6 @@ public class GameModel {
             if (amountClicked != numOfButtons){
                 defendSuccessful = false;
             }
-
-            flipV3 = true;
         }
         
         update();

@@ -1,4 +1,5 @@
 import java.awt.event.*;
+import java.io.*;
 
 import javax.swing.JButton;
 
@@ -35,6 +36,12 @@ public class buttonGameController implements ActionListener {
             titleModel.startGame = false;
             titleModel.gameDifficulty = "";
 
+            // Output to save file and output file
+            File saveFile = new File(gameModel.directory + "\\src\\TextFiles\\SaveFile.txt");
+            PrintWriter output = gameModel.getPrintWriter(saveFile);
+            output.println(gameModel.gameMode + "\n" + gameModel.numOfKeys + "\n" + gameModel.health + "\n" + gameModel.smokeBombs + "\n" + gameModel.monsterHealth);
+            output.close();
+
         }
 
         for(int i = 0; i<18;i++){
@@ -44,7 +51,7 @@ public class buttonGameController implements ActionListener {
             }
         }
         
-        this.mPlayer.buttonSound();
+        this.mPlayer.defendButtonClick();
         gameModel.update();
 
     }
