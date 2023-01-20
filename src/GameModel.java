@@ -203,6 +203,7 @@ public class GameModel {
         Thread thread  = new Thread(myRunnable);
 
         thread.start();
+
     }
 
     public void setUserDirection(String direction){
@@ -466,14 +467,16 @@ public class GameModel {
 
                 while (System.currentTimeMillis() < waitTime) {
                     canEscape = false;
-                    // wantToUseSmokeBomb = true;
-                    // update(); ////////////// MIGHT NOT BE IDEAL
-
-                    //CHECK WHAT THEY DO
+                    if(useSmokeBomb){
+                        smokeBombs--;
+                        break;
+                    }
                 }
 
                 wantToUseSmokeBomb = false;
                 canEscape = true;
+
+                update();
 
             }
 
@@ -485,11 +488,13 @@ public class GameModel {
             health = health - 10;
 
             // Adds health for the monster if the defense was unsuccessful
-            if (monsterHealth <= 90) {
-                monsterHealth = monsterHealth + 10;
+            if(!useSmokeBomb){
+                if (monsterHealth <= 90) {
+                    monsterHealth = monsterHealth + 10;
 
-            } else {
-                monsterHealth = monsterHealth + (100 - monsterHealth);
+                } else {
+                    monsterHealth = monsterHealth + (100 - monsterHealth);
+                }
             }
             update();
         }
@@ -503,6 +508,7 @@ public class GameModel {
             monsterDied = true;
             // Go into next floor and do whatever stuff
         }
+        useSmokeBomb = false;
 
         update(); // To update GameView with whatever is required
     }

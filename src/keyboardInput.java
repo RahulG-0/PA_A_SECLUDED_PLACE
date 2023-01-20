@@ -40,6 +40,7 @@ public class keyboardInput implements KeyListener{
         }
 
         gModel.update();
+        System.out.println(KeyEvent.getKeyText(e.getKeyCode()));
 
     }
 

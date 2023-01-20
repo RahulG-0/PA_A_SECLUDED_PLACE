@@ -36,6 +36,10 @@ public class GameView extends JPanel {
     private JLabel optionsTitle = new JLabel("Options");
     private JPanel optionsPanel = new JPanel();
 
+    private JPanel endJPanel  = new JPanel();
+    private JLabel endDisplay = new JLabel();
+    private JButton quitToTitleButton = new JButton();
+
     private JLabel backGround = new JLabel(); // sets the backround of the game
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // getting the screen sice of the users device
@@ -125,6 +129,16 @@ public class GameView extends JPanel {
         // smokeBombs.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.194),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
         smokeBombs.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.14),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
         smokeBombs.setForeground(new Color(255,255,255));
+
+        smokeBombsPanel.setLayout(null);
+
+        yesButton.setBounds(0,0,100,100);
+        noButton.setBounds(100,0,100,100);
+
+        smokeBombsPanel.add(yesButton);
+        smokeBombsPanel.add(noButton);
+        smokeBombsPanel.setVisible(false);
+        smokeBombsPanel.setBounds(0,0,200,100); //////// TODO Add scaling
 
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
@@ -223,12 +237,10 @@ public class GameView extends JPanel {
         optionsPanel.add(quitGame);
 
         optionsPanel.setVisible(false);
-        
-        // Sets up the smoke bomb panel
-        smokeBombsPanel.add(yesButton);
-        smokeBombsPanel.add(noButton);
-        smokeBombsPanel.setVisible(false);
-        smokeBombsPanel.setBounds(620,30,700,200); //////// TODO Add scaling
+
+        endJPanel.setLayout(null);
+        endJPanel.setBounds(0,0,width,height);
+        endDisplay.setBounds(0,0,100,100);
 
         // adding objects to the game
         this.add(playerHealth);
@@ -239,8 +251,8 @@ public class GameView extends JPanel {
         this.add(smokeBombs);
         this.add(options);
         this.add(optionsPanel);
-        this.add(backGround);
         this.add(smokeBombsPanel);
+        this.add(backGround);
     }// end of game view
 
     // generates buttons in an array
@@ -302,6 +314,12 @@ public class GameView extends JPanel {
 
         buttonGameController quiButtonGameController = new buttonGameController(this.gameModel,titleModel,quitGame);
         quitGame.addActionListener(quiButtonGameController);
+
+        buttonGameController yesButtonGameController = new buttonGameController(this.gameModel,titleModel,yesButton);
+        yesButton.addActionListener(yesButtonGameController);
+
+        buttonGameController nButtonGameController = new buttonGameController(this.gameModel,titleModel,noButton);
+        noButton.addActionListener(nButtonGameController);
         
         addActionForArray();
 
