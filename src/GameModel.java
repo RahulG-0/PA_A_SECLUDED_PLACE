@@ -78,6 +78,8 @@ public class GameModel {
 
     public boolean once = true;
 
+    public boolean quitScreen = false;
+
     // Thread for running the game
     // Runnable myRunnable;
     // Thread thread = new Thread(myRunnable);
@@ -172,8 +174,7 @@ public class GameModel {
         if (gameOver == true) {
             return(gameOver);
         }
-
-        if (gameMode == "EASY" && numOfKeys == 3) {
+        else if (gameMode == "EASY" && numOfKeys == 3) {
             gameOver = true;
         } else if (gameMode == "MEDIUM" && numOfKeys == 4) {
             gameOver = true;
@@ -193,11 +194,12 @@ public class GameModel {
     public void game(){
         Runnable myRunnable = new Runnable() {
             public void run(){
-                int counter = 0;
-                while (!isGameOver()) {
+                startGame();
+                while (!isGameOver()^quitScreen) {
                     // System.out.println("Still doing this: " + counter);
                     // System.nanoTime();
                     // Keep the game going
+                    
                     walking();
         
                     if (monsterDied) {
@@ -205,9 +207,10 @@ public class GameModel {
                         startFloor();
                         // Play the elevator music
                     }
-
-                    counter++;
                 }
+
+                
+
             }
         };
         // UPDATE KEYBINDS HERE
@@ -215,7 +218,6 @@ public class GameModel {
         Thread thread = new Thread(myRunnable);
 
         thread.start();
-
     }
 
     // public void quitThread() {
@@ -224,6 +226,17 @@ public class GameModel {
 
     public void setUserDirection(String direction){
         this.whichDirection = direction;
+    }
+
+    private void startGame(){
+        monsterDied = false;
+        monsterHealth = monsterInitHealth + (getNumOfKeys() * 25);
+        if (health + (health /4) <=100){
+            health = health + (health/4);
+        }
+        amountClicked = 0;
+        flip = false;
+        flipV2 = false;
     }
 
     // Start the floor
