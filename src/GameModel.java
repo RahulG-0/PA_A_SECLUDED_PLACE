@@ -1,19 +1,18 @@
 // Program Name: GameModel
-// Last Modified:
+// Last Modified: January 22, 2023
 // Name: Rahul Gurukiran & Anirudh Bharadwaj
 // Description: Handles the background processing for the game
 
 // Imports
 import java.awt.*;
 import java.io.*;
-import java.text.BreakIterator;
-import java.util.Timer;
 
 public class GameModel {
 
     // Creates instance variables
     private GameView view; // Instance of GameView
-    private TotalModel totalModel;
+    private TotalModel totalModel; // Instance of TotalModel
+    public MusicPlayer mPlayer = new MusicPlayer(); // Instance of MusicPlayer
     public String userSelection = ""; // Registers which button a user presses
     public String gameMode; // Information for the game
     public int numOfKeys = 0;
@@ -24,18 +23,13 @@ public class GameModel {
 
     private String whichDirection; // What keyboard input the player gives
 
-    public boolean gameOver = false;
-
-    public String monstAttackDirection = "";
+    public String monstAttackDirection = ""; // Gets the direction the monster attacks from
     public boolean defendSuccessful = true; // If the player was able to defend or not
     public boolean wantToUseSmokeBomb = false; // Flag to display smoke bomb option
-    public boolean useSmokeBomb = false;
+    public boolean useSmokeBomb = false; // Boolean for if the user wants to use a smoke bomb
 
-    public boolean displayDefendButton = false;
+    public boolean displayDefendButton = false; // Displays the defend button if true
     public boolean defendButton = false; // If the player clicked the defend button
-
-    // Screensize
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     // Booleans for which directions the user can travel
     private boolean canMoveForward = false;
@@ -58,29 +52,29 @@ public class GameModel {
     public boolean playerDied = false;
     public boolean monsterDied = false;
 
-    // SWITCHING BETWEEN going a direction and getting direction
+    // Switching between going a direction and getting direction
     private boolean  flip = false;
     private boolean flipV2 = false;
 
-    public boolean displayOptionsPannel = false;
+    // Displays the options panel
+    public boolean displayOptionsPanel = false;
 
-    public boolean randomise = false;
-
-    public int amountClicked = 0;
-    
+    // These are for the qte
+    public boolean randomize = false;
+    public int amountClicked = 0; // Counts the amount of buttons clicked
     public boolean[] buttonVisible = new boolean[18];
 
-    public MusicPlayer mPlayer = new MusicPlayer();
-
-    // A boolean to check if the player can escape
+    // A boolean to check if the player can click escape key
     public boolean canEscape = true;
 
-    // Gets the user's directory
-    public String directory = System.getProperty("user.dir");
+    // Checks if the game is over or if the user has left the game
+    public boolean gameOver = false;
+    public boolean leftGame = false;
+
+    public String directory = System.getProperty("user.dir"); // Gets the user's directory
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // Gets screensize
 
     public boolean once = true;
-
-    public boolean leftGame = false;
 
     Thread thread;
 
@@ -124,6 +118,7 @@ public class GameModel {
         this.view = currentView;
     }
 
+    // Sets keybinds
     public void setKeyBind(String keyBindName, char keyBind) {
         if (keyBindName.equals("FORWARD")) {
             this.forwardKeyBind = Character.toString(keyBind).toUpperCase();
@@ -136,8 +131,14 @@ public class GameModel {
         }
     }
 
+    // Sets the user's direction
+    public void setUserDirection(String direction){
+        this.whichDirection = direction;
+    }
+
+    // Returns a PrintWriter used to write in the two text files
     public PrintWriter getPrintWriter(File file) {
-        PrintWriter output = null; ///////////////////////////////// MAY CAUSE NULL POINTER EXCEPTION
+        PrintWriter output = null;
         try {
             output = new PrintWriter(file);
         } catch (FileNotFoundException e) {}
@@ -145,6 +146,7 @@ public class GameModel {
         return(output);
     }
 
+    // Checks if the user can move in a direction
     public boolean canMoveInDirection() {
         double x = Math.random();
         if (x > 0.5) {
@@ -164,7 +166,7 @@ public class GameModel {
         }
     }
 
-
+    // Sets the monster's attack direction
     public void monsterAttackDirection() {
         long monstDirection = Math.round((Math.random() * 3) + 1);
 
@@ -179,12 +181,11 @@ public class GameModel {
         }
     }
 
-    // game
-
     // Checks if the game is over
     public void isGameOver() {
-
-        if (gameMode == "EASY" && numOfKeys == 3) {
+        if (gameMode == "DEMO" && numOfKeys == 1) {
+            gameOver = true;
+        } else if (gameMode == "EASY" && numOfKeys == 3) {
             gameOver = true;
         } else if (gameMode == "MEDIUM" && numOfKeys == 4) {
             gameOver = true;
@@ -203,41 +204,47 @@ public class GameModel {
         Runnable myRunnable = new Runnable() {
             public void run(){
                 startGame();
+                // Keeps the game going
                 while (!gameOver) {
-                    // Keep the game going
+                    // Checks to make sure that the game is not over
+                    // TODO Check by commenting out this and gameOver check and instead do isGameOver at bottom
                     isGameOver();
 
+                    // Calls the walking method
                     walking();
+                    
+                    // Checks if the monster on that floor has died
                     if (monsterDied) {
                         numOfKeys++;
                         startFloor();
                     }
+
+                    // Checks if the game is over
                     if(gameOver == true){
                         break;
                     }
                 }
 
+                // Calls update to go to title screen
+                update();
+
             }
         };
-        // UPDATE KEYBINDS HERE
-        // Keeps playing as long as the game is not over
+
+        // Thread to run game
         thread = new Thread(myRunnable);
 
         thread.start();
     }
 
+    // TODO Delete if not required
+    // Stops the thread
     public void stop(){
         thread.interrupt();
     }
 
-    // public void quitThread() {
-    //     // Quit the gameModel thread and call this in quit game
-    // }
-
-    public void setUserDirection(String direction){
-        this.whichDirection = direction;
-    }
-
+    // Method to initialize information at the beginning of the game
+    // TODO Make sure that all this is acc required to be here
     private void startGame(){
         monsterDied = false;
         monsterHealth = monsterInitHealth + (getNumOfKeys() * 25);
@@ -247,10 +254,13 @@ public class GameModel {
         amountClicked = 0;
         flip = false;
         flipV2 = false;
-        this.outputDirections = "You can move ";
+        // this.outputDirections = "You can move ";
+        quickTimeState = false;
+        defendButton = false;
+        this.whichDirection = null;
     }
 
-    // Start the floor
+    // Starts the next floor
     public void startFloor() {
         // Updates health for monster and player
         monsterDied = false;
@@ -262,7 +272,7 @@ public class GameModel {
         flip = false;
         flipV2 = false;
 
-        // This outputs the information to the file
+        // This outputs the information to the files
         File saveFile = new File(directory + "\\src\\TextFiles\\SaveFile.txt");
         File outputFile = new File(directory + "\\src\\TextFiles\\OutputFile.txt");
 
@@ -279,41 +289,50 @@ public class GameModel {
 
     // Message for which directions the user can move in
     public String whichDirections() {
-        this.outputDirections = "You can move ";
-        String tempVal = "";
-        int numOfDirections = 0;
-        int commaCounter = 0;
-        String tempString = "";
+        // Initializes values
+        this.outputDirections = "";
+        boolean moveForward = false;
+        boolean moveLeft = false;
+        boolean moveRight = false;
 
+        // Compares directions and concatenates to the String
         if (canMoveForward == true) {
-            this.outputDirections = outputDirections + "forward, ";
-            numOfDirections++;
+            moveForward = true;
         }
 
         if (canMoveLeft == true) {
-            this.outputDirections = outputDirections + "left, ";
-            numOfDirections++;
+            moveLeft = true;
         }
 
         if (canMoveRight == true) {
-            this.outputDirections = outputDirections + "right, ";
-            numOfDirections++;            
+            moveRight = true;
         }
 
-        for (int i1 = 0; i1 < outputDirections.length() - 2; i1++) {
-            tempVal = tempVal + outputDirections.charAt(i1);
+        // Checks which directions the user can move in and sends a related message
+        if (moveForward && !moveLeft && !moveRight) {
+            outputDirections = "You can move forward.";
+        } else if (!moveForward && moveLeft && !moveRight) {
+            outputDirections = "You can move left.";
+        } else if (!moveForward && !moveLeft && moveRight) {
+            outputDirections = "You can move right.";
+        } else if (moveForward && moveLeft && !moveRight) {
+            outputDirections = "You can move forward or left.";
+        } else if (moveForward && !moveLeft && moveRight) {
+            outputDirections = "You can move forward or right.";
+        } else if (!moveForward && moveLeft && moveRight) {
+            outputDirections = "You can move left or right.";
+        } else if (moveForward && moveLeft && moveRight) {
+            outputDirections = "You can move forward, left and right.";
         }
 
-        this.outputDirections = tempVal;
-        this.outputDirections = outputDirections + ".";
-        commaCounter-=1;
-
+        // Returns the final String
         return(outputDirections);
     }
 
-    // Code to handle walking
+    // Code to simulate walking
     public void walking() {
         
+        // Creates the directions the user can move in
         if(!flip){
             // Gets which directions the user can move in
             canMoveForward = canMoveInDirection();
@@ -332,7 +351,9 @@ public class GameModel {
                     canMoveForward = true;
                 }
             }
+
             whichDirection = null;
+            outputDirections = "";
             whichDirections();
             displayDirections = true;
 
@@ -341,8 +362,8 @@ public class GameModel {
             flip = true;
         }
 
-        // GET USER SELECTION (whichDirection)
-        if(whichDirection != null){
+        // Gets the user's selection of which direction to go in
+        if (whichDirection != null){
             // Compares which directions the user can move and what they selected
             if (canMoveForward == true && whichDirection == forwardKeyBind) {
                 mPlayer.walkingSounds();
@@ -367,6 +388,7 @@ public class GameModel {
             }
         }
 
+        // TODO Comment this cuz I have no clue what this was supposed to do
         if(!flip && flipV2){
             if (doesMonsterSpawn()) {
                 flip = false;
@@ -374,7 +396,7 @@ public class GameModel {
                 monsterAttack();
             } else{
                 displayDirections = false;
-                flip =false;
+                flip = false;
                 update();
             }
             flipV2 = false;
@@ -383,47 +405,35 @@ public class GameModel {
     
     }
 
-    /*
-    // Returns if the defend button has been pushed
-    public boolean isDefendButton(boolean isPushed, String fromWhere) {
-        // System.out.println("Making it here");
-        boolean returnVal = false;
-
-        if (isPushed && fromWhere.equals("fromCont")) {
-            returnVal = true;
-        } else if (!isPushed && fromWhere.equals("fromAttack")) {
-
-        }
-
-        return(returnVal);
-    } */
-
+    // Method for simulating the monster attack
     public void monsterAttack() {
-        // If the monster attack was unsuccessful, do defendSuccessful
+        // Gets the direction for the monster attack and plays the corresponding audio
         this.monsterAttackDirection();
 
         mPlayer.monstAttackPrepSounds(this.monstAttackDirection);
 
+        // Creates delay while the sound is playing
         long time = java.lang.System.currentTimeMillis() + (mPlayer.monstPrepClip.getMicrosecondLength()/1000);
         
         while(java.lang.System.currentTimeMillis()<= time){}
   
+        // Displays defend button
         displayDefendButton = true;
         update();
         
+        // Waits 5 secs for the user to face a direction and click defend button
         long targetTime =  java.lang.System.currentTimeMillis() + 5000;
 
         while (java.lang.System.currentTimeMillis() <= targetTime){
+            // Does not allow user to hit escape key
             canEscape = false;
-            // TODO Figure out another way out of the while loop so that it doesn't have to sysout
-            // Maybe have another method that checks if defend button is true and have button game
-            // controller pass in the value there
-            // Then reference that method in here and set defendButton to that
-            // System.out.println("Defend Button status: " + defendButton);
-            // defendButton = isDefendButton(false, "fromAttack");
 
-            // defendButton = buttonGameController.isPushed;
+            // Adds ten millisecond delay so defendButton can be passed in
+            try {
+                thread.sleep((long)10);
+            } catch (InterruptedException ex) {}
 
+            // Checks if the user met the requirements to defend successfully
             if (defendButton) {
                 if (monstAttackDirection == "FORWARD" && whichDirection != forwardKeyBind) {
                     defendSuccessful = false;
@@ -445,30 +455,36 @@ public class GameModel {
             }
         }
 
+        // Allows the user to enter the escape key
         canEscape = true;
-        buttonGameController.isPushed = false;
 
+        // If the defend button was not pressed
         if (!defendButton){
             defendSuccessful = false;
         }
 
+        // Gets rid of the defend button
         displayDefendButton = false;
         defendButton = false;
         update();
 
+        // If the qte state needs to be created
         if (quickTimeState) {
             displayDefendButton = false;
-            this.randomise = true;
+            this.randomize = true;
             update();
-            this.randomise = false;
+            this.randomize = false;
             update();
 
+            // Waits a certain amount of time for the user to click the buttons
             targetTime =  java.lang.System.currentTimeMillis() + getAddTime(); 
             amountClicked = 0;
 
             while(java.lang.System.currentTimeMillis() <= targetTime){
+                // Does not allow user to exit
                 canEscape = false;
                 
+                // Checks to see if the user clicked all the buttons
                 if (amountClicked == numOfButtons){
                     defendSuccessful = true;
                     update();
@@ -478,19 +494,18 @@ public class GameModel {
 
             }
 
+            // Allows the user to press escape and turns off the qte
             canEscape = true;
             quickTimeState = false;
             update();
 
+            // Case for if the player did not click all the buttons
             if (amountClicked != numOfButtons){
                 defendSuccessful = false;
             }
         }
         
         update();
-
-
-        // If the user clicks all the buttons, defendSuccessful
 
         // If the defence was successful, it takes off monster health
         if (defendSuccessful) {
@@ -504,15 +519,24 @@ public class GameModel {
                 wantToUseSmokeBomb = true;
                 update();
 
-                while (System.currentTimeMillis() < waitTime) {
-                    // System.out.println("Helo");
+                // Gives the user time to decide if they want to use a smoke bomb
+                while (System.currentTimeMillis() <= waitTime) {
+                    // Adds ten millisecond delay so values can be passed in
+                    try {
+                        thread.sleep((long)10);
+                    } catch (InterruptedException ex) {}
+
+                    // Does not allow the user to escape
                     canEscape = false;
+
+                    // If the player used a smoke bomb
                     if(useSmokeBomb){
                         smokeBombs--;
                         break;
                     }
                 }
 
+                // Sets the boolean to false ofr using a smoke bomb and allows the user to escape
                 wantToUseSmokeBomb = false;
                 canEscape = true;
 
@@ -520,11 +544,11 @@ public class GameModel {
 
             }
 
+            // Reduces the player's health since the defence was unsuccessful
             health = health - 10;
 
             // Adds health for the monster if the defense was unsuccessful
             if(!useSmokeBomb){
-                System.out.println("Changing smoke bomb");
                 if (monsterHealth <= 90) {
                     monsterHealth = monsterHealth + 10;
 
@@ -536,6 +560,7 @@ public class GameModel {
             update();
         }
 
+        // Checks to see if the mosnter ahs died
         if (monsterHealth == 0) {
             mPlayer.monsterDeath();
             long monstDeathTime = System.currentTimeMillis() + (mPlayer.monstClip.getMicrosecondLength()/1000);
@@ -543,13 +568,14 @@ public class GameModel {
             while (System.currentTimeMillis() <= monstDeathTime) {}
 
             monsterDied = true;
-            // Go into next floor and do whatever stuff
         }
+        
         useSmokeBomb = false;
 
         update(); // To update GameView with whatever is required
     }
 
+    // Gets the amount of time the user has to do the qte based on difficulty and floor level
     private int getAddTime() {
         int addTime = 0;
 
@@ -583,13 +609,15 @@ public class GameModel {
             } else if (getNumOfKeys() == 4) {
                 addTime= 8000;
             }
+        } else if (getGameMode() == "DEMO") {
+            addTime = 10000;
         }
 
         return addTime;
     }
 
+    // Creates a random height for the qte buttons
     public int getRandomHeight() {
-        int width = (int)this.screenSize.getWidth(); 
         int height = (int)this.screenSize.getHeight();
 
         height = (int)((Math.random()*(height*0.629)) + (height*0.185));
@@ -597,18 +625,12 @@ public class GameModel {
         return(height);
     }
 
-    // Gets the height and width of the buttons for the quick time event
+    // Gets the width of the buttons for the quick time event based on difficulty and floor level
     public int quickTimeGeneration() {
         int width = 0;
-        // int[] returnDimensions = {0, 0};
-
-        // Based on game mode and floor level, it decides how many buttons to generate
-        // System.out.println("Game Mode: " + getGameMode());
-        // System.out.println("Keys: " + getNumOfKeys());
         
         if (getGameMode().equals("EASY")) {
             if (getNumOfKeys() == 0) {
-                // System.out.println("Making it in here");
                 numOfButtons = 4;
             } else if (getNumOfKeys() == 1) {
                 numOfButtons = 5;
@@ -637,28 +659,26 @@ public class GameModel {
             } else if (getNumOfKeys() == 4) {
                 numOfButtons = 18;
             }
+        } else if (getGameMode().equals("DEMO")) {
+            numOfButtons = 5;
         }
 
         setAmountVisible();
 
+        // Divides the screen width by the number of buttons to be generated
         width = (int)screenSize.getWidth()/numOfButtons;
-        // System.out.println("Number of buttons: " + numOfButtons);
-        // width = 5;
 
         return(width);
-
-        // returnDimensions[0] = width;
-        // returnDimensions[1] = height;
-
-        // return(returnDimensions);
     }
 
+    // Sets the buttons for the qte to not visible
     public void setFalseVisible(){
         for (int i = 0; i<18;i++){
             buttonVisible[i] = false;
         }
     }
 
+    // Sets the buttons for the qte to visible
     public void setAmountVisible(){
         for (int i = 0; i<numOfButtons;i++){
             buttonVisible[i] = true;

@@ -1,9 +1,14 @@
+// Program Name: MusicPlayer
+// Last Modified: January 22, 2023
+// Name: Rahul Gurukiran & Anirudh Bharadwaj
+// Description: Plays the various audio clips
+
+// Imports
 import java.io.*;
 import javax.sound.sampled.*;
 
 
 public class MusicPlayer {
-
     // Initializes clips
     Clip clipButton;
     Clip clip;
@@ -13,6 +18,7 @@ public class MusicPlayer {
     Clip walkClip;
     Clip defendClip;
 
+    // Gets directory
     private String directory = System.getProperty("user.dir");
 
     // Sets volume
@@ -56,7 +62,7 @@ public class MusicPlayer {
 
     // Plays sound effect for which direction the monster is coming from
     public void monstAttackPrepSounds(String dir) {
-        AudioInputStream inputStream = null; /////////////////// MIGHT CREATE A NULL POINTER EXCEPTION
+        AudioInputStream inputStream = null;
         
         try {
             if (dir.equals("FORWARD")) {
@@ -87,8 +93,6 @@ public class MusicPlayer {
 
     // Sound effect for walking
     public void walkingSounds() {
-        // MAYBE HAVE A RANDOM NUMBER GENERATOR IN HERE
-        // AND CYCLE THROUGH A FEW DIFFERENT TYPES OF WALKING NOISES
         int randNum = (int)(Math.round(((Math.random() * 2) + 1)));
         
         try {
@@ -101,6 +105,7 @@ public class MusicPlayer {
         }
     }
 
+    // Sound for the defend button or the qte buttons being clicked
     public void defendButtonClick() {
         try {
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\DefendingButtons.wav"));
@@ -112,9 +117,7 @@ public class MusicPlayer {
 
     // Stops whichever audio clip is required to stop
     public void stop(Clip stopClip){
-        // this.clip.stop(); Initially there was no parameter
-        // Changes in TitleView on lines: 285, 318, 323, 328, 349
         stopClip.stop();
     }
 
-}
+} // Closes class

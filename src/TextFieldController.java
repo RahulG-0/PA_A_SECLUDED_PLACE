@@ -1,7 +1,7 @@
 // Program Name: TextFieldController
-// Last Modified:
+// Last Modified: January 22, 2023
 // Name: Rahul Gurukiran & Anirudh Bharadwaj
-// Description: This is the controller for the buttons on the title screen
+// Description: This is the controller for the text fields on the options menu
 
 // Imports
 import java.awt.event.*;
@@ -61,6 +61,6 @@ public class TextFieldController implements ActionListener {
             this.gameModel.setKeyBind("LEFT", left);
         }
 
-    }
+    } // Closes actionPerformed
 
 } // Closes class

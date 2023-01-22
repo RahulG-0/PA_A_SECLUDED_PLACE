@@ -1,5 +1,5 @@
 // Program Name: TotalView
-// Last Modified:
+// Last Modified: January 22, 2023
 // Name: Rahul Gurukiran & Anirudh Bharadwaj
 // Description: Main view for the game
 
@@ -51,11 +51,6 @@ public class TotalView extends JPanel{
         game.addMouseListener(mc); 
         title.addMouseListener(mc);
         this.addMouseListener(new MouseController(this.totalModel) );
-
-        // keyboardInput keyboardInput = new keyboardInput(this.gameModel);
-        // this.addKeyListener(keyboardInput);
-
-
     }
 
     // Updates the TotalView by switching which view is displayed
@@ -63,4 +58,4 @@ public class TotalView extends JPanel{
         title.setVisible(!titleModel.startGame);
         game.setVisible(titleModel.startGame);
     }   
-}
+} // Closes class

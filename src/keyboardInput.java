@@ -1,10 +1,17 @@
+// Program Name: KeyboardInput
+// Last Modified: January 22, 2023
+// Name: Rahul Gurukiran & Anirudh Bharadwaj
+// Description: Gets keyboard input
+
+// Imports
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class keyboardInput implements KeyListener{
+public class KeyboardInput implements KeyListener {
     GameModel gModel;
 
-    public keyboardInput(GameModel gModel){
+    // Constructor
+    public KeyboardInput(GameModel gModel){
         this.gModel = gModel;
     }
 
@@ -15,11 +22,11 @@ public class keyboardInput implements KeyListener{
         
     }
 
+    // Gets the key pressed and either sets the direction or opens options menu
     @Override
     public void keyPressed(KeyEvent e) {
         if (gModel.forwardKeyBind.equals(KeyEvent.getKeyText(e.getKeyCode()))){
             gModel.setUserDirection(gModel.forwardKeyBind);
-            // gModel.hasGivenDirection = true;
         }
         else if (gModel.backwardsKeyBind.equals(KeyEvent.getKeyText(e.getKeyCode()))){
             gModel.setUserDirection(gModel.backwardsKeyBind);
@@ -32,16 +39,12 @@ public class keyboardInput implements KeyListener{
         }
         else if (KeyEvent.getKeyText(e.getKeyCode()).equals("Escape")){
             if (gModel.canEscape) {
-                gModel.displayOptionsPannel = true;
+                gModel.displayOptionsPanel = true;
             }
-
-            // OPTIONAL ADD ERROR SOUND
-
         }
 
+        // Updates the model
         gModel.update();
-        System.out.println(KeyEvent.getKeyText(e.getKeyCode()));
-
     }
 
     @Override
@@ -49,5 +52,6 @@ public class keyboardInput implements KeyListener{
         // TODO Auto-generated method stub
         gModel.update();
         
-    }    
-}
+    }
+    
+} // Closes class

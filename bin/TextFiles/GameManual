@@ -1,0 +1,24 @@
+BASIC FUNCTIONALITY:
+- Moving: The game will provide a list of directions to move in. Use the keybinds to move.
+
+- Defending: Face the direction you hear the monster audio coming from and click the defend button. If you are facing the correct direction, a series of buttons will show up, which you must click in time.
+
+- Using Smoke Bombs: If your defense was unsuccessful you will be given an option to use smoke bombs
+
+- Health Bars: The player health bar can be found in the bottom left of the screen, and the monster's can be found on the bottom right
+
+- Floor Level: The current floor level is shown at the top right of the screen. Once the key for that key has been collected (the monster has been defeated), you will progress to the next floor
+
+HEALTH SYSTEM:
+- Unsuccessful Defence: Not clicking the defend button in time, facing the incorrect direction during an attack or failing to click all of the buttons in the quick time event will result in an unsuccessful defence, draining health points from the user.
+
+- Monster Health: For every unsuccessful defence, the monster gains health points. For every successful defence, the monster loses health points.
+
+- Smoke Bombs: The smoke bomb can be used to make sure that the monster does not gain health if you defend unsuccessfully
+
+OPTIONS MENU:
+- To open the options menu, hit escape
+
+UPDATING KEYBINDS:
+- To update keybinds, enter the options menu or hit escape and enter the key you want for the keybind
+- Once finished, hit enter to save the keybind

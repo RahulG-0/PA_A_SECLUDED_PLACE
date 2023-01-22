@@ -1,5 +1,5 @@
 // Program Name: GameView
-// Last Modified:
+// Last Modified: January 22, 2023
 // Name: Rahul Gurukiran & Anirudh Bharadwaj
 // Description: Creates the GUI for the game
 
@@ -7,63 +7,64 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GameView extends JPanel {
 
     // Creates instance variables
     private GameModel gameModel; // Instance of model
-    private TitleModel titleModel;
-    private MusicPlayer mPlayer;
-    private VolumeController volumeModel;
+    private TitleModel titleModel; // Instance of title model
+    private MusicPlayer mPlayer; // Instance of music player
+    private VolumeController volumeController; // Instance of volume controller
 
+    // Creates the JSlider for sound volume and keybind text fields
     private JSlider volume = new JSlider(JSlider.HORIZONTAL,-20, 6,0);
     private JTextField cFowardKeybind = new JTextField("W");
     private JTextField cBackwardsKeybind = new JTextField("S");
     private JTextField cRightKeybind = new JTextField("D");
     private JTextField cLeftKeybind = new JTextField("A");
 
+    // JLabels and JButtons displayed on options
     private JLabel fowardKeybind = new JLabel("Foward Keybind");
     private JLabel backwardsKeybind = new JLabel("Backward Keybind");
     private JLabel rightKeybind = new JLabel("Right Keybind");
     private JLabel leftKeybind = new JLabel("Left Keybind"); 
     private JLabel volumeLabel = new JLabel("Volume"); 
-    private JButton quitGame = new JButton("Quit_Game");
-
+    private JButton quitGame = new JButton("Quit Game");
     private JButton exitOptions = new JButton("Exit");
 
     private JLabel optionsTitle = new JLabel("Options");
     private JPanel optionsPanel = new JPanel();
 
-    private JPanel endJPanel  = new JPanel();
-    private JLabel endDisplay = new JLabel();
-    private JButton quitToTitleButton = new JButton();
-
-    private JLabel backGround = new JLabel(); // sets the backround of the game
+    private JLabel backGround = new JLabel(); // Sets the background of the game
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // getting the screen sice of the users device
 
     private JLabel playerHealth = new JLabel();  // bar that diplays player health
-    private JLabel MonsterHealth = new JLabel(); // bar that displays monster health
+    private JLabel monsterHealth = new JLabel(); // bar that displays monster health
 
     private JButton buttons[] = new JButton[18]; // array that contains all the wuicktinme buttons
-    private JPanel quicktimeButtonPannel = new JPanel(); // contains all the quicktime buttons
+    private JPanel quicktimeButtonPanel = new JPanel(); // contains all the quicktime buttons
 
-    private JLabel floorLevel = new JLabel(); // siplays the floor you are on 
+    private JLabel floorLevel = new JLabel(); // displays the floor you are on 
 
-    private JButton defend = new JButton("Defend"); // button that allows you to defend
+    private JButton defend = new JButton("Defend"); // Button that allows you to defend
 
-    private String directory = System.getProperty("user.dir");
+    private String directory = System.getProperty("user.dir"); // Gets directory
 
     private JLabel options = new JLabel("",SwingConstants.CENTER);
 
-    // private boolean once = true;
+    // Game over screen
+    private JPanel gameOverPanel = new JPanel();
+    private JLabel wonOrNot = new JLabel();
+    private JLabel gameModeStat = new JLabel();
+    private JLabel numOfKeysStat = new JLabel();
+    private JLabel healthStat = new JLabel();
+    private JLabel smokeBombStat = new JLabel();
+    private JButton exitGameOver = new JButton("Quit to Title Screen");
+    private JLabel gameOverBG = new JLabel();
 
+    // Label and JButton for displaying and using smoke bombs
     private JLabel smokeBombs = new JLabel("");
-    // private JPanel smokeBombsPanel = new JPanel();
-    // private JButton yesButton = new JButton("Yes");
-    // private JButton noButton = new JButton("No");
     private JButton useButton = new JButton("Use");
 
     // Constructor
@@ -82,13 +83,12 @@ public class GameView extends JPanel {
 
         this.setLayout(null); // settoing the layout to null
 
+        // Gets a font
         File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf");
 
-        // gettoing the width and height of user diplay
+        // getting the width and height of user diplay
         int width = (int)this.screenSize.getWidth(); 
         int height = (int)this.screenSize.getHeight();
-
-        System.out.println(width+" "+ (int)Math.round(height*0.944));
 
         this.setBounds(0,0,width,height); // setting the size of the game
 
@@ -99,22 +99,23 @@ public class GameView extends JPanel {
         backGround.setBackground(Color.BLACK);
         backGround.setOpaque(true);
 
-        
+        // Sets up the player's and monster's health bar        
         playerHealth.setBounds((int)Math.round(width*0.005),(int)Math.round(height*0.944),(int)Math.round(width*0.312),(int)Math.round(height*0.046)); // setting the location of player health
         playerHealth.setBackground(Color.RED); // setting colour of player health
         playerHealth.setOpaque(true);
 
-        MonsterHealth.setBounds((int)Math.round(width*0.682),(int)Math.round(height*0.944),(int)Math.round(width*0.312),(int)Math.round(height*0.046)); // setting the location of monster health
-        MonsterHealth.setBackground(new Color(170, 34, 34)); // setting colour of monster health
-        MonsterHealth.setOpaque(true);
+        monsterHealth.setBounds((int)Math.round(width*0.682),(int)Math.round(height*0.944),(int)Math.round(width*0.312),(int)Math.round(height*0.046)); // setting the location of monster health
+        monsterHealth.setBackground(new Color(170, 34, 34)); // setting colour of monster health
+        monsterHealth.setOpaque(true);
 
-        quicktimeButtonPannel.setBounds(0,0,width,height);
+        // Sets up the qte buttons
+        quicktimeButtonPanel.setBounds(0,0,width,height);
         addButtons(); // gneratting and adding quicktime buttons
-        quicktimeButtonPannel.setVisible(false);
-        quicktimeButtonPannel.setOpaque(false);
+        quicktimeButtonPanel.setVisible(false);
+        quicktimeButtonPanel.setOpaque(false);
 
+        // The text to display the floor level
         floorLevel.setText("");
-        // floorLevel.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.009),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
         floorLevel.setBounds((int)Math.round(width*0.9),(int)Math.round(height*0.006),(int)Math.round(width*0.2),(int)Math.round(height*0.083));
         floorLevel.setForeground(new Color(255,255,255));
 
@@ -129,21 +130,12 @@ public class GameView extends JPanel {
 
         // Displays the number of smoke Bombs
         smokeBombs.setText("");
-        // smokeBombs.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.194),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
         smokeBombs.setBounds((int)Math.round(width*0.82),(int)Math.round(height*0.06),(int)Math.round(width*0.27),(int)Math.round(height*0.083));
         smokeBombs.setForeground(new Color(255,255,255));
 
-        // smokeBombsPanel.setLayout(null);
-
-        // yesButton.setBounds(0,0,100,100);
-        // noButton.setBounds(100,0,100,100); // 0.343
+        // Button to use a smoke bomb
         useButton.setBounds((int)Math.round(width*0.43),(int)Math.round(height*0.2),(int)Math.round(width*0.182), (int)Math.round(height*0.046));
         useButton.setVisible(false);
-
-        // smokeBombsPanel.add(yesButton);
-        // smokeBombsPanel.add(noButton);
-        // smokeBombsPanel.setVisible(false);
-        // smokeBombsPanel.setBounds(0,0,200,100); //////// TODO Add scaling
 
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
@@ -153,11 +145,12 @@ public class GameView extends JPanel {
 
         defend.setVisible(false);
 
-        // TODO Add scaling to this and change the size of the font to something realistic
+        // Text for user instructrions
         options.setBounds((int)Math.round(width*0.343),(int)Math.round(height*0.009),(int)Math.round(width*0.364),(int)Math.round(height*0.185));
         options.setFont(new Font("Helvetica", Font.PLAIN, 25));
         options.setForeground(Color.white);
 
+        // Settings menu
         optionsPanel.setLayout(null);
         optionsPanel.setBounds(0,0,width,height);
         optionsPanel.setBackground(new Color(20,20,20,20));
@@ -189,6 +182,7 @@ public class GameView extends JPanel {
         } 
         catch (Exception e) {}
 
+        // Sets up the key binds
         cFowardKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.277), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
         fowardKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.259), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         fowardKeybind.setForeground(new Color(139, 0, 0));
@@ -209,6 +203,7 @@ public class GameView extends JPanel {
         rightKeybind.setForeground(new Color(139, 0, 0));
         cRightKeybind.setText(gameModel.rightKeyBind);
 
+        // Sets up the volume JSlider
         volumeLabel.setBounds((int)Math.round(width*0.463), (int) Math.round(height*0.629), (int)Math.round(width*0.208), (int) Math.round(height*0.046));
         volumeLabel.setForeground(new Color(139, 0, 0));
         volume.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.722), (int)Math.round(width*0.468), (int) Math.round(height*0.046));
@@ -218,6 +213,7 @@ public class GameView extends JPanel {
         volume.setPaintLabels(true);
         volume.setForeground(new Color(139, 0, 0));
 
+        // Sets up exit and quit game buttons
         exitOptions.setBounds((int)Math.round(width*0.005),(int) Math.round(height*0.009),(int)Math.round(width*0.078),(int) Math.round(height*0.084));
         exitOptions.setForeground(new Color(139, 0, 0));
 
@@ -227,6 +223,7 @@ public class GameView extends JPanel {
         fowardKeybind.setText("Foward Keybind");
         backwardsKeybind.setText("Backward Keybind");
 
+        // Adds everything to the optionsPanel and makes it not visible
         optionsPanel.add(optionsTitle);
         optionsPanel.add(cFowardKeybind);
         optionsPanel.add(fowardKeybind);
@@ -243,22 +240,74 @@ public class GameView extends JPanel {
 
         optionsPanel.setVisible(false);
 
-        endJPanel.setLayout(null);
-        endJPanel.setBounds(0,0,width,height);
-        endDisplay.setBounds(0,0,100,100);
+        // Game over screen
+        wonOrNot.setBounds((int)Math.round(width*0.27),(int)Math.round(height*0),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
+        wonOrNot.setForeground(new Color(139, 0, 0));
+        wonOrNot.setSize(screenSize);
+        try {
+            // setting font and scaling the font
+            Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            // Font sizedFont = font.deriveFont(width*0.052f); // original size 100
+            Font sizedFont = font.deriveFont(width*0.06f); // original size 100
+            wonOrNot.setFont(sizedFont);
+        } 
+        catch (Exception e) {}
+
+        // The different statistics from the game
+        gameModeStat.setFont(new Font("Helvetica", Font.PLAIN, 20));
+        gameModeStat.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.4),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
+        gameModeStat.setText("Game Mode: " + gameModel.gameMode);
+        
+        numOfKeysStat.setFont(new Font("Helvetica", Font.PLAIN, 20));
+        numOfKeysStat.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.44),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
+        numOfKeysStat.setText("Number of Keys: " + gameModel.numOfKeys);
+
+        healthStat.setFont(new Font("Helvetica", Font.PLAIN, 20));
+        healthStat.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.48),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
+        healthStat.setText("Your Health: " + gameModel.health);
+
+        smokeBombStat.setFont(new Font("Helvetica", Font.PLAIN, 20));
+        smokeBombStat.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.52),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
+        smokeBombStat.setText("Number of Smoke Bombs: " + gameModel.smokeBombs);
+
+        gameModeStat.setForeground(new Color(255, 255, 255));
+        numOfKeysStat.setForeground(new Color(255, 255, 255));
+        healthStat.setForeground(new Color(255, 255, 255));
+        smokeBombStat.setForeground(new Color(255, 255, 255));
+
+        // Sets up the button to exit back to title screen
+        exitGameOver.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.8),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
+
+        gameOverBG.setBounds(0,0,width,height);
+        gameOverBG.setBackground(Color.BLACK);
+        gameOverBG.setOpaque(true);
+
+        // Adds everything to the gameOverPanel and sets it to not visible
+        gameOverPanel.setLayout(null);
+        gameOverPanel.setBounds(0, 0, width, height);
+        gameOverPanel.add(wonOrNot);
+        gameOverPanel.add(gameModeStat);
+        gameOverPanel.add(numOfKeysStat);
+        gameOverPanel.add(healthStat);
+        gameOverPanel.add(smokeBombStat);
+        gameOverPanel.add(exitGameOver);
+        gameOverPanel.add(gameOverBG);
+        gameOverPanel.setVisible(false);
 
         // adding objects to the game
         this.add(playerHealth);
         this.add(defend);
-        this.add(MonsterHealth);
-        this.add(quicktimeButtonPannel);
+        this.add(monsterHealth);
+        this.add(quicktimeButtonPanel);
         this.add(floorLevel);
         this.add(smokeBombs);
         this.add(options);
         this.add(optionsPanel);
-        // this.add(smokeBombsPanel);
         this.add(useButton);
+        this.add(gameOverPanel);
         this.add(backGround);
+
+        update();
     }// end of game view
 
     // generates buttons in an array
@@ -285,49 +334,40 @@ public class GameView extends JPanel {
         }
     }
 
-    // add
+    // adds buttons to the quicktime panel
     public void addButtons(){
         generateButtons();
         defaultLocations();
-        quicktimeButtonPannel.setLayout(null);
+        quicktimeButtonPanel.setLayout(null);
         for(int i = 0; i<18;i++ ){
-            quicktimeButtonPannel.add(buttons[i]);
+            quicktimeButtonPanel.add(buttons[i]);
         }
-
     }
 
+    // Adds action listener for the array of buttons
     public void addActionForArray(){
         for(int i = 0;i<18;i++){
-            buttons[i].addActionListener(new buttonGameController(gameModel,titleModel, buttons[i]));
+            buttons[i].addActionListener(new ButtonGameController(gameModel,titleModel, buttons[i]));
         }
     }
-
-
 
     // Registers controllers
     private void registerControllers() {
-        //
-        buttonGameController bc = new buttonGameController(this.gameModel, titleModel,defend);
+        ButtonGameController bc = new ButtonGameController(this.gameModel, titleModel,defend);
         defend.addActionListener(bc);
 
-        keyboardInput keyboardInput = new keyboardInput(this.gameModel);
+        KeyboardInput keyboardInput = new KeyboardInput(this.gameModel);
         this.addKeyListener(keyboardInput);
         this.setFocusable(true);
 
-        buttonGameController exitButtonGameController = new buttonGameController(this.gameModel,titleModel,exitOptions);
+        ButtonGameController exitButtonGameController = new ButtonGameController(this.gameModel,titleModel,exitOptions);
         exitOptions.addActionListener(exitButtonGameController);
 
-        buttonGameController quiButtonGameController = new buttonGameController(this.gameModel,titleModel,quitGame);
-        quitGame.addActionListener(quiButtonGameController);
+        ButtonGameController quitButtonGameController = new ButtonGameController(this.gameModel,titleModel,quitGame);
+        quitGame.addActionListener(quitButtonGameController);
 
-        buttonGameController useGameController = new buttonGameController(gameModel, titleModel, useButton);
+        ButtonGameController useGameController = new ButtonGameController(gameModel, titleModel, useButton);
         useButton.addActionListener(useGameController);
-
-        // buttonGameController yesButtonGameController = new buttonGameController(this.gameModel,titleModel,yesButton);
-        // yesButton.addActionListener(yesButtonGameController);
-
-        // buttonGameController nButtonGameController = new buttonGameController(this.gameModel,titleModel,noButton);
-        // noButton.addActionListener(nButtonGameController);
         
         addActionForArray();
 
@@ -337,103 +377,78 @@ public class GameView extends JPanel {
         cLeftKeybind.addActionListener(textFieldController);
         cRightKeybind.addActionListener(textFieldController);
 
-        /*
-        cFowardKeybind.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gameModel.forwardKeyBind = cFowardKeybind.getText().toUpperCase();
-            }
-          });
-        cBackwardsKeybind.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gameModel.backwardsKeyBind = cBackwardsKeybind.getText().toUpperCase();
-            }
-          });
-        cRightKeybind.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gameModel.rightKeyBind = cRightKeybind.getText().toUpperCase();
-            }
-          });
-        cLeftKeybind.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gameModel.leftKeyBind = cLeftKeybind.getText().toUpperCase();
-            }
-          }); */
+        volumeController = new VolumeController(mPlayer, volume);
+        volume.addChangeListener(volumeController);
 
-        volumeModel = new VolumeController(mPlayer, volume);
-        volume.addChangeListener(volumeModel);
+        ButtonGameController exitGameOverCont = new ButtonGameController(gameModel, titleModel, exitGameOver);
+        exitGameOver.addActionListener(exitGameOverCont);
 
     }
 
     // Updates the GUI based on what happens in the game
     public void update() {
 
+        // Gets screen dimensions
         int width = (int)this.screenSize.getWidth(); 
         int height = (int)this.screenSize.getHeight();
 
-
-
+        // If the game should start
         if (titleModel.startGame && gameModel.once == true) {
             gameModel.once = false;
             gameModel.game();
         }
 
+        // Check to see if the user wants to use a smoke bomb
         if (gameModel.wantToUseSmokeBomb) {
-            // smokeBombsPanel.setVisible(true);
             useButton.setVisible(true);
         } else {
-            // smokeBombsPanel.setVisible(false);
             useButton.setVisible(false);
         }
 
-        if (gameModel.randomise){
+        // Generates the random locations for the buttons
+        if (gameModel.randomize){
             randomLocations();
         }
 
-        quicktimeButtonPannel.setVisible(gameModel.quickTimeState);
+        // If the quick time state is activated, it sets the panel to visible
+        quicktimeButtonPanel.setVisible(gameModel.quickTimeState);
 
+        // If the quick time state is activated, sets the array of buttons to visible
         if(gameModel.quickTimeState){
             for(int i = 0; i<gameModel.numOfButtons;i++){
                 buttons[i].setVisible(gameModel.buttonVisible[i]);   
             }
         }
 
+        // Displays the defend button
         defend.setVisible(gameModel.displayDefendButton);
 
+        // Displays the directions the user can move in
         if (gameModel.displayDirections){
             options.setText(gameModel.outputDirections);
             options.setVisible(true);
         }
 
-        if (gameModel.displayOptionsPannel){
+        // Displays the options panel
+        if (gameModel.displayOptionsPanel){
             optionsPanel.setVisible(true);
             defend.setVisible(false);
-            quicktimeButtonPannel.setVisible(false);
+            quicktimeButtonPanel.setVisible(false);
             playerHealth.setVisible(false);
-            MonsterHealth.setVisible(false);
+            monsterHealth.setVisible(false);
             options.setVisible(false);
-        }
-        else{
+        } else {
             playerHealth.setVisible(true);
-            MonsterHealth.setVisible(true);
+            monsterHealth.setVisible(true);
             options.setVisible(true);
             optionsPanel.setVisible(false);
 
-        }
+        }        
 
-
-        
-
+        // Sets the text for the floor level and the number of smoke bombs
         floorLevel.setText("Floor: " + Integer.toString(gameModel.numOfKeys + 1));
         smokeBombs.setText("Smoke Bombs: " + Integer.toString(gameModel.smokeBombs));
 
-        // MonsterHealth.setBounds((int)Math.round(1310+(1310*((100-gameModel.monsterHealth)/100))),1020,(int)Math.round(600*(gameModel.monsterHealth/100)),50);
-
-        // TODO The monster health is not always 100
-        // 610 in
         // Changes the health bar width for the monster depending on the total health
         int healthBarWidth = 0;
         if (gameModel.numOfKeys == 0) {
@@ -448,15 +463,38 @@ public class GameView extends JPanel {
             healthBarWidth = (int)Math.round((width*0.312)*(gameModel.monsterHealth/200));
         }
 
-        MonsterHealth.setBounds((int)Math.round(width-(width*0.007))-healthBarWidth, (int)Math.round(height*0.944), healthBarWidth, (int)Math.round(height*0.046));
+        // Updates the monster's and player's health bars
+        monsterHealth.setBounds((int)Math.round(width-(width*0.007))-healthBarWidth, (int)Math.round(height*0.944), healthBarWidth, (int)Math.round(height*0.046));
 
         playerHealth.setBounds((int)Math.round(width*0.005),(int)Math.round(height*0.944),(int)Math.round((width*0.312)*(gameModel.health/100)),(int)Math.round(height*0.046));
 
+        // Sets the text for the keybind JTextFields
         cFowardKeybind.setText(gameModel.forwardKeyBind);
         cBackwardsKeybind.setText(gameModel.backwardsKeyBind);
         cLeftKeybind.setText(gameModel.leftKeyBind);
         cRightKeybind.setText(gameModel.rightKeyBind);
 
-    }
+        // Game over screen
+        if (gameModel.gameOver) {
+            if (!gameModel.gameMode.equals(null)) {
+                gameModel.canEscape = false;
+
+                if (gameModel.playerDied) {
+                    wonOrNot.setText("You Died");
+                } else {
+                    wonOrNot.setText("You Escaped");
+                }
+
+                playerHealth.setVisible(false);
+                monsterHealth.setVisible(false);
+                options.setVisible(false);
+                floorLevel.setVisible(false);
+                smokeBombs.setVisible(false);
+
+                gameOverPanel.setVisible(true);
+            }
+        }
+
+    } // Closes update
     
 } // Closes class

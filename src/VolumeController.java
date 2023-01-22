@@ -1,3 +1,9 @@
+// Program Name: Main
+// Last Modified: January 22, 2023
+// Name: Rahul Gurukiran & Anirudh Bharadwaj
+// Description: Controls the volume in the options menus
+
+// Imports
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;

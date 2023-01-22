@@ -1,5 +1,5 @@
 // Program Name: TitleView
-// Last Modified:
+// Last Modified: January 22, 2023
 // Name: Rahul Gurukiran & Anirudh Bharadwaj
 // Description: Creates the GUI for the title screen
 
@@ -21,7 +21,7 @@ public class TitleView extends JPanel {
     // Creates instance variables
     private TitleModel titleModel; // Instance of model
     public MusicPlayer mPlayer;
-    private VolumeController volumeModel;
+    private VolumeController volumeController;
 
     private JLabel loadingScreenImage = new JLabel(); // Background image
     private JLabel title = new JLabel("A Secluded Place"); // Title
@@ -36,13 +36,13 @@ public class TitleView extends JPanel {
     // Error message for if the save file has not been started or is completed
     private JLabel startNewGame = new JLabel("No game in session. Please start a new game.");
     
-    // private JLabel howToPlay = new JLabel(titleModel.getGameInfo());
-    private JLabel howToPlay = new JLabel("Move: The game will provide a list of directions to move in. Use keybinds to move.\nDefend: Face the direction you hear the audio coming from, click defend and respond to the quick time event.\nUsing Smoke Bombs: If your defense was unsuccessful you will be given an option to use Smoke Bombs");
+    private JLabel howToPlay = new JLabel("Look through the game manual file provided!");
 
     // Difficulty settings
     private JButton easy = new JButton("Easy"); 
     private JButton medium = new JButton("Medium");
     private JButton hard = new JButton("Hard");
+    private JButton demo = new JButton("Demo");
     private JPanel gameModePanel = new JPanel(); // Stores buttons for difficulty
 
     private JSlider volume = new JSlider(JSlider.HORIZONTAL,-20, 6,0);
@@ -138,9 +138,9 @@ public class TitleView extends JPanel {
         howToPlay.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.531),(int)Math.round(width*0.364),(int)Math.round(height*0.185));
 
         //
-        gameModePanel.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.462),(int)Math.round(width*0.104),(int)Math.round(height*0.185));
+        gameModePanel.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.462),(int)Math.round(width*0.104),(int)Math.round(height*0.24));
         // gameModePanel.setBounds(1200,500,200,200);
-        gameModePanel.setLayout(new GridLayout(3,1));
+        gameModePanel.setLayout(new GridLayout(4,1));
 
         optionsPanel.setLayout(null);
         optionsPanel.setBounds(0,0,width,height);
@@ -226,6 +226,7 @@ public class TitleView extends JPanel {
         gameModePanel.add(easy);
         gameModePanel.add(medium);
         gameModePanel.add(hard);
+        gameModePanel.add(demo);
         gameModePanel.setVisible(false);
 
         this.setLayout(null);
@@ -253,10 +254,11 @@ public class TitleView extends JPanel {
         this.easy.addActionListener(controller);
         this.medium.addActionListener(controller);
         this.hard.addActionListener(controller);
+        this.demo.addActionListener(controller);
         this.exitOptions.addActionListener(controller);
 
-        volumeModel = new VolumeController(mPlayer, volume);
-        volume.addChangeListener(volumeModel);
+        volumeController = new VolumeController(mPlayer, volume);
+        volume.addChangeListener(volumeController);
 
         TextFieldController textFieldController = new TextFieldController(gameModel, cFowardKeybind, cBackwardsKeybind, cLeftKeybind, cRightKeybind);
         cFowardKeybind.addActionListener(textFieldController);
@@ -398,8 +400,6 @@ public class TitleView extends JPanel {
 
         if (this.titleModel.userSelection.equals("new")) {
 
-
-
             // Displays buttons to select game mode
             startNewGame.setVisible(false);
             howToPlay.setVisible(false);
@@ -416,8 +416,8 @@ public class TitleView extends JPanel {
                 this.mPlayer.gameMusic();
                 gameModel.leftGame = false;
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
-                gameModel.gameOver = false;
-                gameModel.once = true;
+                this.gameModel.gameOver = false;
+                this.gameModel.once = true;
                 gameModePanel.setVisible(false);
                 this.gameModel.setInfo("MEDIUM", 0, 100, 2, 100);
                 this.gameModel.update();
@@ -425,10 +425,19 @@ public class TitleView extends JPanel {
                 this.mPlayer.gameMusic();
                 gameModel.leftGame = false;
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
-                gameModel.gameOver = false;
-                gameModel.once = true;
+                this.gameModel.gameOver = false;
+                this.gameModel.once = true;
                 gameModePanel.setVisible(false);
                 this.gameModel.setInfo("HARD", 0, 100, 1, 100);
+                this.gameModel.update();
+                this.mPlayer.stop(mPlayer.clip);
+                this.mPlayer.gameMusic();
+                gameModel.leftGame = false;
+            } else if (this.titleModel.gameDifficulty.equals("Demo")) {
+                this.gameModel.gameOver = false;
+                this.gameModel.once = true;
+                gameModePanel.setVisible(false);
+                this.gameModel.setInfo("DEMO", 0, 100, 5, 100);
                 this.gameModel.update();
                 this.mPlayer.stop(mPlayer.clip);
                 this.mPlayer.gameMusic();
