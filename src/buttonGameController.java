@@ -11,6 +11,8 @@ public class buttonGameController implements ActionListener {
     private MusicPlayer mPlayer;
     private JButton aButton;
 
+    public static boolean isPushed = false;
+
     // Constructor
     public buttonGameController(GameModel gameModel,TitleModel titleModel, JButton aButton) {
         this.gameModel = gameModel;
@@ -23,8 +25,9 @@ public class buttonGameController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(((JButton)aButton).toString().contains("text=Defend")){
             this.gameModel.defendButton = true;
+            // this.gameModel.isDefendButton(true, "fromCont");
+            // isPushed = true;
             this.gameModel.displayDefendButton = false;
-
         }
 
         if(((JButton)aButton).toString().contains("text=Exit")){
@@ -58,14 +61,18 @@ public class buttonGameController implements ActionListener {
 
         }
 
-        // Uses smoke bomb
-        if (((JButton)aButton).toString().contains("text=Yes")) {
+        if (((JButton)aButton).toString().contains("text=Use")) {
             gameModel.useSmokeBomb = true;
         }
 
-        if (((JButton)aButton).toString().contains("text=No")) {
-            gameModel.useSmokeBomb = false;
-        }
+        // // Uses smoke bomb
+        // if (((JButton)aButton).toString().contains("text=Yes")) {
+        //     gameModel.useSmokeBomb = true;
+        // }
+
+        // if (((JButton)aButton).toString().contains("text=No")) {
+        //     gameModel.useSmokeBomb = false;
+        // }
 
         for(int i = 0; i<18;i++){
             if(((JButton)aButton).toString().contains("text="+(i))){

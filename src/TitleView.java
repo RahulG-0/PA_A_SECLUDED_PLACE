@@ -53,7 +53,7 @@ public class TitleView extends JPanel {
     private JTextField cLeftKeybind = new JTextField();
 
     private JLabel fowardKeybind = new JLabel("Foward Keybind");
-    private JLabel backwardsKeybind = new JLabel("Backward Keybing");
+    private JLabel backwardsKeybind = new JLabel("Backward Keybind");
     private JLabel rightKeybind = new JLabel("Right Keybind");
     private JLabel leftKeybind = new JLabel("Left Keybind"); 
     private JLabel volumeLabel = new JLabel("Volume"); 
@@ -258,6 +258,13 @@ public class TitleView extends JPanel {
         volumeModel = new VolumeController(mPlayer, volume);
         volume.addChangeListener(volumeModel);
 
+        TextFieldController textFieldController = new TextFieldController(gameModel, cFowardKeybind, cBackwardsKeybind, cLeftKeybind, cRightKeybind);
+        cFowardKeybind.addActionListener(textFieldController);
+        cBackwardsKeybind.addActionListener(textFieldController);
+        cLeftKeybind.addActionListener(textFieldController);
+        cRightKeybind.addActionListener(textFieldController);
+
+        /*
         cFowardKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -297,7 +304,7 @@ public class TitleView extends JPanel {
                     gameModel.leftKeyBind = cLeftKeybind.getText().toUpperCase();
                 }
             }
-          });
+          }); */
 
     }
 
@@ -420,8 +427,6 @@ public class TitleView extends JPanel {
             startNewGame.setVisible(false);
             gameModePanel.setVisible(false);
             howToPlay.setVisible(true);
-            // System.out.println(this.howToPlay.isVisible());
-            // System.out.println(this.howToPlay.getText());
         
         } else if (this.titleModel.userSelection.equals("settings")) {
 
@@ -447,6 +452,7 @@ public class TitleView extends JPanel {
             buttonsPanel.setVisible(true);
             startNewGame.setVisible(false);
         }
+
         cFowardKeybind.setText(gameModel.forwardKeyBind);
         cBackwardsKeybind.setText(gameModel.backwardsKeyBind);
         cLeftKeybind.setText(gameModel.leftKeyBind);

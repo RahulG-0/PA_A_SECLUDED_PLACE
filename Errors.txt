@@ -1,21 +1,13 @@
 Priorities:
-- Monster health
 - Game Over screen
-- Fix scaling
-- Display smoke bomb panel
-- Format
-- None of the buttons work when returned to title from game
-
-Test:
-- Make sure that it writes to OutputFile after the each round
-- Make sure last monster attack works proper
+- Format and clean up code and writing the stuff in README
+- Fix the audio when going from game to title
+- Continue game is janky
+    - Requires user to hit "Alt" key before starting for some reason
+    - QTE not showing up properly
 
 Optional Features:
-- Make it so that when entering keybinds, it can only be a single character
 - Make the buttons look nice
 - Make things look cleaner
 - Somehow make it so that after the second to last direction, it says "and"
-
-Fix audio for switching from GameModel to TitleModel
-
-Continue game does not register the key controllers
+- Show a message saying that the user will be overwriting an existing save file if they start new game
