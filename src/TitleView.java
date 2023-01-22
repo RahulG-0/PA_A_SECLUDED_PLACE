@@ -6,8 +6,6 @@
 // Imports
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -45,8 +43,10 @@ public class TitleView extends JPanel {
     private JButton demo = new JButton("Demo");
     private JPanel gameModePanel = new JPanel(); // Stores buttons for difficulty
 
+    // JSlider for game music volume
     private JSlider volume = new JSlider(JSlider.HORIZONTAL,-20, 6,0);
 
+    // Sets up keybinds
     private JTextField cFowardKeybind = new JTextField();
     private JTextField cBackwardsKeybind = new JTextField();
     private JTextField cRightKeybind = new JTextField();
@@ -58,12 +58,11 @@ public class TitleView extends JPanel {
     private JLabel leftKeybind = new JLabel("Left Keybind"); 
     private JLabel volumeLabel = new JLabel("Volume"); 
 
+    // Exit button and options panel
     private JButton exitOptions = new JButton("Exit");
 
     private JLabel optionsTitle = new JLabel("Options");
     private JPanel optionsPanel = new JPanel();
-
-
 
     private GameModel gameModel; // Instance of GameModel
 
@@ -83,7 +82,6 @@ public class TitleView extends JPanel {
         this.mPlayer.music();
         this.mPlayer.gameMusic();
         this.mPlayer.stop(mPlayer.gameClip);
-        // this.mPlayer.stop(mPlayer.gameClip);
     }
 
     // Creates the initial layout of the GUI
@@ -93,22 +91,22 @@ public class TitleView extends JPanel {
         int height = (int)this.screenSize.getHeight();
 
         loadingScreenImage.setBounds(0, 0, width, height);
-        // loadingScreenImage.setIcon(new ImageIcon(directory + "\\src\\res\\Safeimagekit-resized-img.png"));
 
         try {
             // setting image and scaling image to fit the icon
-            BufferedImage bufferedImage = ImageIO.read(new File(directory + "\\src\\res\\Safeimagekit-resized-img.png")); 
+            BufferedImage bufferedImage = ImageIO.read(new File(directory + "\\src\\res\\Safeimagekit-resized-img.png")); // Version for VS
+            // BufferedImage bufferedImage = ImageIO.read(new File(directory + "\\res\\Safeimagekit-resized-img.png"));
             Image image = bufferedImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
             loadingScreenImage.setIcon(new ImageIcon(image));
         } catch (IOException e1) {}
 
         // Formatting for title
-        title.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.231),(int)Math.round(width*0.625),(int)Math.round(height*0.092)); // setting scaling for title
-        // title.setBounds(450,250,1200,100);
+        title.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.231),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
         title.setForeground(new Color(139, 0, 0));
         title.setBorder(null);
 
-        File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf");
+        File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf"); // Version for VS
+        // File fontFile = new File(directory + "\\res\\HelpMe.ttf");
         try {
             // setting font and scaling the font
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
@@ -117,9 +115,25 @@ public class TitleView extends JPanel {
         } 
         catch (Exception e) {}
 
+        // Changing the color of the buttons
+        newGame.setBackground(new Color(230, 230, 230));
+        newGame.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        loadGame.setBackground(new Color(230, 230, 230));
+        loadGame.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        howTo.setBackground(new Color(230, 230, 230));
+        howTo.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        settings.setBackground(new Color(230, 230, 230));
+        settings.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        quit.setBackground(new Color(230, 230, 230));
+        quit.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+
         // Adds the buttons to the buttons panel
         buttonsPanel.setBounds((int)Math.round(width*0.416),(int)Math.round(height*0.462),(int)Math.round(width*0.156),(int)Math.round(height*0.509));
-        // buttonsPanel.setBounds(800,500,300,550);
         buttonsPanel.setLayout(new GridLayout(5, 1));
         buttonsPanel.add(newGame);
         buttonsPanel.add(loadGame);
@@ -137,11 +151,29 @@ public class TitleView extends JPanel {
         howToPlay.setForeground(new Color(255, 255, 255));
         howToPlay.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.531),(int)Math.round(width*0.364),(int)Math.round(height*0.185));
 
-        //
-        gameModePanel.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.462),(int)Math.round(width*0.104),(int)Math.round(height*0.24));
-        // gameModePanel.setBounds(1200,500,200,200);
-        gameModePanel.setLayout(new GridLayout(4,1));
+        // Changes background colors for the game mode buttons
+        easy.setBackground(new Color(230, 230, 230));
+        easy.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
+        medium.setBackground(new Color(230, 230, 230));
+        medium.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        hard.setBackground(new Color(230, 230, 230));
+        hard.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        demo.setBackground(new Color(230, 230, 230));
+        demo.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        // Sets up the panel for displaying the game modes
+        gameModePanel.setBounds((int)Math.round(width*0.625),(int)Math.round(height*0.462),(int)Math.round(width*0.104),(int)Math.round(height*0.24));
+        gameModePanel.setLayout(new GridLayout(4,1));
+        gameModePanel.add(easy);
+        gameModePanel.add(medium);
+        gameModePanel.add(hard);
+        gameModePanel.add(demo);
+        gameModePanel.setVisible(false);
+
+        // Sets up the options menu panel
         optionsPanel.setLayout(null);
         optionsPanel.setBounds(0,0,width,height);
         optionsPanel.setBackground(new Color(20,20,20,20));
@@ -172,6 +204,7 @@ public class TitleView extends JPanel {
         } 
         catch (Exception e) {}
 
+        // Sets up the keybinds
         cFowardKeybind.setBounds((int)Math.round(width*0.677), (int) Math.round(height*0.277), (int)Math.round(width*0.052), (int) Math.round(height*0.046));
         fowardKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.259), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         fowardKeybind.setForeground(new Color(139, 0, 0));
@@ -188,6 +221,7 @@ public class TitleView extends JPanel {
         rightKeybind.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.537), (int)Math.round(width*0.208), (int) Math.round(height*0.092));
         rightKeybind.setForeground(new Color(139, 0, 0));
 
+        // Sets up the volume slider
         volumeLabel.setBounds((int)Math.round(width*0.463), (int) Math.round(height*0.629), (int)Math.round(width*0.208), (int) Math.round(height*0.046));
         volumeLabel.setForeground(new Color(139, 0, 0));
         volume.setBounds((int)Math.round(width*0.260), (int) Math.round(height*0.722), (int)Math.round(width*0.468), (int) Math.round(height*0.046));
@@ -197,9 +231,12 @@ public class TitleView extends JPanel {
         volume.setPaintLabels(true);
         volume.setForeground(new Color(139, 0, 0));
 
+        // The button for exiting the options menu
         exitOptions.setBounds((int)Math.round(width*0.005),(int) Math.round(height*0.009),(int)Math.round(width*0.078),(int) Math.round(height*0.084));
         exitOptions.setForeground(new Color(139, 0, 0));
+        exitOptions.setBackground(new Color(230, 230, 230));
 
+        // Keybinds
         fowardKeybind.setText("Foward Keybind");
         backwardsKeybind.setText("Backward Keybind");
 
@@ -208,6 +245,7 @@ public class TitleView extends JPanel {
         cLeftKeybind.setText(gameModel.leftKeyBind);
         cRightKeybind.setText(gameModel.rightKeyBind);
 
+        // Adds everything to the options panel
         optionsPanel.add(optionsTitle);
         optionsPanel.add(cFowardKeybind);
         optionsPanel.add(fowardKeybind);
@@ -223,14 +261,8 @@ public class TitleView extends JPanel {
 
         optionsPanel.setVisible(false);
 
-        gameModePanel.add(easy);
-        gameModePanel.add(medium);
-        gameModePanel.add(hard);
-        gameModePanel.add(demo);
-        gameModePanel.setVisible(false);
-
+        // Adds everything to the JFrame
         this.setLayout(null);
-
         this.add(optionsPanel);
         this.add(title);
         this.add(gameModePanel);
@@ -240,7 +272,6 @@ public class TitleView extends JPanel {
         this.add(loadingScreenImage);
 
     }
-
 
     // Registers the controller to the buttons
     private void registerControllers() {
@@ -265,54 +296,12 @@ public class TitleView extends JPanel {
         cBackwardsKeybind.addActionListener(textFieldController);
         cLeftKeybind.addActionListener(textFieldController);
         cRightKeybind.addActionListener(textFieldController);
-
-        /*
-        cFowardKeybind.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (gameModel.forwardKeyBind == gameModel.backwardsKeyBind || gameModel.forwardKeyBind == gameModel.rightKeyBind || gameModel.forwardKeyBind == gameModel.leftKeyBind) {
-                    cFowardKeybind.selectAll();
-                } else {
-                    gameModel.forwardKeyBind = cFowardKeybind.getText().toUpperCase();
-                }
-            }
-          });
-        cBackwardsKeybind.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (gameModel.backwardsKeyBind == gameModel.forwardKeyBind || gameModel.backwardsKeyBind == gameModel.rightKeyBind || gameModel.backwardsKeyBind == gameModel.leftKeyBind) {
-                    cBackwardsKeybind.selectAll();
-                } else {
-                    gameModel.backwardsKeyBind = cBackwardsKeybind.getText().toUpperCase();
-                }
-            }
-          });
-        cRightKeybind.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (gameModel.rightKeyBind == gameModel.forwardKeyBind || gameModel.rightKeyBind == gameModel.backwardsKeyBind || gameModel.rightKeyBind == gameModel.leftKeyBind) {
-                    cRightKeybind.selectAll();
-                } else {
-                    gameModel.rightKeyBind = cRightKeybind.getText().toUpperCase();
-                }
-            }
-          });
-        cLeftKeybind.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (gameModel.leftKeyBind == gameModel.forwardKeyBind || gameModel.leftKeyBind == gameModel.rightKeyBind || gameModel.leftKeyBind == gameModel.backwardsKeyBind) {
-                    cLeftKeybind.selectAll();
-                } else {
-                    gameModel.leftKeyBind = cLeftKeybind.getText().toUpperCase();
-                }
-            }
-          }); */
-
     }
 
     // This checks if the save file can be used for game information
     public boolean canFileLoad() {
-        File sFile = new File(directory + "\\src\\TextFiles\\SaveFile.txt"); // Directory of file
+        File sFile = new File(directory + "\\src\\TextFiles\\SaveFile.txt"); // Version for VS
+        // File sFile = new File(directory + "\\TextFiles\\SaveFile.txt");
         Scanner saveFile = null;
         String gameMode = ""; // Information for game
         int numOfKeys = 0;
@@ -346,26 +335,45 @@ public class TitleView extends JPanel {
                 } else if (counter == 3) {
                     smokeBombs = Integer.parseInt(saveFile.next());
                 } else if (counter == 4) {
-                    // monsterHealth = Integer.parseInt(saveFile.next());
                     monsterHealth = Double.parseDouble(saveFile.next());
                 }
 
                 counter++;
             }
 
-            // Passes the information to the GameModel and sets canLoad to true
-            if (this.titleModel.userSelection.equals("load")) {
-                gameModel.once = true;
-                gameModel.gameOver = false;
-                this.mPlayer.stop(this.mPlayer.clip);
-                this.mPlayer.gameMusic();
-                this.gameModel.setInfo(gameMode, numOfKeys, health, smokeBombs, monsterHealth);
-                buttonsPanel.setVisible(false);
-                this.gameModel.update();
-                gameModel.leftGame = false;
-                canLoad = true;
+            // Makes sure that the save file is not already completed
+            if (gameMode.equals("EASY") && numOfKeys == 3) {
+                gameModePanel.setVisible(false);
+                howToPlay.setVisible(false);
+                startNewGame.setVisible(true);
+            } else if (gameMode.equals("MEDIUM") && numOfKeys == 4) {
+                gameModePanel.setVisible(false);
+                howToPlay.setVisible(false);
+                startNewGame.setVisible(true);
+            } else if (gameMode.equals("HARD") && numOfKeys == 5) {
+                gameModePanel.setVisible(false);
+                howToPlay.setVisible(false);
+                startNewGame.setVisible(true);
+            } else if (gameMode.equals("DEMO") && numOfKeys == 1) {
+                gameModePanel.setVisible(false);
+                howToPlay.setVisible(false);
+                startNewGame.setVisible(true);
             } else {
-                canLoad = true;
+                // Passes the information to the GameModel and sets canLoad to true
+                if (this.titleModel.userSelection.equals("load")) {
+                    gameModel.once = true;
+                    gameModel.gameOver = false;
+                    this.mPlayer.stop(this.mPlayer.clip);
+                    this.mPlayer.gameMusic();
+                    this.gameModel.setInfo(gameMode, numOfKeys, health, smokeBombs, monsterHealth);
+                    // buttonsPanel.setVisible(false);
+                    this.gameModel.update();
+                    gameModel.leftGame = false;
+
+                    canLoad = true;
+                } else {
+                    canLoad = true;
+                }
             }
         }
 
@@ -374,19 +382,14 @@ public class TitleView extends JPanel {
 
         // Returns whether the file can be loaded or not
         return(canLoad);
-        // if (canLoad) {
-        //     return(true);
-        // } else {
-        //     return(false);
-        // }
     }
 
-    // Updates the GUI with the answer
+    // Updates the GUI
     public void update() {
 
         if (titleModel.once){
             this.mPlayer.music();
-            titleModel.once =false;
+            titleModel.once = false;
         }
 
         if(gameModel.leftGame){
@@ -445,18 +448,19 @@ public class TitleView extends JPanel {
             }
             
         } else if (this.titleModel.userSelection.equals("load")) {
-            // Checks to see if the file can be loaded
+            // Checks to see if the file can be loaded and starts game if the user selected load
             canFileLoad();
 
         } else if (this.titleModel.userSelection.equals("info")) {
 
+            // Displays the how to play message
             startNewGame.setVisible(false);
             gameModePanel.setVisible(false);
             howToPlay.setVisible(true);
         
         } else if (this.titleModel.userSelection.equals("settings")) {
 
-            // setting settings to visible
+            // Makes settings visible
             optionsPanel.setVisible(true);
             title.setVisible(false);
             gameModePanel.setVisible(false);
@@ -473,11 +477,14 @@ public class TitleView extends JPanel {
             Window win = SwingUtilities.getWindowAncestor(this);
             win.dispose();
             System.exit(0);
+
         } else if(this.titleModel.userSelection.equals("Quit")){
+
             optionsPanel.setVisible(false);
             title.setVisible(true);
             buttonsPanel.setVisible(true);
             startNewGame.setVisible(false);
+            
         }
 
         cFowardKeybind.setText(gameModel.forwardKeyBind);

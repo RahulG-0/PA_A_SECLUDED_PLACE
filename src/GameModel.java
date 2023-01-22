@@ -254,7 +254,6 @@ public class GameModel {
         amountClicked = 0;
         flip = false;
         flipV2 = false;
-        // this.outputDirections = "You can move ";
         quickTimeState = false;
         defendButton = false;
         this.whichDirection = null;
@@ -273,8 +272,10 @@ public class GameModel {
         flipV2 = false;
 
         // This outputs the information to the files
-        File saveFile = new File(directory + "\\src\\TextFiles\\SaveFile.txt");
-        File outputFile = new File(directory + "\\src\\TextFiles\\OutputFile.txt");
+        File saveFile = new File(directory + "\\src\\TextFiles\\SaveFile.txt"); // Version for VS
+        // File saveFile = new File(directory + "\\TextFiles\\SaveFile.txt");
+        File outputFile = new File(directory + "\\src\\TextFiles\\OutputFile.txt"); // Version for VS
+        // File outputFile = new File(directory + "\\TextFiles\\OutputFile.txt");
 
         // Output to save file and output file
         PrintWriter output = getPrintWriter(saveFile);
@@ -291,37 +292,21 @@ public class GameModel {
     public String whichDirections() {
         // Initializes values
         this.outputDirections = "";
-        boolean moveForward = false;
-        boolean moveLeft = false;
-        boolean moveRight = false;
-
-        // Compares directions and concatenates to the String
-        if (canMoveForward == true) {
-            moveForward = true;
-        }
-
-        if (canMoveLeft == true) {
-            moveLeft = true;
-        }
-
-        if (canMoveRight == true) {
-            moveRight = true;
-        }
 
         // Checks which directions the user can move in and sends a related message
-        if (moveForward && !moveLeft && !moveRight) {
+        if (canMoveForward && !canMoveLeft && !canMoveRight) {
             outputDirections = "You can move forward.";
-        } else if (!moveForward && moveLeft && !moveRight) {
+        } else if (!canMoveForward && canMoveLeft && !canMoveRight) {
             outputDirections = "You can move left.";
-        } else if (!moveForward && !moveLeft && moveRight) {
+        } else if (!canMoveForward && !canMoveLeft && canMoveRight) {
             outputDirections = "You can move right.";
-        } else if (moveForward && moveLeft && !moveRight) {
+        } else if (canMoveForward && canMoveLeft && !canMoveRight) {
             outputDirections = "You can move forward or left.";
-        } else if (moveForward && !moveLeft && moveRight) {
+        } else if (canMoveForward && !canMoveLeft && canMoveRight) {
             outputDirections = "You can move forward or right.";
-        } else if (!moveForward && moveLeft && moveRight) {
+        } else if (!canMoveForward && canMoveLeft && canMoveRight) {
             outputDirections = "You can move left or right.";
-        } else if (moveForward && moveLeft && moveRight) {
+        } else if (canMoveForward && canMoveLeft && canMoveRight) {
             outputDirections = "You can move forward, left and right.";
         }
 
@@ -484,6 +469,10 @@ public class GameModel {
                 // Does not allow user to exit
                 canEscape = false;
                 
+                try {
+                    thread.sleep(10);
+                } catch (InterruptedException ex) {}
+
                 // Checks to see if the user clicked all the buttons
                 if (amountClicked == numOfButtons){
                     defendSuccessful = true;

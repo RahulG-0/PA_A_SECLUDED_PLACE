@@ -52,7 +52,8 @@ public class ButtonGameController implements ActionListener {
             titleModel.once = true;
 
             // Output to save file
-            File saveFile = new File(gameModel.directory + "\\src\\TextFiles\\SaveFile.txt");
+            File saveFile = new File(gameModel.directory + "\\src\\TextFiles\\SaveFile.txt"); // Version for VS
+            // File saveFile = new File(gameModel.directory + "\\TextFiles\\SaveFile.txt");
             PrintWriter output = gameModel.getPrintWriter(saveFile);
             output.println(gameModel.gameMode + "\n" + gameModel.numOfKeys + "\n" + gameModel.health + "\n" + gameModel.smokeBombs + "\n" + gameModel.monsterHealth);
             output.close();
@@ -80,7 +81,8 @@ public class ButtonGameController implements ActionListener {
             titleModel.once = true;
 
             // Clears the text file
-            File saveFile = new File(gameModel.directory + "\\src\\TextFiles\\SaveFile.txt");
+            File saveFile = new File(gameModel.directory + "\\src\\TextFiles\\SaveFile.txt"); // Version for VS
+            // File saveFile = new File(gameModel.directory + "\\TextFiles\\SaveFile.txt");
             PrintWriter output = gameModel.getPrintWriter(saveFile);
             output.flush();
             output.close();
