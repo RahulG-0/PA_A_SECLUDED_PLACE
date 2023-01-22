@@ -36,6 +36,7 @@ public class buttonGameController implements ActionListener {
             gameModel.displayOptionsPannel = false;
             titleModel.startGame = false;
             titleModel.gameDifficulty = "";
+            titleModel.userSelection = "";
             // mPlayer.gameClip.stop();
             // gameModel.mPlayer.gameClip.stop();
             // mPlayer.music(); TODO Add this in title view and update

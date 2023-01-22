@@ -382,6 +382,13 @@ public class GameView extends JPanel {
         }
 
         quicktimeButtonPannel.setVisible(gameModel.quickTimeState);
+
+        if(gameModel.quickTimeState){
+            for(int i = 0; i<gameModel.numOfButtons;i++){
+                buttons[i].setVisible(gameModel.buttonVisible[i]);   
+            }
+        }
+
         defend.setVisible(gameModel.displayDefendButton);
 
         if (gameModel.displayDirections){
@@ -404,6 +411,7 @@ public class GameView extends JPanel {
             optionsPanel.setVisible(false);
 
         }
+
 
         
 
