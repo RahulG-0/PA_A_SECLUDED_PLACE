@@ -360,6 +360,7 @@ public class TitleView extends JPanel {
                 this.gameModel.setInfo(gameMode, numOfKeys, health, smokeBombs, monsterHealth);
                 buttonsPanel.setVisible(false);
                 this.gameModel.update();
+                gameModel.leftGame = false;
                 canLoad = true;
             } else {
                 canLoad = true;
@@ -377,14 +378,27 @@ public class TitleView extends JPanel {
         //     return(false);
         // }
     }
-    
 
     // Updates the GUI with the answer
     public void update() {
+
+        if (titleModel.once){
+            this.mPlayer.music();
+            titleModel.once =false;
+        }
+
+        if(gameModel.leftGame){
+            try {
+                this.mPlayer.stop(mPlayer.gameClip);
+            } catch (Exception e) {}
+        }
+
         // Updates the GUI based on which button the user selects
         buttonsPanel.setVisible(true);
 
         if (this.titleModel.userSelection.equals("new")) {
+
+
 
             // Displays buttons to select game mode
             startNewGame.setVisible(false);
@@ -400,6 +414,7 @@ public class TitleView extends JPanel {
                 this.gameModel.update();
                 this.mPlayer.stop(mPlayer.clip);
                 this.mPlayer.gameMusic();
+                gameModel.leftGame = false;
             } else if (this.titleModel.gameDifficulty.equals("Medium")) {
                 gameModel.gameOver = false;
                 gameModel.once = true;
@@ -408,6 +423,7 @@ public class TitleView extends JPanel {
                 this.gameModel.update();
                 this.mPlayer.stop(mPlayer.clip);
                 this.mPlayer.gameMusic();
+                gameModel.leftGame = false;
             } else if (this.titleModel.gameDifficulty.equals("Hard")) {
                 gameModel.gameOver = false;
                 gameModel.once = true;
@@ -416,6 +432,7 @@ public class TitleView extends JPanel {
                 this.gameModel.update();
                 this.mPlayer.stop(mPlayer.clip);
                 this.mPlayer.gameMusic();
+                gameModel.leftGame = false;
             }
             
         } else if (this.titleModel.userSelection.equals("load")) {
@@ -446,6 +463,7 @@ public class TitleView extends JPanel {
             this.mPlayer.stop(mPlayer.gameClip);
             Window win = SwingUtilities.getWindowAncestor(this);
             win.dispose();
+            System.exit(0);
         } else if(this.titleModel.userSelection.equals("Quit")){
             optionsPanel.setVisible(false);
             title.setVisible(true);

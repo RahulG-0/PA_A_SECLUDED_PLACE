@@ -10,7 +10,7 @@ public class VolumeController implements ChangeListener {
     public VolumeController(MusicPlayer mPlayer, JSlider slider){
         this.mPlayer = mPlayer;
         this.slider = slider;
-    }
+    } 
 
     @Override
     public void stateChanged(ChangeEvent e) {

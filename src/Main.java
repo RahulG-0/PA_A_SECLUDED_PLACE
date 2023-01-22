@@ -4,7 +4,7 @@
 // Description: Main class for "A Secluded Place"
 
 // Imports
-import javax.swing.*;
+import javax.swing.*; 
 
 public class Main {
 

@@ -6,6 +6,7 @@
 // Imports
 import java.awt.*;
 import java.io.*;
+import java.text.BreakIterator;
 import java.util.Timer;
 
 public class GameModel {
@@ -78,6 +79,10 @@ public class GameModel {
     public String directory = System.getProperty("user.dir");
 
     public boolean once = true;
+
+    public boolean leftGame = false;
+
+    Thread thread;
 
     // Constructor
     public GameModel() {
@@ -177,11 +182,9 @@ public class GameModel {
     // game
 
     // Checks if the game is over
-    public boolean isGameOver() {
-        if (gameOver == true) {
-            return(gameOver);
-        }
-        else if (gameMode == "EASY" && numOfKeys == 3) {
+    public void isGameOver() {
+
+        if (gameMode == "EASY" && numOfKeys == 3) {
             gameOver = true;
         } else if (gameMode == "MEDIUM" && numOfKeys == 4) {
             gameOver = true;
@@ -193,35 +196,38 @@ public class GameModel {
         } else{
             gameOver = false;
         }
-
-        return(gameOver);
     }
 
     // Method to run the game
     public void game(){
         Runnable myRunnable = new Runnable() {
             public void run(){
-
-                while (!isGameOver()) {
+                startGame();
+                while (!gameOver) {
                     // Keep the game going
-                    
+                    isGameOver();
+
                     walking();
-        
                     if (monsterDied) {
                         numOfKeys++;
                         startFloor();
                     }
+                    if(gameOver == true){
+                        break;
+                    }
                 }
-
-                
 
             }
         };
         // UPDATE KEYBINDS HERE
         // Keeps playing as long as the game is not over
-        Thread thread = new Thread(myRunnable);
+        thread = new Thread(myRunnable);
 
         thread.start();
+    }
+
+    public void stop(){
+        thread.interrupt();
     }
 
     // public void quitThread() {
@@ -241,6 +247,7 @@ public class GameModel {
         amountClicked = 0;
         flip = false;
         flipV2 = false;
+        this.outputDirections = "You can move ";
     }
 
     // Start the floor

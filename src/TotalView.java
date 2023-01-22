@@ -48,7 +48,7 @@ public class TotalView extends JPanel{
     public void registerControllers(){
         MouseController mc = new MouseController(this.totalModel);
 
-        game.addMouseListener(mc);
+        game.addMouseListener(mc); 
         title.addMouseListener(mc);
         this.addMouseListener(new MouseController(this.totalModel) );
 

@@ -50,7 +50,7 @@ public class MusicPlayer {
             this.gameClip = AudioSystem.getClip();
             gameClip.open(inputStream);
             // gameClip.start();
-            gameClip.loop(5);
+            gameClip.loop(100);
         } catch (Exception e) {}
     }
 

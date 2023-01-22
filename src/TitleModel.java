@@ -17,6 +17,8 @@ public class TitleModel {
     // Stores whether the GUI should switch from TitleView to GameView or not
     public boolean startGame = false;
 
+    public boolean once = false; 
+
     // Constructor
     public TitleModel() {
         super();

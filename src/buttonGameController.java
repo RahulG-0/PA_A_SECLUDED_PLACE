@@ -28,18 +28,22 @@ public class buttonGameController implements ActionListener {
             // this.gameModel.isDefendButton(true, "fromCont");
             // isPushed = true;
             this.gameModel.displayDefendButton = false;
+            gameModel.update();
         }
 
         if(((JButton)aButton).toString().contains("text=Exit")){
             gameModel.displayOptionsPannel = false;
+            gameModel.update();
         }
 
         if(((JButton)aButton).toString().contains("text=Quit_Game")){
 
             gameModel.displayOptionsPannel = false;
             titleModel.startGame = false;
-            titleModel.gameDifficulty = "";
+            titleModel.gameDifficulty = "nonbe";
             titleModel.userSelection = "";
+            gameModel.leftGame = true;
+            titleModel.once = true;
             // mPlayer.gameClip.stop();
             // gameModel.mPlayer.gameClip.stop();
             // mPlayer.music(); TODO Add this in title view and update
@@ -55,7 +59,8 @@ public class buttonGameController implements ActionListener {
 
             // gameModel.quitThread();
             gameModel.gameOver = true;
-            gameModel.isGameOver();
+            titleModel.update();
+            gameModel.update();
 
             // totalView.switchGameType();
 
@@ -63,6 +68,7 @@ public class buttonGameController implements ActionListener {
 
         if (((JButton)aButton).toString().contains("text=Use")) {
             gameModel.useSmokeBomb = true;
+            gameModel.update();
         }
 
         // // Uses smoke bomb
@@ -82,7 +88,6 @@ public class buttonGameController implements ActionListener {
         }
         
         this.mPlayer.defendButtonClick();
-        gameModel.update();
 
     }
 }

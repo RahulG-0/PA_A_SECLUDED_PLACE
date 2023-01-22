@@ -264,7 +264,7 @@ public class GameView extends JPanel {
     // generates buttons in an array
     public void generateButtons(){
         for(int i = 0; i<18;i++ ){
-            buttons[i] = new JButton(String.valueOf(i+1));
+            buttons[i] = new JButton(String.valueOf(i));
             buttons[i].setVisible(false);
         }
     }
@@ -375,10 +375,6 @@ public class GameView extends JPanel {
         int height = (int)this.screenSize.getHeight();
 
 
-        // if (titleModel.startGame && once == true){
-        //     once = false;
-        //     gameModel.game();
-        // }
 
         if (titleModel.startGame && gameModel.once == true) {
             gameModel.once = false;
