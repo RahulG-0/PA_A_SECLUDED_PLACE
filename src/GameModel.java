@@ -6,6 +6,7 @@
 // Imports
 import java.awt.*;
 import java.io.*;
+import java.util.Timer;
 
 public class GameModel {
 
@@ -78,10 +79,6 @@ public class GameModel {
 
     public boolean once = true;
 
-    // Thread for running the game
-    // Runnable myRunnable;
-    // Thread thread = new Thread(myRunnable);
-
     // Constructor
     public GameModel() {
         super();
@@ -120,6 +117,18 @@ public class GameModel {
     // Sets the current layout of the GUI
     public void setGUI(GameView currentView) {
         this.view = currentView;
+    }
+
+    public void setKeyBind(String keyBindName, char keyBind) {
+        if (keyBindName.equals("FORWARD")) {
+            this.forwardKeyBind = Character.toString(keyBind).toUpperCase();
+        } else if (keyBindName.equals("BACKWARDS")) {
+            this.backwardsKeyBind = Character.toString(keyBind).toUpperCase();
+        } else if (keyBindName.equals("RIGHT")) {
+            this.rightKeyBind = Character.toString(keyBind).toUpperCase();
+        } else if (keyBindName.equals("LEFT")) {
+            this.leftKeyBind = Character.toString(keyBind).toUpperCase();
+        }
     }
 
     public PrintWriter getPrintWriter(File file) {
@@ -193,20 +202,16 @@ public class GameModel {
     public void game(){
         Runnable myRunnable = new Runnable() {
             public void run(){
-                int counter = 0;
+                boolean stop = false;
+
                 while (!isGameOver()) {
-                    // System.out.println("Still doing this: " + counter);
-                    // System.nanoTime();
                     // Keep the game going
                     walking();
         
                     if (monsterDied) {
                         numOfKeys++;
                         startFloor();
-                        // Play the elevator music
                     }
-
-                    counter++;
                 }
             }
         };
@@ -321,8 +326,6 @@ public class GameModel {
         if(whichDirection != null){
             // Compares which directions the user can move and what they selected
             if (canMoveForward == true && whichDirection == forwardKeyBind) {
-
-
                 mPlayer.walkingSounds();
                 long time = java.lang.System.currentTimeMillis() + (mPlayer.walkClip.getMicrosecondLength()/1000);
                 while(java.lang.System.currentTimeMillis()<= time){}
@@ -361,6 +364,21 @@ public class GameModel {
     
     }
 
+    /*
+    // Returns if the defend button has been pushed
+    public boolean isDefendButton(boolean isPushed, String fromWhere) {
+        // System.out.println("Making it here");
+        boolean returnVal = false;
+
+        if (isPushed && fromWhere.equals("fromCont")) {
+            returnVal = true;
+        } else if (!isPushed && fromWhere.equals("fromAttack")) {
+
+        }
+
+        return(returnVal);
+    } */
+
     public void monsterAttack() {
         // If the monster attack was unsuccessful, do defendSuccessful
         this.monsterAttackDirection();
@@ -375,26 +393,30 @@ public class GameModel {
         update();
         
         long targetTime =  java.lang.System.currentTimeMillis() + 5000;
-        
+
         while (java.lang.System.currentTimeMillis() <= targetTime){
             canEscape = false;
+            // TODO Figure out another way out of the while loop so that it doesn't have to sysout
+            // Maybe have another method that checks if defend button is true and have button game
+            // controller pass in the value there
+            // Then reference that method in here and set defendButton to that
+            // System.out.println("Defend Button status: " + defendButton);
+            // defendButton = isDefendButton(false, "fromAttack");
+
+            // defendButton = buttonGameController.isPushed;
 
             if (defendButton) {
                 if (monstAttackDirection == "FORWARD" && whichDirection != forwardKeyBind) {
                     defendSuccessful = false;
-                    displayDefendButton = false;
                     break;
                 } else if (monstAttackDirection == "RIGHT" && whichDirection != rightKeyBind) {
                     defendSuccessful = false;
-                    displayDefendButton = false;
                     break;
                 } else if (monstAttackDirection == "BACKWARD" && whichDirection != backwardsKeyBind) {
                     defendSuccessful = false;
-                    displayDefendButton = false;
                     break;
                 } else if (monstAttackDirection == "LEFT" && whichDirection != leftKeyBind) {
                     defendSuccessful = false;
-                    displayDefendButton = false;
                     break;
                 } else {
                     quickTimeState = true;
@@ -405,19 +427,21 @@ public class GameModel {
         }
 
         canEscape = true;
+        buttonGameController.isPushed = false;
 
         if (!defendButton){
             defendSuccessful = false;
         }
+
         displayDefendButton = false;
         defendButton = false;
         update();
 
-        if(quickTimeState){
+        if (quickTimeState) {
             displayDefendButton = false;
-            randomise = true;
+            this.randomise = true;
             update();
-            randomise = false;
+            this.randomise = false;
             update();
 
             targetTime =  java.lang.System.currentTimeMillis() + getAddTime(); 
@@ -462,6 +486,7 @@ public class GameModel {
                 update();
 
                 while (System.currentTimeMillis() < waitTime) {
+                    // System.out.println("Helo");
                     canEscape = false;
                     if(useSmokeBomb){
                         smokeBombs--;
@@ -476,15 +501,11 @@ public class GameModel {
 
             }
 
-            // IF THE USER USED THE SMOKE BOMB
-            // if (user used smoke bomb) {
-            //     smokeBombs--;
-            // }
-
             health = health - 10;
 
             // Adds health for the monster if the defense was unsuccessful
             if(!useSmokeBomb){
+                System.out.println("Changing smoke bomb");
                 if (monsterHealth <= 90) {
                     monsterHealth = monsterHealth + 10;
 
@@ -492,6 +513,7 @@ public class GameModel {
                     monsterHealth = monsterHealth + (100 - monsterHealth);
                 }
             }
+
             update();
         }
 
@@ -562,15 +584,19 @@ public class GameModel {
         // int[] returnDimensions = {0, 0};
 
         // Based on game mode and floor level, it decides how many buttons to generate
-        if (getGameMode() == "EASY") {
+        // System.out.println("Game Mode: " + getGameMode());
+        // System.out.println("Keys: " + getNumOfKeys());
+        
+        if (getGameMode().equals("EASY")) {
             if (getNumOfKeys() == 0) {
+                // System.out.println("Making it in here");
                 numOfButtons = 4;
             } else if (getNumOfKeys() == 1) {
                 numOfButtons = 5;
             } else if (getNumOfKeys() == 2) {
                 numOfButtons = 6;
             }
-        } else if (getGameMode() == "MEDIUM") {
+        } else if (getGameMode().equals("MEDIUM")) {
             if (getNumOfKeys() == 0) {
                 numOfButtons = 5;
             } else if (getNumOfKeys() == 1) {
@@ -580,7 +606,7 @@ public class GameModel {
             } else if (getNumOfKeys() == 3) {
                 numOfButtons = 13;
             }
-        } else if (getGameMode() == "HARD") {
+        } else if (getGameMode().equals("HARD")) {
             if (getNumOfKeys() == 0) {
                 numOfButtons = 7;
             } else if (getNumOfKeys() == 1) {
@@ -593,9 +619,12 @@ public class GameModel {
                 numOfButtons = 18;
             }
         }
+
         setAmountVisible();
 
         width = (int)screenSize.getWidth()/numOfButtons;
+        // System.out.println("Number of buttons: " + numOfButtons);
+        // width = 5;
 
         return(width);
 
@@ -610,6 +639,7 @@ public class GameModel {
             buttonVisible[i] = false;
         }
     }
+
     public void setAmountVisible(){
         for (int i = 0; i<numOfButtons;i++){
             buttonVisible[i] = true;

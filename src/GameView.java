@@ -19,13 +19,13 @@ public class GameView extends JPanel {
     private VolumeController volumeModel;
 
     private JSlider volume = new JSlider(JSlider.HORIZONTAL,-20, 6,0);
-    private JTextField cFowardKeybind = new JTextField("w");
-    private JTextField cBackwardsKeybind = new JTextField("s");
-    private JTextField cRightKeybind = new JTextField("d");
-    private JTextField cLeftKeybind = new JTextField("a");
+    private JTextField cFowardKeybind = new JTextField("W");
+    private JTextField cBackwardsKeybind = new JTextField("S");
+    private JTextField cRightKeybind = new JTextField("D");
+    private JTextField cLeftKeybind = new JTextField("A");
 
     private JLabel fowardKeybind = new JLabel("Foward Keybind");
-    private JLabel backwardsKeybind = new JLabel("Backward Keybing");
+    private JLabel backwardsKeybind = new JLabel("Backward Keybind");
     private JLabel rightKeybind = new JLabel("Right Keybind");
     private JLabel leftKeybind = new JLabel("Left Keybind"); 
     private JLabel volumeLabel = new JLabel("Volume"); 
@@ -61,9 +61,10 @@ public class GameView extends JPanel {
     // private boolean once = true;
 
     private JLabel smokeBombs = new JLabel("");
-    private JPanel smokeBombsPanel = new JPanel();
-    private JButton yesButton = new JButton("Yes");
-    private JButton noButton = new JButton("No");
+    // private JPanel smokeBombsPanel = new JPanel();
+    // private JButton yesButton = new JButton("Yes");
+    // private JButton noButton = new JButton("No");
+    private JButton useButton = new JButton("Use");
 
     // Constructor
     public GameView(GameModel gameModel,TitleModel titleModel) {
@@ -113,36 +114,40 @@ public class GameView extends JPanel {
         quicktimeButtonPannel.setOpaque(false);
 
         floorLevel.setText("");
-        floorLevel.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.009),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
+        // floorLevel.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.009),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
+        floorLevel.setBounds((int)Math.round(width*0.9),(int)Math.round(height*0.006),(int)Math.round(width*0.2),(int)Math.round(height*0.083));
         floorLevel.setForeground(new Color(255,255,255));
 
         try {
             // setting font and scaling the font
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-            Font sizedFont = font.deriveFont(width*0.052f); // original size 100
+            // Font sizedFont = font.deriveFont(width*0.052f); // original size 100
+            Font sizedFont = font.deriveFont(width*0.018f); // original size 100
             floorLevel.setFont(sizedFont);
         } 
         catch (Exception e) {}
 
-        // Smoke Bombs
+        // Displays the number of smoke Bombs
         smokeBombs.setText("");
         // smokeBombs.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.194),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
-        smokeBombs.setBounds((int)Math.round(width*0.947),(int)Math.round(height*0.14),(int)Math.round(width*0.052),(int)Math.round(height*0.083));
+        smokeBombs.setBounds((int)Math.round(width*0.82),(int)Math.round(height*0.06),(int)Math.round(width*0.27),(int)Math.round(height*0.083));
         smokeBombs.setForeground(new Color(255,255,255));
 
-        smokeBombsPanel.setLayout(null);
+        // smokeBombsPanel.setLayout(null);
 
-        yesButton.setBounds(0,0,100,100);
-        noButton.setBounds(100,0,100,100);
+        // yesButton.setBounds(0,0,100,100);
+        // noButton.setBounds(100,0,100,100); // 0.343
+        useButton.setBounds((int)Math.round(width*0.43),(int)Math.round(height*0.2),(int)Math.round(width*0.182), (int)Math.round(height*0.046));
+        useButton.setVisible(false);
 
-        smokeBombsPanel.add(yesButton);
-        smokeBombsPanel.add(noButton);
-        smokeBombsPanel.setVisible(false);
-        smokeBombsPanel.setBounds(0,0,200,100); //////// TODO Add scaling
+        // smokeBombsPanel.add(yesButton);
+        // smokeBombsPanel.add(noButton);
+        // smokeBombsPanel.setVisible(false);
+        // smokeBombsPanel.setBounds(0,0,200,100); //////// TODO Add scaling
 
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-            Font sizedFont = font.deriveFont(width*0.052f);
+            Font sizedFont = font.deriveFont(width*0.018f);
             smokeBombs.setFont(sizedFont);
         } catch (Exception e) {}
 
@@ -150,7 +155,7 @@ public class GameView extends JPanel {
 
         // TODO Add scaling to this and change the size of the font to something realistic
         options.setBounds((int)Math.round(width*0.343),(int)Math.round(height*0.009),(int)Math.round(width*0.364),(int)Math.round(height*0.185));
-        options.setFont(new Font("Serif", Font.PLAIN, 30));
+        options.setFont(new Font("Helvetica", Font.PLAIN, 25));
         options.setForeground(Color.white);
 
         optionsPanel.setLayout(null);
@@ -251,14 +256,15 @@ public class GameView extends JPanel {
         this.add(smokeBombs);
         this.add(options);
         this.add(optionsPanel);
-        this.add(smokeBombsPanel);
+        // this.add(smokeBombsPanel);
+        this.add(useButton);
         this.add(backGround);
     }// end of game view
 
     // generates buttons in an array
     public void generateButtons(){
         for(int i = 0; i<18;i++ ){
-            buttons[i] = new JButton(String.valueOf(i));
+            buttons[i] = new JButton(String.valueOf(i+1));
             buttons[i].setVisible(false);
         }
     }
@@ -276,7 +282,6 @@ public class GameView extends JPanel {
         for(int i = 0;i<gameModel.numOfButtons;i++){
             buttons[i].setBounds(width*i,gameModel.getRandomHeight(),width,(int) Math.round(height*0.092));
             buttons[i].setVisible(true);
-
         }
     }
 
@@ -315,14 +320,24 @@ public class GameView extends JPanel {
         buttonGameController quiButtonGameController = new buttonGameController(this.gameModel,titleModel,quitGame);
         quitGame.addActionListener(quiButtonGameController);
 
-        buttonGameController yesButtonGameController = new buttonGameController(this.gameModel,titleModel,yesButton);
-        yesButton.addActionListener(yesButtonGameController);
+        buttonGameController useGameController = new buttonGameController(gameModel, titleModel, useButton);
+        useButton.addActionListener(useGameController);
 
-        buttonGameController nButtonGameController = new buttonGameController(this.gameModel,titleModel,noButton);
-        noButton.addActionListener(nButtonGameController);
+        // buttonGameController yesButtonGameController = new buttonGameController(this.gameModel,titleModel,yesButton);
+        // yesButton.addActionListener(yesButtonGameController);
+
+        // buttonGameController nButtonGameController = new buttonGameController(this.gameModel,titleModel,noButton);
+        // noButton.addActionListener(nButtonGameController);
         
         addActionForArray();
 
+        TextFieldController textFieldController = new TextFieldController(gameModel, cFowardKeybind, cBackwardsKeybind, cLeftKeybind, cRightKeybind);
+        cFowardKeybind.addActionListener(textFieldController);
+        cBackwardsKeybind.addActionListener(textFieldController);
+        cLeftKeybind.addActionListener(textFieldController);
+        cRightKeybind.addActionListener(textFieldController);
+
+        /*
         cFowardKeybind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -346,7 +361,7 @@ public class GameView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 gameModel.leftKeyBind = cLeftKeybind.getText().toUpperCase();
             }
-          });
+          }); */
 
         volumeModel = new VolumeController(mPlayer, volume);
         volume.addChangeListener(volumeModel);
@@ -371,10 +386,11 @@ public class GameView extends JPanel {
         }
 
         if (gameModel.wantToUseSmokeBomb) {
-            smokeBombsPanel.setVisible(true);
-            System.out.println(smokeBombsPanel.isVisible());
+            // smokeBombsPanel.setVisible(true);
+            useButton.setVisible(true);
         } else {
-            smokeBombsPanel.setVisible(false);
+            // smokeBombsPanel.setVisible(false);
+            useButton.setVisible(false);
         }
 
         if (gameModel.randomise){
@@ -407,8 +423,8 @@ public class GameView extends JPanel {
 
         
 
-        floorLevel.setText(Integer.toString(gameModel.numOfKeys + 1));
-        smokeBombs.setText(Integer.toString(gameModel.smokeBombs));
+        floorLevel.setText("Floor: " + Integer.toString(gameModel.numOfKeys + 1));
+        smokeBombs.setText("Smoke Bombs: " + Integer.toString(gameModel.smokeBombs));
 
         // MonsterHealth.setBounds((int)Math.round(1310+(1310*((100-gameModel.monsterHealth)/100))),1020,(int)Math.round(600*(gameModel.monsterHealth/100)),50);
 

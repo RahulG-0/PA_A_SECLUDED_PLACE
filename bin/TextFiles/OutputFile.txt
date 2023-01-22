@@ -1,0 +1,4 @@
+Game Mode: EASY
+Number of Keys: 1
+Your Health: 100.0
+Number of Smoke Bombs: 3
