@@ -1,4 +1,4 @@
-Game Mode: DEMO
-Number of Keys: 1
+Game Mode: HARD
+Number of Keys: 2
 Your Health: 100.0
-Number of Smoke Bombs: 5
+Number of Smoke Bombs: 1

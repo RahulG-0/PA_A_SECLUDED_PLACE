@@ -16,4 +16,4 @@ Optional Features:
 - Make things look cleaner
 - Somehow make it so that after the second to last direction, it says "and"
 - Show a message saying that the user will be overwriting an existing save file if they start new game
-- Make a "demo" difficulty where it is just one floor
+- Add elevator music

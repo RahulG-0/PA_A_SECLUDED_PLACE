@@ -32,6 +32,7 @@ public class GameView extends JPanel {
     private JButton quitGame = new JButton("Quit Game");
     private JButton exitOptions = new JButton("Exit");
 
+    // Label and panel for the options menu
     private JLabel optionsTitle = new JLabel("Options");
     private JPanel optionsPanel = new JPanel();
 
@@ -51,7 +52,7 @@ public class GameView extends JPanel {
 
     private String directory = System.getProperty("user.dir"); // Gets directory
 
-    private JLabel options = new JLabel("",SwingConstants.CENTER);
+    private JLabel options = new JLabel("",SwingConstants.CENTER); // Tells user what they can do
 
     // Game over screen
     private JPanel gameOverPanel = new JPanel();
@@ -84,7 +85,8 @@ public class GameView extends JPanel {
         this.setLayout(null); // settoing the layout to null
 
         // Gets a font
-        File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf");
+        File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf"); // Version for VS
+        // File fontFile = new File(directory + "\\res\\HelpMe.ttf");
 
         // getting the width and height of user diplay
         int width = (int)this.screenSize.getWidth(); 
@@ -92,7 +94,10 @@ public class GameView extends JPanel {
 
         this.setBounds(0,0,width,height); // setting the size of the game
 
-        this.defend.setBounds((int)Math.round(width*0.416), (int)Math.round(height*0.944), (int)Math.round(width*0.182), (int)Math.round(height*0.046)); // settng the size for the defend buttom
+        // Sets up defend button
+        defend.setBounds((int)Math.round(width*0.416), (int)Math.round(height*0.944), (int)Math.round(width*0.182), (int)Math.round(height*0.046)); // settng the size for the defend buttom
+        defend.setBackground(new Color(204, 204, 204));
+        defend.setVisible(false);
 
         // setting the colour of the backround
         backGround.setBounds(0,0,width,height);
@@ -135,6 +140,7 @@ public class GameView extends JPanel {
 
         // Button to use a smoke bomb
         useButton.setBounds((int)Math.round(width*0.43),(int)Math.round(height*0.2),(int)Math.round(width*0.182), (int)Math.round(height*0.046));
+        useButton.setBackground(new Color(204, 204, 204));
         useButton.setVisible(false);
 
         try {
@@ -142,8 +148,6 @@ public class GameView extends JPanel {
             Font sizedFont = font.deriveFont(width*0.018f);
             smokeBombs.setFont(sizedFont);
         } catch (Exception e) {}
-
-        defend.setVisible(false);
 
         // Text for user instructrions
         options.setBounds((int)Math.round(width*0.343),(int)Math.round(height*0.009),(int)Math.round(width*0.364),(int)Math.round(height*0.185));
@@ -314,6 +318,7 @@ public class GameView extends JPanel {
     public void generateButtons(){
         for(int i = 0; i<18;i++ ){
             buttons[i] = new JButton(String.valueOf(i));
+            buttons[i].setBackground(new Color(230, 230, 230));
             buttons[i].setVisible(false);
         }
     }
@@ -477,6 +482,8 @@ public class GameView extends JPanel {
         // Game over screen
         if (gameModel.gameOver) {
             if (!gameModel.gameMode.equals(null)) {
+                System.out.println("Game Mode: " + gameModel.gameMode);
+
                 gameModel.canEscape = false;
 
                 if (gameModel.playerDied) {
