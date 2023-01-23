@@ -482,7 +482,6 @@ public class GameView extends JPanel {
         // Game over screen
         if (gameModel.gameOver) {
             if (!gameModel.gameMode.equals(null)) {
-                System.out.println("Game Mode: " + gameModel.gameMode);
 
                 gameModel.canEscape = false;
 

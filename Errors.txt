@@ -1,19 +1,6 @@
 Priorities:
-- Game Over screen - Mostly done (just get the title to go up)
-    - Display information
-    - Have exit button
-    - Display if they won or not
-- Format and clean up code and writing the stuff in README
 - Continue game is janky
     - Requires user to hit "Alt" key before starting for some reason
         - setFocusable for panel (this)
-    - QTE not showing up properly
-    - Not comparing the direction faced and monster attack direction correctly
-        - Therefore QTE is not showing up
 
-Optional Features:
-- Make the buttons look nice
-- Make things look cleaner
-- Somehow make it so that after the second to last direction, it says "and"
-- Show a message saying that the user will be overwriting an existing save file if they start new game
-- Add elevator music
+- Make sure that game over screen reads from the OutputFile for information to display

@@ -207,7 +207,6 @@ public class GameModel {
                 // Keeps the game going
                 while (!gameOver) {
                     // Checks to make sure that the game is not over
-                    // TODO Check by commenting out this and gameOver check and instead do isGameOver at bottom
                     isGameOver();
 
                     // Calls the walking method
@@ -373,7 +372,6 @@ public class GameModel {
             }
         }
 
-        // TODO Comment this cuz I have no clue what this was supposed to do
         if(!flip && flipV2){
             if (doesMonsterSpawn()) {
                 flip = false;
@@ -458,11 +456,13 @@ public class GameModel {
             displayDefendButton = false;
             this.randomize = true;
             update();
+            
             this.randomize = false;
             update();
 
             // Waits a certain amount of time for the user to click the buttons
-            targetTime =  java.lang.System.currentTimeMillis() + getAddTime(); 
+            targetTime =  java.lang.System.currentTimeMillis() + getAddTime();
+
             amountClicked = 0;
 
             while(java.lang.System.currentTimeMillis() <= targetTime){
@@ -479,6 +479,7 @@ public class GameModel {
                     update();
                     break;
                 }
+
                 update();
 
             }
@@ -568,37 +569,37 @@ public class GameModel {
     private int getAddTime() {
         int addTime = 0;
 
-        if (getGameMode() == "EASY") {
-            if (getNumOfKeys() == 0) {
+        if (gameMode.equals("EASY")) {
+            if (numOfKeys == 0) {
                 addTime = 7000;
-            } else if (getNumOfKeys() == 1) {
+            } else if (numOfKeys == 1) {
                 addTime = 6000;
-            } else if (getNumOfKeys() == 2) {
+            } else if (numOfKeys == 2) {
                 addTime = 6000;
             }
-        } else if (getGameMode() == "MEDIUM") {
-            if (getNumOfKeys() == 0) {
+        } else if (gameMode.equals("MEDIUM")) {
+            if (numOfKeys == 0) {
                 addTime = 6000;
-            } else if (getNumOfKeys() == 1) {
+            } else if (numOfKeys == 1) {
                 addTime = 7000;
-            } else if (getNumOfKeys() == 2) {
+            } else if (numOfKeys == 2) {
                 addTime = 8000;
-            } else if (getNumOfKeys() == 3) {
+            } else if (numOfKeys == 3) {
                 addTime = 12000;
             }
-        } else if (getGameMode() == "HARD") {
-            if (getNumOfKeys() == 0) {
+        } else if (gameMode.equals("HARD")) {
+            if (numOfKeys == 0) {
                 addTime = 7000;
-            } else if (getNumOfKeys() == 1) {
+            } else if (numOfKeys == 1) {
                 addTime = 8000;
-            } else if (getNumOfKeys() == 2) {
+            } else if (numOfKeys == 2) {
                 addTime = 10000;
-            } else if (getNumOfKeys() == 3) {
+            } else if (numOfKeys == 3) {
                 addTime= 10000;
-            } else if (getNumOfKeys() == 4) {
+            } else if (numOfKeys == 4) {
                 addTime= 8000;
             }
-        } else if (getGameMode() == "DEMO") {
+        } else if (gameMode.equals("DEMO")) {
             addTime = 10000;
         }
 

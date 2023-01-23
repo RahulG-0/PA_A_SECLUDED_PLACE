@@ -40,9 +40,11 @@ public class TitleModel {
         } else if (option.equals("Continue Game")) {
 
             userSelection = "load";
+
+            /*
             if (canLoad) {
                 startGame = true;
-            }
+            } */
 
         } else if (option.equals("Options")) {
 

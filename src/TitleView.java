@@ -366,7 +366,7 @@ public class TitleView extends JPanel {
                     this.mPlayer.stop(this.mPlayer.clip);
                     this.mPlayer.gameMusic();
                     this.gameModel.setInfo(gameMode, numOfKeys, health, smokeBombs, monsterHealth);
-                    // buttonsPanel.setVisible(false);
+                    this.titleModel.startGame = true;
                     this.gameModel.update();
                     gameModel.leftGame = false;
 
