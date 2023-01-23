@@ -78,12 +78,17 @@ public class ButtonGameController implements ActionListener {
             titleModel.userSelection = "";
             gameModel.leftGame = true;
             titleModel.once = true;
+            gameModel.displayOptionsPanel = false;
+            gameModel.gameOver = true;
 
             // Clears the text file
             File saveFile = new File(gameModel.directory + "\\src\\TextFiles\\SaveFile.txt");
             PrintWriter output = gameModel.getPrintWriter(saveFile);
             output.flush();
             output.close();
+            
+            titleModel.update();
+            gameModel.update();
         }
 
         // Checks the randomly generated buttons and sets them to false

@@ -19,7 +19,7 @@ public class Main {
         frame.setUndecorated(true); // Gets rid of the top bar of the JFrame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(view);
-        frame.setVisible(true); 
+        frame.setVisible(true);
 
     } // Closes main method
     

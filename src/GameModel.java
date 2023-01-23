@@ -191,7 +191,7 @@ public class GameModel {
             gameOver = true;
         } else if (gameMode == "HARD" && numOfKeys == 5) {
             gameOver = true;
-        } else if (health == 0) {
+        } else if (health <= 0) {
             gameOver = true;
             playerDied = true;
         } else{
@@ -247,6 +247,7 @@ public class GameModel {
     // TODO Make sure that all this is acc required to be here
     private void startGame(){
         monsterDied = false;
+        playerDied = false;
         monsterHealth = monsterInitHealth + (getNumOfKeys() * 25);
         if (health + (health /4) <=100){
             health = health + (health/4);

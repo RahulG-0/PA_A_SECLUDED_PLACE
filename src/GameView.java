@@ -241,7 +241,7 @@ public class GameView extends JPanel {
         optionsPanel.setVisible(false);
 
         // Game over screen
-        wonOrNot.setBounds((int)Math.round(width*0.27),(int)Math.round(height*0),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
+        wonOrNot.setBounds(660,0,900,500);
         wonOrNot.setForeground(new Color(139, 0, 0));
         wonOrNot.setSize(screenSize);
         try {
@@ -493,6 +493,9 @@ public class GameView extends JPanel {
 
                 gameOverPanel.setVisible(true);
             }
+        }
+        else{
+            gameOverPanel.setVisible(false);
         }
 
     } // Closes update
