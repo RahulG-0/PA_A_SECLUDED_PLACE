@@ -84,7 +84,7 @@ public class ButtonGameController implements ActionListener {
 
             // Clears the text file
             File saveFile = new File(gameModel.directory + "\\src\\TextFiles\\SaveFile.txt"); // Version for VS
-            // File saveFile = new File(gameModel.directory + "\\TextFiles\\SaveFile.txt");
+            // File saveFile = new File(gameModel.directory + "\\TextFiles\\SaveFile.txt"); 
             PrintWriter output = gameModel.getPrintWriter(saveFile);
             output.flush();
             output.close();
