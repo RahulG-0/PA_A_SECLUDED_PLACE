@@ -17,7 +17,7 @@ public class KeyboardInput implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
+        // Auto-generated method stub
         gModel.update();
         
     }
@@ -49,7 +49,7 @@ public class KeyboardInput implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
+        // Auto-generated method stub
         gModel.update();
         
     }

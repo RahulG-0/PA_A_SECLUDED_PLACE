@@ -1,6 +1,0 @@
-Priorities:
-- Continue game is janky
-    - Requires user to hit "Alt" key before starting for some reason
-        - setFocusable for panel (this)
-
-- Make sure that game over screen reads from the OutputFile for information to display

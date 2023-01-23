@@ -7,8 +7,6 @@
 import javax.swing.event.MouseInputAdapter;
 import java.awt.event.*;
 
-
-// TODO Possibly delete this class since it is serving no purpose
 public class MouseController extends MouseInputAdapter {
 
     // Creates instance of TotalModel

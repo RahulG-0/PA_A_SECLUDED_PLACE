@@ -27,3 +27,15 @@ OPTIONS MENU:
 UPDATING KEYBINDS:
 - To update keybinds, enter the options menu or hit escape and enter the key you want for the keybind
 - Once finished, hit enter to save the keybind
+
+LEARNING HOW TO PLAY:
+- To get familiar with the game, try playing on the demo game mode, where you have fewer buttons and more time to click them during the quick time events. There is also only one floor and you get several smoke bombs to use as needed
+
+GAME REQUIREMENTS:
+1. Player vs. Computer Format - Achieved
+2. User defined rounds of play - User can select rounds through difficulty (each floor is one round)
+3. Result of round must be shown on view - Floor level increases and monster's health resets
+4. Player must be able to exit game - Player can return to title screen using the quit button in options menu
+5. Game stats should be displayed at end of game - Displayed in the game over screen
+6. Player can start new game or stop playing - Game over returns player to title screen
+7. Game record should be output on a text file which should be accessible by GUI - Round record is uploaded to text file and final stats can be seen on game over screen (same stats as in file)

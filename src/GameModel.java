@@ -236,14 +236,7 @@ public class GameModel {
         thread.start();
     }
 
-    // TODO Delete if not required
-    // Stops the thread
-    public void stop(){
-        thread.interrupt();
-    }
-
     // Method to initialize information at the beginning of the game
-    // TODO Make sure that all this is acc required to be here
     private void startGame(){
         monsterDied = false;
         playerDied = false;

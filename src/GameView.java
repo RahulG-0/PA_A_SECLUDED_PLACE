@@ -7,6 +7,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class GameView extends JPanel {
 
@@ -43,7 +45,7 @@ public class GameView extends JPanel {
     private JLabel playerHealth = new JLabel();  // bar that diplays player health
     private JLabel monsterHealth = new JLabel(); // bar that displays monster health
 
-    private JButton buttons[] = new JButton[18]; // array that contains all the wuicktinme buttons
+    private JButton buttons[] = new JButton[18]; // array that contains all the quicktinme buttons
     private JPanel quicktimeButtonPanel = new JPanel(); // contains all the quicktime buttons
 
     private JLabel floorLevel = new JLabel(); // displays the floor you are on 
@@ -260,19 +262,47 @@ public class GameView extends JPanel {
         // The different statistics from the game
         gameModeStat.setFont(new Font("Helvetica", Font.PLAIN, 20));
         gameModeStat.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.4),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
-        gameModeStat.setText("Game Mode: " + gameModel.gameMode);
+        // gameModeStat.setText("Game Mode: " + gameModel.gameMode);
         
         numOfKeysStat.setFont(new Font("Helvetica", Font.PLAIN, 20));
         numOfKeysStat.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.44),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
-        numOfKeysStat.setText("Number of Keys: " + gameModel.numOfKeys);
+        // numOfKeysStat.setText("Number of Keys: " + gameModel.numOfKeys);
 
         healthStat.setFont(new Font("Helvetica", Font.PLAIN, 20));
         healthStat.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.48),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
-        healthStat.setText("Your Health: " + gameModel.health);
+        // healthStat.setText("Your Health: " + gameModel.health);
 
         smokeBombStat.setFont(new Font("Helvetica", Font.PLAIN, 20));
         smokeBombStat.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.52),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
-        smokeBombStat.setText("Number of Smoke Bombs: " + gameModel.smokeBombs);
+        // smokeBombStat.setText("Number of Smoke Bombs: " + gameModel.smokeBombs);
+
+        File oFile = new File(directory + "\\src\\TextFiles\\OutputFile.txt");
+        Scanner outputFile = null;
+
+        try {
+            outputFile = new Scanner(oFile);
+        } catch (FileNotFoundException ex) {}
+
+        int counter = 0;
+
+        while (outputFile.hasNext()) {
+            if (counter == 1) {
+                gameModeStat.setText(outputFile.nextLine());
+            } else if (counter == 2) {
+                numOfKeysStat.setText(outputFile.nextLine());
+                System.out.println(numOfKeysStat.getText());
+            } else if (counter == 3) {
+                healthStat.setText(outputFile.nextLine());
+                System.out.println(healthStat.getText());
+            } else if (counter == 4) {
+                smokeBombStat.setText(outputFile.nextLine());
+                System.out.println(smokeBombStat.getText());
+            }
+
+            counter++;
+        }
+
+        outputFile.close();
 
         gameModeStat.setForeground(new Color(255, 255, 255));
         numOfKeysStat.setForeground(new Color(255, 255, 255));
