@@ -321,6 +321,7 @@ public class TitleView extends JPanel {
             
             gameModePanel.setVisible(false);
             startNewGame.setVisible(true);
+            howToPlay.setVisible(false);
 
         } else {
             // Transfers all information from file to variables
@@ -371,6 +372,8 @@ public class TitleView extends JPanel {
                     gameModel.leftGame = false;
 
                     canLoad = true;
+
+                    buttonsPanel.setVisible(false);
                 } else {
                     canLoad = true;
                 }
@@ -386,6 +389,7 @@ public class TitleView extends JPanel {
 
     // Updates the GUI
     public void update() {
+        buttonsPanel.setVisible(true);
 
         if (titleModel.once){
             this.mPlayer.music();

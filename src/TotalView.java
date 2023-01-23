@@ -57,5 +57,12 @@ public class TotalView extends JPanel{
     public void update(){
         title.setVisible(!titleModel.startGame);
         game.setVisible(titleModel.startGame);
+
+        if(titleModel.startGame){
+            game.setFocusable(true);
+            game.isFocusable();
+            game.requestFocus();
+            game.requestFocusInWindow();
+        }
     }   
 } // Closes class

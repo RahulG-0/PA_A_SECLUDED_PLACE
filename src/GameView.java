@@ -431,6 +431,7 @@ public class GameView extends JPanel {
         if (titleModel.startGame && gameModel.once == true) {
             gameModel.once = false;
             gameModel.game();
+            this.setFocusable(true);
         }
 
         // Check to see if the user wants to use a smoke bomb
@@ -449,11 +450,11 @@ public class GameView extends JPanel {
         quicktimeButtonPanel.setVisible(gameModel.quickTimeState);
 
         // If the quick time state is activated, sets the array of buttons to visible
-        if(gameModel.quickTimeState){
-            for(int i = 0; i<gameModel.numOfButtons;i++){
-                buttons[i].setVisible(gameModel.buttonVisible[i]);   
-            }
-        }
+        // if(gameModel.quickTimeState){
+        //     for(int i = 0; i<gameModel.numOfButtons;i++){
+        //         buttons[i].setVisible(gameModel.buttonVisible[i]);   
+        //     }
+        // }
 
         // Displays the defend button
         defend.setVisible(gameModel.displayDefendButton);

@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 Game Mode: MEDIUM
 Number of Keys: 1
 Your Health: 100.0
 Number of Smoke Bombs: 2
+=======
+Game Mode: HARD
+Number of Keys: 1
+Your Health: 90.0
+Number of Smoke Bombs: 0
+>>>>>>> d29a678c29881531617cb1bb097545aad69e1938
