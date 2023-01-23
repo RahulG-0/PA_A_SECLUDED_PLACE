@@ -663,11 +663,6 @@ public class GameModel {
     }
 
     // Sets the buttons for the qte to not visible
-    public void setFalseVisible(){
-        for (int i = 0; i<18;i++){
-            buttonVisible[i] = false;
-        }
-    }
 
     // Sets the buttons for the qte to visible
     public void setAmountVisible(){

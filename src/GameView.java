@@ -419,11 +419,11 @@ public class GameView extends JPanel {
         quicktimeButtonPanel.setVisible(gameModel.quickTimeState);
 
         // If the quick time state is activated, sets the array of buttons to visible
-        if(gameModel.quickTimeState){
-            for(int i = 0; i<gameModel.numOfButtons;i++){
-                buttons[i].setVisible(gameModel.buttonVisible[i]);   
-            }
-        }
+        // if(gameModel.quickTimeState){
+        //     for(int i = 0; i<gameModel.numOfButtons;i++){
+        //         buttons[i].setVisible(gameModel.buttonVisible[i]);   
+        //     }
+        // }
 
         // Displays the defend button
         defend.setVisible(gameModel.displayDefendButton);

@@ -95,8 +95,9 @@ public class ButtonGameController implements ActionListener {
 
         // Checks the randomly generated buttons and sets them to false
         for(int i = 0; i<18;i++){
-            if(((JButton)aButton).toString().contains("text="+(i))){
-                gameModel.buttonVisible[i] = false;
+            if(aButton.getText().equals(Integer.toString(i))){
+                // gameModel.buttonVisible[i] = false;
+                aButton.setVisible(false);
                 gameModel.amountClicked++;
             }
         }
