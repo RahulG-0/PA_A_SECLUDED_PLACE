@@ -1,5 +1,5 @@
 // Program Name: TitleModel
-// Last Modified:
+// Last Modified: January 22, 2023
 // Name: Rahul Gurukiran & Anirudh Bharadwaj
 // Description: Does the background work for the title screen
 
@@ -7,7 +7,6 @@ public class TitleModel {
 
     // Creates instance variables
     private TitleView view; // Instance of TitleView
-    private GameModel gameModel;
     public String userSelection = ""; // Stores which button the user selected
     public String gameDifficulty = ""; // Stores difficulty chosen if new game was selected
 
@@ -16,6 +15,8 @@ public class TitleModel {
 
     // Stores whether the GUI should switch from TitleView to GameView or not
     public boolean startGame = false;
+
+    public boolean once = false; 
 
     // Constructor
     public TitleModel() {
@@ -39,9 +40,11 @@ public class TitleModel {
         } else if (option.equals("Continue Game")) {
 
             userSelection = "load";
+
+            /*
             if (canLoad) {
                 startGame = true;
-            }
+            } */
 
         } else if (option.equals("Options")) {
 
@@ -66,6 +69,11 @@ public class TitleModel {
             gameDifficulty = "Hard";
             startGame = true;
 
+        } else if (option.equals("Demo")) {
+
+            gameDifficulty = "Demo";
+            startGame = true;
+            
         } else if (option.equals("Exit")){
 
             userSelection = "Quit";
@@ -76,23 +84,11 @@ public class TitleModel {
 
         this.update();
     }
-
-    public String getGameInfo(){
-        
-        String str = "Move: The game will provide a list of directions to move in. Use keybinds to move.\nDefend: Face the direction you hear the audio coming from, click defend and respond to the quick time event.\nUsing Smoke Bombs: If your defense was unsuccessful you will be given an option to use Smoke Bombs";
-        
-        return str;
-    }
-
+    
     // Updates the GUI
     public void update() {
         view.update();
 
     }
 
-    /*
-    public boolean getStartGame(){
-        return startGame;
-    } */
-    
 } // Closes class

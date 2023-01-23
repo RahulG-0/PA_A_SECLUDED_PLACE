@@ -1,5 +1,5 @@
 // Program Name: TotalModel
-// Last Modified:
+// Last Modified: January 22, 2023
 // Name: Rahul Gurukiran & Anirudh Bharadwaj
 // Description: Model for the entire game which helps switch from titleView to gameView
 

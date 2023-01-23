@@ -1,0 +1,4 @@
+Game Mode: HARD
+Number of Keys: 1
+Your Health: 90.0
+Number of Smoke Bombs: 0
