@@ -99,6 +99,7 @@ public class ButtonGameController implements ActionListener {
                 // gameModel.buttonVisible[i] = false;
                 aButton.setVisible(false);
                 gameModel.amountClicked++;
+                gameModel.update();
             }
         }
         

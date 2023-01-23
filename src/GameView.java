@@ -401,6 +401,7 @@ public class GameView extends JPanel {
         if (titleModel.startGame && gameModel.once == true) {
             gameModel.once = false;
             gameModel.game();
+            this.setFocusable(true);
         }
 
         // Check to see if the user wants to use a smoke bomb
