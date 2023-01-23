@@ -290,13 +290,10 @@ public class GameView extends JPanel {
                 gameModeStat.setText(outputFile.nextLine());
             } else if (counter == 2) {
                 numOfKeysStat.setText(outputFile.nextLine());
-                System.out.println(numOfKeysStat.getText());
             } else if (counter == 3) {
                 healthStat.setText(outputFile.nextLine());
-                System.out.println(healthStat.getText());
             } else if (counter == 4) {
                 smokeBombStat.setText(outputFile.nextLine());
-                System.out.println(smokeBombStat.getText());
             }
 
             counter++;
