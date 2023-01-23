@@ -52,8 +52,8 @@ public class ButtonGameController implements ActionListener {
             titleModel.once = true;
 
             // Output to save file
-            File saveFile = new File(gameModel.directory + "\\src\\TextFiles\\SaveFile.txt"); // Version for VS
-            // File saveFile = new File(gameModel.directory + "\\TextFiles\\SaveFile.txt");
+            // File saveFile = new File(gameModel.directory + "\\src\\TextFiles\\SaveFile.txt"); // Version for VS
+            File saveFile = new File(gameModel.directory + "\\TextFiles\\SaveFile.txt");
             PrintWriter output = gameModel.getPrintWriter(saveFile);
             output.println(gameModel.gameMode + "\n" + gameModel.numOfKeys + "\n" + gameModel.health + "\n" + gameModel.smokeBombs + "\n" + gameModel.monsterHealth);
             output.close();
@@ -83,8 +83,8 @@ public class ButtonGameController implements ActionListener {
             gameModel.gameOver = true;
 
             // Clears the text file
-            File saveFile = new File(gameModel.directory + "\\src\\TextFiles\\SaveFile.txt"); // Version for VS
-            // File saveFile = new File(gameModel.directory + "\\TextFiles\\SaveFile.txt"); 
+            // File saveFile = new File(gameModel.directory + "\\src\\TextFiles\\SaveFile.txt"); // Version for VS
+            File saveFile = new File(gameModel.directory + "\\TextFiles\\SaveFile.txt");
             PrintWriter output = gameModel.getPrintWriter(saveFile);
             output.flush();
             output.close();
@@ -96,7 +96,6 @@ public class ButtonGameController implements ActionListener {
         // Checks the randomly generated buttons and sets them to false
         for(int i = 0; i<18;i++){
             if(aButton.getText().equals(Integer.toString(i))){
-                // gameModel.buttonVisible[i] = false;
                 aButton.setVisible(false);
                 gameModel.amountClicked++;
                 gameModel.update();

@@ -10,14 +10,17 @@ import javax.swing.event.ChangeListener;
 
 public class VolumeController implements ChangeListener {
 
+    // Instance variables
     private MusicPlayer mPlayer;
     private JSlider slider;
     
+    // Constructor
     public VolumeController(MusicPlayer mPlayer, JSlider slider){
         this.mPlayer = mPlayer;
         this.slider = slider;
     } 
 
+    // Changes the volume based on where the JSlider is
     @Override
     public void stateChanged(ChangeEvent e) {
         

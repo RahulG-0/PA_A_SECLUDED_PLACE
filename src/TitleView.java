@@ -94,8 +94,8 @@ public class TitleView extends JPanel {
 
         try {
             // setting image and scaling image to fit the icon
-            BufferedImage bufferedImage = ImageIO.read(new File(directory + "\\src\\res\\Safeimagekit-resized-img.png")); // Version for VS
-            // BufferedImage bufferedImage = ImageIO.read(new File(directory + "\\res\\Safeimagekit-resized-img.png"));
+            // BufferedImage bufferedImage = ImageIO.read(new File(directory + "\\src\\res\\Safeimagekit-resized-img.png")); // Version for VS
+            BufferedImage bufferedImage = ImageIO.read(new File(directory + "\\res\\Safeimagekit-resized-img.png"));
             Image image = bufferedImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
             loadingScreenImage.setIcon(new ImageIcon(image));
         } catch (IOException e1) {}
@@ -105,8 +105,8 @@ public class TitleView extends JPanel {
         title.setForeground(new Color(139, 0, 0));
         title.setBorder(null);
 
-        File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf"); // Version for VS
-        // File fontFile = new File(directory + "\\res\\HelpMe.ttf");
+        // File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf"); // Version for VS
+        File fontFile = new File(directory + "\\res\\HelpMe.ttf");
         try {
             // setting font and scaling the font
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
@@ -300,8 +300,8 @@ public class TitleView extends JPanel {
 
     // This checks if the save file can be used for game information
     public boolean canFileLoad() {
-        File sFile = new File(directory + "\\src\\TextFiles\\SaveFile.txt"); // Version for VS
-        // File sFile = new File(directory + "\\TextFiles\\SaveFile.txt");
+        // File sFile = new File(directory + "\\src\\TextFiles\\SaveFile.txt"); // Version for VS
+        File sFile = new File(directory + "\\TextFiles\\SaveFile.txt");
         Scanner saveFile = null;
         String gameMode = ""; // Information for game
         int numOfKeys = 0;

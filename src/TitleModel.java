@@ -41,11 +41,6 @@ public class TitleModel {
 
             userSelection = "load";
 
-            /*
-            if (canLoad) {
-                startGame = true;
-            } */
-
         } else if (option.equals("Options")) {
 
             userSelection = "settings";

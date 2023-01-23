@@ -30,8 +30,8 @@ public class MusicPlayer {
     // Sound for button clicks
     public void buttonSound(){
         try {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\ButtonClick.wav")); // Version for VS
-            // AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\ButtonClick.wav"));
+            // AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\ButtonClick.wav")); // Version for VS
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\ButtonClick.wav"));
             this.clipButton = AudioSystem.getClip();
             clipButton.open(inputStream);
             clipButton.start();
@@ -41,8 +41,8 @@ public class MusicPlayer {
     // Ambiance for title screen
     public void music(){
         try{
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\Opening.wav")); // Version for VS
-            // AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\Opening.wav"));
+            // AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\Opening.wav")); // Version for VS
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\Opening.wav"));
             this.clip = AudioSystem.getClip();
             clip.open(inputStream);
 
@@ -54,8 +54,8 @@ public class MusicPlayer {
     // Ambiance for game
     public void gameMusic() {
         try {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\Ambiance.wav")); // Version for VS
-            // AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\Ambiance.wav"));
+            // AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\Ambiance.wav")); // Version for VS
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\Ambiance.wav"));
             this.gameClip = AudioSystem.getClip();
             gameClip.open(inputStream);
             // gameClip.start();
@@ -69,17 +69,17 @@ public class MusicPlayer {
         
         try {
             if (dir.equals("FORWARD")) {
-                inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningFront.wav")); // Version for VS
-                // inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\WarningFront.wav"));
+                // inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningFront.wav")); // Version for VS
+                inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\WarningFront.wav"));
             } else if (dir.equals("LEFT")) {
-                inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningLeft.wav")); // Version for VS
-                // inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\WarningLeft.wav"));
+                // inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningLeft.wav")); // Version for VS
+                inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\WarningLeft.wav"));
             } else if (dir.equals("RIGHT")) {
-                inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningRight.wav")); // Version for VS
-                // inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\WarningRight.wav"));
+                // inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningRight.wav")); // Version for VS
+                inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\WarningRight.wav"));
             } else if (dir.equals("BACKWARD")) {
-                inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningBack.wav")); // Version for VS
-                // inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\WarningBack.wav"));
+                // inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\WarningBack.wav")); // Version for VS
+                inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\WarningBack.wav"));
             }
 
             this.monstPrepClip = AudioSystem.getClip();
@@ -91,8 +91,8 @@ public class MusicPlayer {
     // Monster death sound effect
     public void monsterDeath() {
         try {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\MonsterDeath.wav")); // Version for VS
-            // AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\MonsterDeath.wav"));
+            // AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\MonsterDeath.wav")); // Version for VS
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\MonsterDeath.wav"));
             this.monstClip = AudioSystem.getClip();
             monstClip.open(inputStream);
             monstClip.start();
@@ -104,8 +104,8 @@ public class MusicPlayer {
         int randNum = (int)(Math.round(((Math.random() * 2) + 1)));
         
         try {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\Walking" + randNum + ".wav")); // Version for VS
-            // AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\Walking" + randNum + ".wav"));
+            // AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\Walking" + randNum + ".wav")); // Version for VS
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\Walking" + randNum + ".wav"));
             this.walkClip = AudioSystem.getClip();
             walkClip.open(inputStream);
             walkClip.start();
@@ -117,8 +117,8 @@ public class MusicPlayer {
     // Sound for the defend button or the qte buttons being clicked
     public void defendButtonClick() {
         try {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\DefendingButtons.wav")); // Version for VS
-            // AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\DefendingButtons.wav"));
+            // AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\src\\Music\\DefendingButtons.wav")); // Version for VS
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(directory + "\\Music\\DefendingButtons.wav"));
             this.defendClip = AudioSystem.getClip();
             defendClip.open(inputStream);
             defendClip.start();

@@ -87,8 +87,8 @@ public class GameView extends JPanel {
         this.setLayout(null); // settoing the layout to null
 
         // Gets a font
-        File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf"); // Version for VS
-        // File fontFile = new File(directory + "\\res\\HelpMe.ttf");
+        // File fontFile = new File(directory + "\\src\\res\\HelpMe.ttf"); // Version for VS
+        File fontFile = new File(directory + "\\res\\HelpMe.ttf");
 
         // getting the width and height of user diplay
         int width = (int)this.screenSize.getWidth(); 
@@ -129,7 +129,6 @@ public class GameView extends JPanel {
         try {
             // setting font and scaling the font
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-            // Font sizedFont = font.deriveFont(width*0.052f); // original size 100
             Font sizedFont = font.deriveFont(width*0.018f); // original size 100
             floorLevel.setFont(sizedFont);
         } 
@@ -249,11 +248,10 @@ public class GameView extends JPanel {
         // Game over screen
         wonOrNot.setBounds((int)Math.round(width*0.364),(int)Math.round(height*0),(int)Math.round(width*0.468),(int)Math.round(height*0.462));
         wonOrNot.setForeground(new Color(139, 0, 0));
-        // wonOrNot.setSize(screenSize);
+
         try {
             // setting font and scaling the font
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-            // Font sizedFont = font.deriveFont(width*0.052f); // original size 100
             Font sizedFont = font.deriveFont(width*0.06f); // original size 100
             wonOrNot.setFont(sizedFont);
         } 
@@ -262,44 +260,15 @@ public class GameView extends JPanel {
         // The different statistics from the game
         gameModeStat.setFont(new Font("Helvetica", Font.PLAIN, 20));
         gameModeStat.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.4),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
-        // gameModeStat.setText("Game Mode: " + gameModel.gameMode);
         
         numOfKeysStat.setFont(new Font("Helvetica", Font.PLAIN, 20));
         numOfKeysStat.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.44),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
-        // numOfKeysStat.setText("Number of Keys: " + gameModel.numOfKeys);
 
         healthStat.setFont(new Font("Helvetica", Font.PLAIN, 20));
         healthStat.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.48),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
-        // healthStat.setText("Your Health: " + gameModel.health);
 
         smokeBombStat.setFont(new Font("Helvetica", Font.PLAIN, 20));
         smokeBombStat.setBounds((int)Math.round(width*0.234),(int)Math.round(height*0.52),(int)Math.round(width*0.625),(int)Math.round(height*0.092));
-        // smokeBombStat.setText("Number of Smoke Bombs: " + gameModel.smokeBombs);
-
-        File oFile = new File(directory + "\\src\\TextFiles\\OutputFile.txt");
-        Scanner outputFile = null;
-
-        try {
-            outputFile = new Scanner(oFile);
-        } catch (FileNotFoundException ex) {}
-
-        int counter = 0;
-
-        while (outputFile.hasNext()) {
-            if (counter == 1) {
-                gameModeStat.setText(outputFile.nextLine());
-            } else if (counter == 2) {
-                numOfKeysStat.setText(outputFile.nextLine());
-            } else if (counter == 3) {
-                healthStat.setText(outputFile.nextLine());
-            } else if (counter == 4) {
-                smokeBombStat.setText(outputFile.nextLine());
-            }
-
-            counter++;
-        }
-
-        outputFile.close();
 
         gameModeStat.setForeground(new Color(255, 255, 255));
         numOfKeysStat.setForeground(new Color(255, 255, 255));
@@ -446,13 +415,6 @@ public class GameView extends JPanel {
         // If the quick time state is activated, it sets the panel to visible
         quicktimeButtonPanel.setVisible(gameModel.quickTimeState);
 
-        // If the quick time state is activated, sets the array of buttons to visible
-        // if(gameModel.quickTimeState){
-        //     for(int i = 0; i<gameModel.numOfButtons;i++){
-        //         buttons[i].setVisible(gameModel.buttonVisible[i]);   
-        //     }
-        // }
-
         // Displays the defend button
         defend.setVisible(gameModel.displayDefendButton);
 
@@ -510,6 +472,33 @@ public class GameView extends JPanel {
         // Game over screen
         if (gameModel.gameOver) {
             if (!gameModel.gameMode.equals(null)) {
+
+                // File oFile = new File(directory + "\\src\\TextFiles\\OutputFile.txt"); // Version for VS Code
+                File oFile = new File(directory + "\\TextFiles\\OutputFile.txt");
+                Scanner outputFile = null;
+
+                // Tries accessing the file and sets the game over screen info to the info in the file
+                try {
+                    outputFile = new Scanner(oFile);
+                } catch (FileNotFoundException ex) {}
+
+                int counter = 0;
+
+                while (outputFile.hasNext()) {
+                    if (counter == 1) {
+                        gameModeStat.setText(outputFile.nextLine());
+                    } else if (counter == 2) {
+                        numOfKeysStat.setText(outputFile.nextLine());
+                    } else if (counter == 3) {
+                        healthStat.setText(outputFile.nextLine());
+                    } else if (counter == 4) {
+                        smokeBombStat.setText(outputFile.nextLine());
+                    }
+
+                    counter++;
+                }
+
+                outputFile.close();
 
                 gameModel.canEscape = false;
 

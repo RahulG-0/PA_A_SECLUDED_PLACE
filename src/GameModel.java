@@ -18,8 +18,8 @@ public class GameModel {
     public int numOfKeys = 0;
     public double health = 100;
     public int smokeBombs = 0;
-    private final int monsterInitHealth = 100;
-    public double monsterHealth = monsterInitHealth;
+    private final int monsterInitHealth = 100; // Monster's initial health
+    public double monsterHealth = monsterInitHealth; // Sets the monster's health to init health
 
     private String whichDirection; // What keyboard input the player gives
 
@@ -74,8 +74,10 @@ public class GameModel {
     public String directory = System.getProperty("user.dir"); // Gets the user's directory
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // Gets screensize
 
+    // Condition for if statement at start of each game
     public boolean once = true;
 
+    // Runs the game
     Thread thread;
 
     // Constructor
@@ -92,6 +94,7 @@ public class GameModel {
         this.monsterHealth = monsterHealth;
     }
 
+    // Initializes total model
     public void addTotalModel(TotalModel totalModel){
         this.totalModel = totalModel;
     }
@@ -170,6 +173,7 @@ public class GameModel {
     public void monsterAttackDirection() {
         long monstDirection = Math.round((Math.random() * 3) + 1);
 
+        // Sets monstAttackDirection variable to the attack direction
         if (monstDirection == 1) {
             monstAttackDirection = "FORWARD";
         } else if (monstDirection == 2) {
@@ -265,10 +269,10 @@ public class GameModel {
         flipV2 = false;
 
         // This outputs the information to the files
-        File saveFile = new File(directory + "\\src\\TextFiles\\SaveFile.txt"); // Version for VS
-        // File saveFile = new File(directory + "\\TextFiles\\SaveFile.txt");
-        File outputFile = new File(directory + "\\src\\TextFiles\\OutputFile.txt"); // Version for VS
-        // File outputFile = new File(directory + "\\TextFiles\\OutputFile.txt");
+        // File saveFile = new File(directory + "\\src\\TextFiles\\SaveFile.txt"); // Version for VS
+        File saveFile = new File(directory + "\\TextFiles\\SaveFile.txt");
+        // File outputFile = new File(directory + "\\src\\TextFiles\\OutputFile.txt"); // Version for VS
+        File outputFile = new File(directory + "\\TextFiles\\OutputFile.txt");
 
         // Output to save file and output file
         PrintWriter output = getPrintWriter(saveFile);
@@ -366,6 +370,7 @@ public class GameModel {
             }
         }
 
+        // Makes the monster spawn and simulates the attack
         if(!flip && flipV2){
             if (doesMonsterSpawn()) {
                 flip = false;
