@@ -247,9 +247,9 @@ public class GameView extends JPanel {
         optionsPanel.setVisible(false);
 
         // Game over screen
-        wonOrNot.setBounds(660,0,900,500);
+        wonOrNot.setBounds((int)Math.round(width*0.364),(int)Math.round(height*0),(int)Math.round(width*0.468),(int)Math.round(height*0.462));
         wonOrNot.setForeground(new Color(139, 0, 0));
-        wonOrNot.setSize(screenSize);
+        // wonOrNot.setSize(screenSize);
         try {
             // setting font and scaling the font
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);

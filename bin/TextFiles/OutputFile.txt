@@ -1,0 +1,7 @@
+<<<<<<< HEAD
+=======
+Game Mode: HARD
+Number of Keys: 1
+Your Health: 90.0
+Number of Smoke Bombs: 0
+>>>>>>> 51f3ae346bd770e53fa1d3fd7c8a9fc37f673077
