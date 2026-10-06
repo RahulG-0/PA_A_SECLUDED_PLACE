@@ -1,19 +1,38 @@
-## Getting Started
+# A Secluded Place
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+An audio-driven horror game written in Java with Swing. You can't see the monster: you hear which direction it is coming from, turn to face it, and defend through a quick-time event. It is best played with headphones.
 
-## Folder Structure
+Built as a high-school team project with [AnirudhBharadwaj](https://github.com/AnirudhBharadwaj).
 
-The workspace contains two folders by default, where:
+## Gameplay
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- **Move** through each floor with the keyboard, choosing from the directions the game offers.
+- **Listen** for the monster. Warning sounds play from the front, back, left or right.
+- **Defend** by facing the right direction and pressing defend, then clicking the sequence of buttons before the timer runs out.
+- **Smoke bombs** stop the monster gaining health when a defence fails.
+- **Clear the floor** by draining the monster's health to collect the key and move up.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+There is a demo mode with one floor, a slower quick-time event and extra smoke bombs for learning the controls. Keybinds and volume can be changed from the options menu (Escape). The full manual is in `src/TextFiles/GameManual`.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## How it is built
 
-## Dependency Management
+The game follows a model/view/controller split:
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
-# PA_A_SECLUDED_PLACE
+| Part | Files |
+|---|---|
+| Models | `GameModel`, `TitleModel`, `TotalModel` |
+| Views | `GameView`, `TitleView`, `TotalView` |
+| Controllers | `MouseController`, `keyboardInput`, `buttonGameController`, `TextFieldController`, `TitleController`, `VolumeController` |
+| Audio | `MusicPlayer` with directional warning, footstep and ambience tracks in `src/Music` |
+
+Game state such as keybinds and results is saved to text files in `src/TextFiles`.
+
+## Run it
+
+Requires a JDK (11 or newer).
+
+```bash
+cd src
+javac *.java
+java Main
+```
